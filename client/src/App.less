@@ -1,0 +1,30 @@
+@import "~antd/dist/antd.less";
+@dark-color: #001529;
+body {
+  transition: color 0.3s;
+}
+.trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.bg-white {
+  background-color: white;
+}
+.color-white {
+  color: rgba(255, 255, 255, 0.65);
+  &:hover {
+    color: white;
+  }
+}
+.bg-dark {
+  background-color: @dark-color;
+}
+.color-dark {
+  color: rgba(0, 0, 0, 0.65);
+  &:hover {
+    color: @primary-color;
+  }
+}

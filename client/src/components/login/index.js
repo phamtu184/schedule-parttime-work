@@ -2,10 +2,6 @@ import React, { useRef, useState } from "react";
 import { message } from "antd";
 import LoginForm from "./loginForm";
 
-const user = {
-  tk: "user",
-  mk: "123",
-};
 export default function Login() {
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
