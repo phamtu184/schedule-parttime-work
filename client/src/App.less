@@ -1,8 +1,5 @@
 @import "~antd/dist/antd.less";
 @dark-color: #001529;
-body {
-  transition: color 0.3s;
-}
 .trigger {
   font-size: 18px;
   line-height: 64px;
@@ -12,19 +9,37 @@ body {
 }
 .bg-white {
   background-color: white;
+  transition: all 0.3s !important;
 }
 .color-white {
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.75) !important;
+  transition: all 0.3s !important;
   &:hover {
     color: white;
   }
 }
 .bg-dark {
   background-color: @dark-color;
+  transition: all 0.3s !important;
 }
 .color-dark {
-  color: rgba(0, 0, 0, 0.65);
+  color: rgba(0, 0, 0, 0.75);
+  transition: all 0.3s !important;
+}
+.color-dark-hover {
   &:hover {
     color: @primary-color;
   }
+}
+.bg-gray {
+  background-color: #f0f2f5;
+}
+.bg-black {
+  background-color: #000;
+}
+.color-pure-white {
+  color: white;
+}
+.text-cap {
+  text-transform: capitalize;
 }

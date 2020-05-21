@@ -1,6 +1,7 @@
 const initialState = {
   isCollapsed: false,
   isThemeLight: true,
+  language: "vi-vi",
 };
 const settingReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -9,6 +10,9 @@ const settingReducer = (state = initialState, action) => {
     }
     case "TOGGLE_THEME": {
       return { ...state, isThemeLight: !state.isThemeLight };
+    }
+    case "CHANGE_LANGUAGE": {
+      return { ...state, language: action.payload };
     }
     default:
       return state;
