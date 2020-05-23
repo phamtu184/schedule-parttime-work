@@ -15,37 +15,24 @@ import translate from "../../asset/i18n/translate";
 const DivMenuTitle = styled.div`
   height: 29px;
   margin: 16px;
+  h3 {
+    text-transform: capitalize;
+  }
 `;
 function MenuSider({ children, location }) {
   const isCollapsed = useSelector((state) => state.setting.isCollapsed);
-  const isThemeLight = useSelector((state) => state.setting.isThemeLight);
   return (
     <Layout.Sider
-      theme={isThemeLight ? "light" : "dark"}
+      theme="light"
       trigger={null}
       collapsible
       collapsed={isCollapsed}
     >
-      <DivMenuTitle
-        className={isThemeLight ? "bg-white color-dark" : "bg-dark color-white"}
-      >
-        {isCollapsed ? (
-          ""
-        ) : (
-          <h3
-            className={
-              isThemeLight
-                ? "bg-white color-dark text-cap"
-                : "bg-dark color-white text-cap"
-            }
-          >
-            {translate("management")}
-          </h3>
-        )}
+      <DivMenuTitle>
+        {isCollapsed ? "" : <h3>{translate("management")}</h3>}
       </DivMenuTitle>
       <Menu
         mode="inline"
-        theme={isThemeLight ? "light" : "dark"}
         defaultSelectedKeys={["/"]}
         selectedKeys={[location.pathname]}
       >

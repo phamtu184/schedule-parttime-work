@@ -8,9 +8,6 @@ const settingReducer = (state = initialState, action) => {
     case "TOGGLE_SIDER": {
       return { ...state, isCollapsed: !state.isCollapsed };
     }
-    case "TOGGLE_THEME": {
-      return { ...state, isThemeLight: !state.isThemeLight };
-    }
     case "CHANGE_LANGUAGE": {
       return { ...state, language: action.payload };
     }

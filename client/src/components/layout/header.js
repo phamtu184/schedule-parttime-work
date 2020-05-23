@@ -4,13 +4,12 @@ import {
   MenuFoldOutlined,
   UserOutlined,
   LogoutOutlined,
-  CloudOutlined,
 } from "@ant-design/icons";
 import { Layout, Dropdown, Menu, Button, Select } from "antd";
 import styled from "styled-components";
 import Breadcrumb from "./breadcrumb";
 import { useSelector, useDispatch } from "react-redux";
-import { toggleSider, toggleTheme, changeLanguage } from "../../action/setting";
+import { toggleSider, changeLanguage } from "../../action/setting";
 import translate from "../../asset/i18n/translate";
 
 const { Option } = Select;
@@ -37,18 +36,16 @@ const DivHeader = styled.div`
 `;
 export default function Header() {
   const isCollapsed = useSelector((state) => state.setting.isCollapsed);
-  const isThemeLight = useSelector((state) => state.setting.isThemeLight);
   const dispatch = useDispatch();
   return (
     <>
       <DivHeader>
-        <Layout.Header className={isThemeLight ? "bg-white" : "bg-dark"}>
+        <Layout.Header className="bg-white">
           {React.createElement(
             isCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
             {
-              className: isThemeLight
-                ? "trigger bg-white color-dark color-dark-hover"
-                : "trigger bg-dark color-white",
+              className: "trigger bg-white color-dark color-dark-hover",
+
               onClick: () => dispatch(toggleSider()),
             }
           )}
@@ -58,13 +55,6 @@ export default function Header() {
               alignItems: "center",
             }}
           >
-            <CloudOutlined
-              style={{ fontSize: "24px" }}
-              className={
-                isThemeLight ? "color-dark color-dark-hover" : "color-white"
-              }
-              onClick={() => dispatch(toggleTheme())}
-            />
             <Select
               defaultValue="vi-vi"
               style={{ width: 120, margin: "0 0 0 15px" }}

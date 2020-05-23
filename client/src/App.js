@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from "react";
-import "./App.less";
+import "./styles/index.less";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Layout } from "antd";
 import Loader from "./components/loader/pageLoader";

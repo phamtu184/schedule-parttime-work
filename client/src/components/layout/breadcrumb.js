@@ -7,6 +7,7 @@ import translate from "../../asset/i18n/translate";
 const breadcrumbNameMap = {
   "/calendar": translate("calendar"),
   "/users": translate("users"),
+  "/users/newuser": translate("newUser"),
   "/customer": translate("customer"),
   "/setting": translate("setting"),
 };

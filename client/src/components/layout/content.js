@@ -4,9 +4,9 @@ import { Route } from "react-router-dom";
 // import Page404 from "../errorPage/result";
 import Home from "../home";
 import User from "../user";
-import { useSelector } from "react-redux";
+import NewUser from "../user/newUser/index";
+
 export default function Content() {
-  const isThemeLight = useSelector((state) => state.setting.isThemeLight);
   return (
     <Layout.Content
       style={{
@@ -16,7 +16,7 @@ export default function Content() {
         overflowY: "hidden",
         borderRadius: "5px",
       }}
-      className={isThemeLight ? "bg-white" : "bg-dark"}
+      className="bg-white"
     >
       <Route
         path="/calendar"
@@ -24,6 +24,7 @@ export default function Content() {
         component={() => <div>calendar</div>}
       />
       <Route path="/users" exact={true} component={User} />
+      <Route path="/users/newuser" exact={true} component={NewUser} />
       <Route
         path="/customer"
         exact={true}
