@@ -4,22 +4,22 @@ import translate from "../../../asset/i18n/translate";
 const { Option } = Select;
 const formItems = [
   {
-    name: "idUser",
-    label: translate("idUser"),
+    name: "userId",
+    label: translate("userId"),
     input: <Input />,
     rules: [
       {
         required: true,
-        message: translate("require", { title: translate("idUser") }),
+        message: translate("require", { title: translate("userId") }),
       },
       {
         whitespace: true,
-        message: translate("whitespace", { title: translate("idUser") }),
+        message: translate("whitespace", { title: translate("userId") }),
       },
       {
         max: 15,
         message: translate("max", {
-          title: translate("idUser"),
+          title: translate("userId"),
           characters: "15",
         }),
       },
@@ -138,22 +138,22 @@ const formItems = [
     ],
   },
   {
-    name: "phoneNumber",
-    label: translate("phoneNumber"),
+    name: "phonenumber",
+    label: translate("phonenumber"),
     input: <Input />,
     rules: [
       {
         required: true,
-        message: translate("require", { title: translate("phoneNumber") }),
+        message: translate("require", { title: translate("phonenumber") }),
       },
       {
         whitespace: true,
-        message: translate("whitespace", { title: translate("phoneNumber") }),
+        message: translate("whitespace", { title: translate("phonenumber") }),
       },
       {
         len: 10,
         message: translate("len", {
-          title: translate("phoneNumber"),
+          title: translate("phonenumber"),
           characters: "10",
         }),
       },
@@ -164,8 +164,8 @@ const formItems = [
     label: translate("roles"),
     input: (
       <Select mode="tags" style={{ width: "100%" }}>
-        <Option value="managament">{translate("manager")}</Option>
-        <Option value="leader">{translate("storeManager")}</Option>
+        <Option value="manager">{translate("manager")}</Option>
+        <Option value="storeManager">{translate("storeManager")}</Option>
         <Option value="cook">{translate("cook")}</Option>
         <Option value="receptionist">{translate("receptionist")}</Option>
         <Option value="server">{translate("server")}</Option>

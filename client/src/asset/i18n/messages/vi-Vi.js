@@ -4,6 +4,7 @@ export default {
   [LOCALES.VIETNAMESE]: {
     english: "tiếng anh",
     vietnamese: "tiếng việt",
+    // router
     home: "trang chủ",
     calendar: "lịch làm việc",
     users: "nhân viên",
@@ -11,6 +12,7 @@ export default {
     customer: "khách hàng",
     setting: "cài đặt",
     management: "quản lý",
+    // user section
     new: "thêm",
     remove: "xóa",
     enable: "kích hoạt",
@@ -23,8 +25,9 @@ export default {
     fullname: "họ tên",
     password: "mật khẩu",
     confirmPassword: "xác nhận mật khẩu",
-    idUser: "mã nhân viên",
-    phoneNumber: "số điện thoại",
+    userId: "mã nhân viên",
+    phonenumber: "số điện thoại",
+    // roles
     manager: "quản lý",
     storeManager: "cửa hàng trưởng",
     cook: "phụ bếp",
@@ -41,5 +44,14 @@ export default {
     len: "{title} phải chứa {characters} kí tự",
     numberValid: "{title} phải là {type}",
     number: "số",
+    // event
+    userExist: "mã nhân viên hoặc tên đăng nhập đã tồn tại",
+    serverError: "lỗi server",
+    addUserSuccess: "Thêm nhân viên thành công",
+    loginSuccess: "đăng nhập thành công",
+    loginFail: "tên đăng nhập không tồn tại hoặc sai mật khẩu",
+    // feedback
+    success: "thành công",
+    error: "Lỗi",
   },
 };

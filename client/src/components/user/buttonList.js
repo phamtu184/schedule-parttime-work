@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Radio } from "antd";
 import {
   UserAddOutlined,
   UserDeleteOutlined,
@@ -8,7 +8,6 @@ import {
 } from "@ant-design/icons";
 import styled from "styled-components";
 import translate from "../../asset/i18n/translate";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ButtonEdit = styled(Button)`
@@ -20,7 +19,9 @@ const ButtonEdit = styled(Button)`
   }
 `;
 export default function ButtonList() {
-  const isThemeLight = useSelector((state) => state.setting.isThemeLight);
+  const onChangeRadio = (e) => {
+    console.log(`radio checked:${e.target.value}`);
+  };
   return (
     <>
       <div style={{ marginBottom: "5px" }}>
@@ -40,30 +41,17 @@ export default function ButtonList() {
         </ButtonEdit>
       </div>
       <div className="text-cap">
-        <span
-          className={isThemeLight ? "color-dark" : "color-white"}
-          style={{ marginRight: "15px" }}
-        >
+        <span className="color-dark" style={{ marginRight: "15px" }}>
           {translate("viewBy")}
         </span>
-        <Button
-          className={
-            isThemeLight
-              ? "text-cap"
-              : "text-cap color-white bg-dark bg-dark-hover"
-          }
-        >
-          {translate("users")}
-        </Button>
-        <Button
-          className={
-            isThemeLight
-              ? "text-cap"
-              : "text-cap color-white bg-dark bg-dark-hover"
-          }
-        >
-          {translate("roles")}
-        </Button>
+        <Radio.Group onChange={onChangeRadio} defaultValue="users">
+          <Radio.Button className="text-cap" value="users">
+            {translate("users")}
+          </Radio.Button>
+          <Radio.Button className="text-cap" value="roles">
+            {translate("roles")}
+          </Radio.Button>
+        </Radio.Group>
       </div>
     </>
   );

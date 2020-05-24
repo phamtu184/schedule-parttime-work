@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   MenuUnfoldOutlined,
   MenuFoldOutlined,
@@ -11,20 +11,9 @@ import Breadcrumb from "./breadcrumb";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleSider, changeLanguage } from "../../action/setting";
 import translate from "../../asset/i18n/translate";
-
+import { useHistory } from "react-router-dom";
 const { Option } = Select;
-const menu = (
-  <Menu>
-    <Menu.Item>
-      <UserOutlined />
-      <span className="text-cap">{translate("editProfile")}</span>
-    </Menu.Item>
-    <Menu.Item>
-      <LogoutOutlined />
-      <span className="text-cap">{translate("logout")}</span>
-    </Menu.Item>
-  </Menu>
-);
+
 const DivHeader = styled.div`
   .ant-layout-header {
     padding: 0;
@@ -37,6 +26,24 @@ const DivHeader = styled.div`
 export default function Header() {
   const isCollapsed = useSelector((state) => state.setting.isCollapsed);
   const dispatch = useDispatch();
+  const history = useHistory();
+  useEffect(() => {});
+  const logOut = () => {
+    localStorage.authToken = "";
+    history.push("/login");
+  };
+  const menu = (
+    <Menu>
+      <Menu.Item>
+        <UserOutlined />
+        <span className="text-cap">{translate("editProfile")}</span>
+      </Menu.Item>
+      <Menu.Item onClick={logOut}>
+        <LogoutOutlined />
+        <span className="text-cap">{translate("logout")}</span>
+      </Menu.Item>
+    </Menu>
+  );
   return (
     <>
       <DivHeader>

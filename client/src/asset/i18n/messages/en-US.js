@@ -4,6 +4,7 @@ export default {
   [LOCALES.ENGLISH]: {
     english: "english",
     vietnamese: "vietnamese",
+    // router
     home: "home",
     calendar: "calendar",
     users: "users",
@@ -11,6 +12,7 @@ export default {
     customer: "customer",
     setting: "setting",
     management: "management",
+    // user section
     new: "new",
     remove: "remove",
     enable: "enable",
@@ -23,10 +25,11 @@ export default {
     fullname: "fullname",
     password: "password",
     confirmPassword: "confirm password",
-    idUser: "id user",
-    phoneNumber: "phone number",
+    userId: "id user",
+    phonenumber: "phone number",
+    // roles
     manager: "manager",
-    storeManager: "leader",
+    storeManager: "store manager",
     cook: "cook",
     receptionist: "receptionist",
     server: "server",
@@ -38,8 +41,17 @@ export default {
     max: "{title} cannot be longer than {characters} characters",
     min: "{title} must be at least {characters} characters",
     matchPassword: "Password and confirm password do not match!",
-    len: "{title} must be exactly ${characters} characters",
+    len: "{title} must be exactly {characters} characters",
     numberValid: "{title} is not a valid {type}",
     number: "number",
+    // event
+    userExist: "user id or username has exist",
+    serverError: "server error",
+    addUserSuccess: "add user success",
+    loginSuccess: "login success",
+    loginFail: "username dosen't exist or wrong password",
+    // feedback
+    success: "success",
+    error: "error",
   },
 };

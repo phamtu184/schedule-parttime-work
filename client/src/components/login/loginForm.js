@@ -40,11 +40,11 @@ const DivForm = styled.div`
   }
 `;
 export default function LoginForm(props) {
-  const { submitLogin, isLoading, usernameRef, passwordRef } = props;
+  const { onFinish, isLoading } = props;
   return (
     <DivBg>
       <DivForm>
-        <Form onSubmitCapture={submitLogin}>
+        <Form onFinish={onFinish}>
           <Form.Item
             name="username"
             rules={[
@@ -58,7 +58,6 @@ export default function LoginForm(props) {
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="Tài khoản"
               autoComplete="off"
-              ref={usernameRef}
             />
           </Form.Item>
           <Form.Item
@@ -74,7 +73,6 @@ export default function LoginForm(props) {
               prefix={<LockOutlined className="site-form-item-icon" />}
               placeholder="Mật khẩu"
               autoComplete="off"
-              ref={passwordRef}
             />
           </Form.Item>
           <Form.Item name="remember" valuePropName="checked">

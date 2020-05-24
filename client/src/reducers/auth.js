@@ -1,6 +1,6 @@
 const initialState = {
-  username: "",
-  role: 0,
+  fullname: "",
+  role: "",
 };
 const authReducer = (state = initialState, action) => {
   switch (action.type) {

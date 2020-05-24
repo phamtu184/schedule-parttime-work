@@ -1,25 +1,49 @@
-import React, { useRef, useState } from "react";
-import { message } from "antd";
+import React, { useState } from "react";
 import LoginForm from "./loginForm";
+import { useIntl } from "react-intl";
+import axios from "axios";
+import url from "../../asset/urlConfig";
+import notification from "../common/notification";
+import { useHistory } from "react-router-dom";
 
 export default function Login() {
-  const usernameRef = useRef(null);
-  const passwordRef = useRef(null);
   const [isLoading, setLoading] = useState(false);
-  const submitLogin = (e) => {
-    e.preventDefault();
+  const intl = useIntl();
+  const history = useHistory();
+  const onFinish = (value) => {
+    const { username, password } = value;
     setLoading(true);
-    const usernameValue = usernameRef.current.props.value;
-    const passwordValue = passwordRef.current.props.value;
-    if (!usernameValue || !passwordValue) return setLoading(false);
-    return message.success("This is a success message");
+    axios
+      .post(`${url.BASE || url.LOCAL}/api/auth`, { username, password })
+      .then((res) => {
+        if (res.status === 200) {
+          notification(
+            "success",
+            intl.formatMessage({ id: "success" }),
+            intl.formatMessage({ id: "loginSuccess" })
+          );
+          localStorage.authToken = res.data.token;
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err.response.status);
+        if (err.response.status === 400) {
+          notification(
+            "error",
+            intl.formatMessage({ id: "error" }),
+            intl.formatMessage({ id: "loginFail" })
+          );
+          setLoading(false);
+        } else {
+          notification(
+            "error",
+            intl.formatMessage({ id: "error" }),
+            intl.formatMessage({ id: "serverError" })
+          );
+          setLoading(false);
+        }
+      });
   };
-  return (
-    <LoginForm
-      submitLogin={submitLogin}
-      isLoading={isLoading}
-      usernameRef={usernameRef}
-      passwordRef={passwordRef}
-    />
-  );
+  return <LoginForm onFinish={onFinish} isLoading={isLoading} />;
 }
