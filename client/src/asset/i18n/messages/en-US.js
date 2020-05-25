@@ -27,6 +27,8 @@ export default {
     confirmPassword: "confirm password",
     userId: "id user",
     phonenumber: "phone number",
+    status: "status",
+    search: "search",
     // roles
     manager: "manager",
     storeManager: "store manager",

@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import ButtonList from "./buttonList";
 import translate from "../../asset/i18n/translate";
+import ButtonList from "./buttonList";
+import FormSearch from "./formSearch";
 
 const Title = styled.h1`
   margin-bottom: 36px;
@@ -13,6 +14,7 @@ export default function User() {
     <>
       <Title className="color-dark">{translate("users")}</Title>
       <ButtonList />
+      <FormSearch />
     </>
   );
 }

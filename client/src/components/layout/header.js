@@ -10,10 +10,13 @@ import styled from "styled-components";
 import Breadcrumb from "./breadcrumb";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleSider, changeLanguage } from "../../action/setting";
+import { logout, login } from "../../action/auth";
 import translate from "../../asset/i18n/translate";
 import { useHistory } from "react-router-dom";
-const { Option } = Select;
+import axios from "axios";
+import url from "../../asset/urlConfig";
 
+const { Option } = Select;
 const DivHeader = styled.div`
   .ant-layout-header {
     padding: 0;
@@ -25,11 +28,32 @@ const DivHeader = styled.div`
 `;
 export default function Header() {
   const isCollapsed = useSelector((state) => state.setting.isCollapsed);
+  const fullname = useSelector((state) => state.auth.fullname);
   const dispatch = useDispatch();
   const history = useHistory();
-  useEffect(() => {});
+  useEffect(() => {
+    const token = localStorage.authToken;
+    if (token) {
+      axios
+        .get(`${url.BASE || url.LOCAL}/api/auth`, {
+          headers: { Authorization: token },
+        })
+        .then((res) => {
+          dispatch(
+            login({ fullname: res.data.fullname, roles: res.data.roles })
+          );
+        })
+        .catch((e) => {
+          history.push("/login");
+          localStorage.removeItem("authToken");
+        });
+    } else {
+      history.push("/login");
+    }
+  }, []);
   const logOut = () => {
-    localStorage.authToken = "";
+    localStorage.removeItem("authToken");
+    dispatch(logout());
     history.push("/login");
   };
   const menu = (
@@ -52,7 +76,6 @@ export default function Header() {
             isCollapsed ? MenuUnfoldOutlined : MenuFoldOutlined,
             {
               className: "trigger bg-white color-dark color-dark-hover",
-
               onClick: () => dispatch(toggleSider()),
             }
           )}
@@ -80,7 +103,9 @@ export default function Header() {
               placement="bottomCenter"
               trigger={["click"]}
             >
-              <Button style={{ margin: "0 15px 0 15px" }}>topRight</Button>
+              <Button style={{ margin: "0 15px 0 15px" }}>
+                {fullname ? fullname : "user"}
+              </Button>
             </Dropdown>
           </div>
         </Layout.Header>

@@ -27,6 +27,8 @@ export default {
     confirmPassword: "xác nhận mật khẩu",
     userId: "mã nhân viên",
     phonenumber: "số điện thoại",
+    status: "trạng thái",
+    search: "tìm kiếm",
     // roles
     manager: "quản lý",
     storeManager: "cửa hàng trưởng",

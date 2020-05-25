@@ -13,7 +13,7 @@ module.exports.login = async function (req, res) {
     return res.status(400).json({ message: "wrong password" });
   }
   jwt.sign(
-    { id: user.userId, username: user.username },
+    { id: user.userId, fullname: user.fullname, roles: user.roles },
     process.env.JWTSECRET,
     { expiresIn: 1000 * 60 * 60 * 24 },
     (err, token) => {
@@ -23,4 +23,13 @@ module.exports.login = async function (req, res) {
         .json({ token, fullname: user.fullname, roles: user.roles });
     }
   );
+};
+module.exports.getProfile = function (req, res) {
+  const token = req.headers.authorization;
+  if (token) {
+    jwt.verify(token, process.env.JWTSECRET, (err, decoded) => {
+      if (err) return res.status(400).json({ message: "Token expired" });
+      return res.status(200).json(decoded);
+    });
+  }
 };

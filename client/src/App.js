@@ -12,7 +12,6 @@ import { I18nProvider } from "./asset/i18n";
 const Login = lazy(() => import("./components/login"));
 
 function App() {
-  const isThemeLight = useSelector((state) => state.setting.isThemeLight);
   const language = useSelector((state) => state.setting.language);
   return (
     <I18nProvider locale={language}>
@@ -23,7 +22,7 @@ function App() {
               <Route path="/login" component={Login} />
               <Route>
                 <MenuSider />
-                <Layout className={isThemeLight ? "bg-gray" : "bg-black"}>
+                <Layout className="bg-gray">
                   <MenuHeader />
                   <MenuContent />
                   <Layout.Footer style={{ textAlign: "center" }}>
