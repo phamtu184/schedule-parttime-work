@@ -49,11 +49,31 @@ module.exports.searchUsers = async function (req, res) {
   if (username) {
     query.push({ username: { $regex: username, $options: "i" } });
   }
-  if (roles) {
+  if (roles && roles.length > 0) {
     query.push({ roles: { $all: roles } });
   }
   const users = await User.find({ $and: query })
     .select("-password -phonenumber")
     .lean();
   res.status(200).json(formatUsers(users));
+};
+
+module.exports.deleteUsers = async function (req, res) {
+  const query = Object.values(req.query);
+  User.deleteMany({ userId: { $in: query } })
+    .then(() => res.status(200).json({ message: "delete success" }))
+    .catch((e) => res.status(500).json({ message: "server error" }));
+};
+
+module.exports.modifyStatusUsers = async function (req, res) {
+  const { enableAction, selectedRowKeys } = req.body;
+  if (enableAction) {
+    User.updateMany({ userId: { $in: selectedRowKeys } }, { disabled: false })
+      .then(() => res.status(200).json({ message: "enable user success" }))
+      .catch((e) => res.status(500).json({ message: "server error" }));
+  } else {
+    User.updateMany({ userId: { $in: selectedRowKeys } }, { disabled: true })
+      .then(() => res.status(200).json({ message: "disable user success" }))
+      .catch((e) => res.status(500).json({ message: "server error" }));
+  }
 };

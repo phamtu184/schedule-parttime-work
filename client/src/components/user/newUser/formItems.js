@@ -163,7 +163,7 @@ const formItems = [
     name: "roles",
     label: translate("roles"),
     input: (
-      <Select mode="tags" style={{ width: "100%" }}>
+      <Select mode="multiple" style={{ width: "100%" }}>
         <Option value="manager">{translate("manager")}</Option>
         <Option value="storeManager">{translate("storeManager")}</Option>
         <Option value="cook">{translate("cook")}</Option>

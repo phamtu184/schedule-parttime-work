@@ -9,6 +9,7 @@ export default {
     calendar: "calendar",
     users: "users",
     newUser: "new user",
+    viewUser: "view user",
     customer: "customer",
     setting: "setting",
     management: "management",
@@ -33,6 +34,9 @@ export default {
     action: "action",
     edit: "edit",
     view: "view",
+    confirmDelete: "are you sure delete this task?",
+    yes: "yes",
+    no: "no",
     // roles
     manager: "manager",
     storeManager: "store manager",
@@ -54,6 +58,9 @@ export default {
     userExist: "user id or username has exist",
     serverError: "server error",
     addUserSuccess: "add user success",
+    deleteUserSuccess: "delete user success",
+    enableUserSuccess: "enable user success",
+    disableUserSuccess: "disable user success",
     loginSuccess: "login success",
     loginFail: "username dosen't exist or wrong password",
     // feedback

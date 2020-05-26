@@ -11,5 +11,7 @@ router.post("/user", userController.addUser);
 /* users  */
 router.get("/users", userController.getUsers);
 router.post("/users", userController.searchUsers);
+router.delete("/users", userController.deleteUsers);
+router.put("/users", userController.modifyStatusUsers);
 
 module.exports = router;

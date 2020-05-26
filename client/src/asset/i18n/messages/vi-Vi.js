@@ -9,6 +9,7 @@ export default {
     calendar: "lịch làm việc",
     users: "nhân viên",
     newUser: "thêm nhân viên",
+    viewUser:'thông tin nhân viên',
     customer: "khách hàng",
     setting: "cài đặt",
     management: "quản lý",
@@ -33,6 +34,9 @@ export default {
     action: "thao tác",
     edit: "sửa",
     view: "xem",
+    confirmDelete: "bạn có chắc muốn xóa?",
+    yes: "có",
+    no: "không",
     // roles
     manager: "quản lý",
     storeManager: "cửa hàng trưởng",
@@ -54,6 +58,9 @@ export default {
     userExist: "mã nhân viên hoặc tên đăng nhập đã tồn tại",
     serverError: "lỗi server",
     addUserSuccess: "Thêm nhân viên thành công",
+    deleteUserSuccess: "xóa nhân viên thành công",
+    enableUserSuccess: "kích hoạt nhân viên thành công",
+    disableUserSuccess: "vô hiệu nhân viên thành công",
     loginSuccess: "đăng nhập thành công",
     loginFail: "tên đăng nhập không tồn tại hoặc sai mật khẩu",
     // feedback

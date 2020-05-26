@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "antd";
+import { Button, Popconfirm } from "antd";
 import {
   UserAddOutlined,
   UserDeleteOutlined,
@@ -18,7 +18,8 @@ const ButtonEdit = styled(Button)`
     margin-right: 8px;
   }
 `;
-export default function ButtonList({ selectedRowKeys }) {
+export default function ButtonList(props) {
+  const { selectedRowKeys, deleteUsers, enableUsers, disableUsers } = props;
   const hasSelected = selectedRowKeys.length > 0;
   return (
     <div style={{ marginBottom: "5px" }}>
@@ -27,17 +28,26 @@ export default function ButtonList({ selectedRowKeys }) {
           {translate("new")}
         </ButtonEdit>
       </Link>
-      <ButtonEdit
-        type="primary"
-        icon={<UserDeleteOutlined />}
+      <Popconfirm
+        title={translate("confirmDelete")}
+        onConfirm={deleteUsers}
+        okText={translate("yes")}
+        cancelText={translate("no")}
         disabled={!hasSelected}
       >
-        {translate("remove")}
-      </ButtonEdit>
+        <ButtonEdit
+          type="primary"
+          icon={<UserDeleteOutlined />}
+          disabled={!hasSelected}
+        >
+          {translate("remove")}
+        </ButtonEdit>
+      </Popconfirm>
       <ButtonEdit
         type="primary"
         icon={<CheckOutlined />}
         disabled={!hasSelected}
+        onClick={enableUsers}
       >
         {translate("enable")}
       </ButtonEdit>
@@ -45,6 +55,7 @@ export default function ButtonList({ selectedRowKeys }) {
         type="primary"
         icon={<StopOutlined />}
         disabled={!hasSelected}
+        onClick={disableUsers}
       >
         {translate("disable")}
       </ButtonEdit>

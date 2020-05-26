@@ -2,6 +2,7 @@ import React from "react";
 import translate from "../../asset/i18n/translate";
 import { Avatar, Space, Tag } from "antd";
 import { UserOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 const columns = [
   {
     title: translate("avatar"),
@@ -50,10 +51,10 @@ const columns = [
     title: translate("action"),
     dataIndex: "action",
     key: "action",
-    render: () => (
+    render: (text, record) => (
       <Space size="middle">
-        <a>{translate("view")}</a>
-        <a>{translate("edit")}</a>
+        <Link to={`/users/viewuser/${record._id}`}>{translate("view")}</Link>
+        {/* <Link>{translate("edit")}</Link> */}
       </Space>
     ),
   },

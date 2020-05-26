@@ -1,6 +1,7 @@
 const formatUsers = (users) => {
   const rs = users.map((item) => {
     return {
+      _id: item._id,
       key: item.userId,
       avatar: item.avatar,
       username: item.username,

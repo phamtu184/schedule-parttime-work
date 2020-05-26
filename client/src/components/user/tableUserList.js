@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Table, Spin } from "antd";
 import axios from "axios";
 import columns from "./columnsItem";
