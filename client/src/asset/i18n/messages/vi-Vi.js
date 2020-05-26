@@ -29,6 +29,10 @@ export default {
     phonenumber: "số điện thoại",
     status: "trạng thái",
     search: "tìm kiếm",
+    avatar: "hình đại diện",
+    action: "thao tác",
+    edit: "sửa",
+    view: "xem",
     // roles
     manager: "quản lý",
     storeManager: "cửa hàng trưởng",

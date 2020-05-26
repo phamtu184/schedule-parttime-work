@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Form, Row, Col, Button } from "antd";
-import { SearchOutlined, UndoOutlined } from "@ant-design/icons";
 import formItems from "./formSearchItem";
+import { SearchOutlined, UndoOutlined } from "@ant-design/icons";
 import translate from "../../asset/i18n/translate";
+import axios from "axios";
+import url from "../../asset/urlConfig";
 
 const DivForm = styled.div`
   margin-bottom: 16px;
@@ -28,14 +30,15 @@ const tailFormItemLayout = {
     md: { span: 18, offset: 3 },
   },
 };
-export default function FormSearch() {
-  const [isLoading, setLoading] = useState(false);
+export default function FormSearch(props) {
+  const { onFinish, setLoading, setUserList } = props;
   const [form] = Form.useForm();
-  const onFinish = (value) => {
-    console.log(value);
-  };
   const onReset = () => {
     form.resetFields();
+    axios.get(`${url.BASE || url.LOCAL}/api/users`).then((res) => {
+      setUserList(res.data);
+      setLoading(false);
+    });
   };
   return (
     <DivForm>
@@ -64,7 +67,6 @@ export default function FormSearch() {
             htmlType="submit"
             className="text-cap mr-7px"
             icon={<SearchOutlined className="mr-7px" />}
-            loading={isLoading}
           >
             {translate("search")}
           </Button>

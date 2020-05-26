@@ -29,6 +29,10 @@ export default {
     phonenumber: "phone number",
     status: "status",
     search: "search",
+    avatar: "avatar",
+    action: "action",
+    edit: "edit",
+    view: "view",
     // roles
     manager: "manager",
     storeManager: "store manager",

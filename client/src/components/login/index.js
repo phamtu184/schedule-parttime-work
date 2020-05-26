@@ -30,6 +30,7 @@ export default function Login() {
           history.push("/login");
         });
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const onFinish = (value) => {
     const { username, password } = value;
@@ -52,21 +53,12 @@ export default function Login() {
         }
       })
       .catch((err) => {
-        if (err.response.status === 400) {
-          notification(
-            "error",
-            intl.formatMessage({ id: "error" }),
-            intl.formatMessage({ id: "loginFail" })
-          );
-          setLoading(false);
-        } else {
-          notification(
-            "error",
-            intl.formatMessage({ id: "error" }),
-            intl.formatMessage({ id: "serverError" })
-          );
-          setLoading(false);
-        }
+        notification(
+          "error",
+          intl.formatMessage({ id: "error" }),
+          intl.formatMessage({ id: "loginFail" })
+        );
+        setLoading(false);
       });
   };
   return <LoginForm onFinish={onFinish} isLoading={isLoading} />;
