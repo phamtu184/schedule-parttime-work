@@ -2,7 +2,6 @@ import React from "react";
 import { NavLink, withRouter } from "react-router-dom";
 import { Menu, Layout } from "antd";
 import {
-  HomeOutlined,
   UserAddOutlined,
   SettingOutlined,
   CalendarOutlined,
@@ -34,13 +33,13 @@ function MenuSider({ children, location }) {
       <Menu
         mode="inline"
         defaultSelectedKeys={["/"]}
-        selectedKeys={[location.pathname]}
+        selectedKeys={["/" + location.pathname.split("/")[1]]}
       >
-        <Menu.Item key="/" icon={<HomeOutlined />}>
+        {/* <Menu.Item key="/" icon={<HomeOutlined />}>
           <NavLink to="/" className="text-cap">
             {translate("home")}
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
         <Menu.Item key="/calendar" icon={<CalendarOutlined />}>
           <NavLink to="/calendar" className="text-cap">
             {translate("calendar")}

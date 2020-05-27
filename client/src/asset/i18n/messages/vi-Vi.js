@@ -9,7 +9,7 @@ export default {
     calendar: "lịch làm việc",
     users: "nhân viên",
     newUser: "thêm nhân viên",
-    viewUser:'thông tin nhân viên',
+    viewUser: "thông tin nhân viên",
     customer: "khách hàng",
     setting: "cài đặt",
     management: "quản lý",
@@ -66,5 +66,8 @@ export default {
     // feedback
     success: "thành công",
     error: "Lỗi",
+    pageNotExist: "trang mà bạn truy cập không tồn tại",
+    pageAuthorized: "bạn không được quyền truy cập vào trang này",
+    backHome: "về trang chủ",
   },
 };

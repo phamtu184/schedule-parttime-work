@@ -50,7 +50,7 @@ export default function FormSearch(props) {
       >
         <Row>
           {formItems.map((item) => (
-            <Col md={24} lg={12} key={item.name}>
+            <Col xs={24} lg={12} key={item.name}>
               <Form.Item
                 name={item.name}
                 label={item.label}

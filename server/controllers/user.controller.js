@@ -2,6 +2,12 @@ const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const formatUsers = require("../common/formatUsers");
 
+module.exports.getUser = async function (req, res) {
+  const { id } = req.query;
+  const user = await User.findById(id).lean().select("-password");
+  if (!user) return res.status(500).json({ message: "user dosen't exist" });
+  res.status(200).json(user);
+};
 module.exports.addUser = async function (req, res) {
   const { userId, username, password, fullname, phonenumber, roles } = req.body;
   const user = await User.findOne({

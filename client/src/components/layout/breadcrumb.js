@@ -5,6 +5,8 @@ import { useSelector } from "react-redux";
 import translate from "../../asset/i18n/translate";
 
 const breadcrumbNameMap = {
+  "/404": "404",
+  "/403": "403",
   "/calendar": translate("calendar"),
   "/users": translate("users"),
   "/users/newuser": translate("newUser"),

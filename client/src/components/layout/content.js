@@ -1,13 +1,16 @@
 import React from "react";
 import { Layout } from "antd";
-import { Route } from "react-router-dom";
-// import Page404 from "../errorPage/result";
+import { Route, Redirect } from "react-router-dom";
+import PrivateRoute from "../security/privateRoute";
+import PageError from "../errorPage/result";
 import Home from "../home";
 import User from "../user";
 import NewUser from "../user/newUser";
 import ViewUser from "../user/viewUser";
+import { useSelector } from "react-redux";
 
 export default function Content() {
+  const authed = useSelector((state) => state.auth.roles);
   return (
     <Layout.Content
       style={{
@@ -19,25 +22,25 @@ export default function Content() {
       }}
       className="bg-white"
     >
-      <Route
-        path="/calendar"
-        exact={true}
-        component={() => <div>calendar</div>}
+      <PrivateRoute exact authed={authed} path="/users" component={User} />
+      <PrivateRoute
+        exact
+        authed={authed}
+        path="/users/newuser"
+        component={NewUser}
       />
-      <Route path="/users" exact={true} component={User} />
-      <Route path="/users/newuser" exact={true} component={NewUser} />
-      <Route path="/users/viewuser/:id" exact={true} component={ViewUser} />
-      <Route
-        path="/customer"
-        exact={true}
-        component={() => <div>customer</div>}
+      <PrivateRoute
+        exact
+        authed={authed}
+        path="/users/viewuser/:id"
+        component={ViewUser}
       />
-      <Route
-        path="/setting"
-        exact={true}
-        component={() => <div>setting</div>}
-      />
-      <Route path="/" exact={true} component={Home} />
+      <Route exact path="/customer" component={() => <div>customer</div>} />
+      <Route exact path="/setting" component={() => <div>setting</div>} />
+      <Route path="/calendar" component={() => <div>calendar</div>} />
+      <Route exact path="/404" component={PageError} />
+      <Route path="/" exact component={Home} />
+      <Redirect to="/" />
     </Layout.Content>
   );
 }

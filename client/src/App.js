@@ -6,7 +6,6 @@ import Loader from "./components/loader/pageLoader";
 import MenuSider from "./components/layout/sider";
 import MenuHeader from "./components/layout/header";
 import MenuContent from "./components/layout/content";
-import Page404 from "./components/errorPage/result";
 import { useSelector } from "react-redux";
 import { I18nProvider } from "./asset/i18n";
 const Login = lazy(() => import("./components/login"));
@@ -30,7 +29,6 @@ function App() {
                   </Layout.Footer>
                 </Layout>
               </Route>
-              <Route component={Page404} />
             </Switch>
           </Layout>
         </Router>

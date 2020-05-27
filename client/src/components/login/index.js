@@ -26,9 +26,7 @@ export default function Login() {
           );
           history.push("/");
         })
-        .catch((e) => {
-          history.push("/login");
-        });
+        .catch((e) => {});
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

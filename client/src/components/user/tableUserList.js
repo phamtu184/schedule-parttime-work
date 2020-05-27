@@ -21,6 +21,7 @@ export default function TableUserList(props) {
         columns={columns}
         dataSource={userList}
         rowSelection={rowSelection}
+        scroll={{ x: true, y: 500 }}
       ></Table>
     </Spin>
   );

@@ -12,8 +12,16 @@ module.exports.login = async function (req, res) {
   if (!passwordMatch) {
     return res.status(400).json({ message: "wrong password" });
   }
+  if (user.disabled) {
+    return res.status(400).json({ message: "account is disable" });
+  }
   jwt.sign(
-    { id: user.userId, fullname: user.fullname, roles: user.roles },
+    {
+      id: user.userId,
+      fullname: user.fullname,
+      roles: user.roles,
+      disabled: user.disabled,
+    },
     process.env.JWTSECRET,
     { expiresIn: 1000 * 60 * 60 * 24 },
     (err, token) => {
@@ -29,6 +37,8 @@ module.exports.getProfile = function (req, res) {
   if (token) {
     jwt.verify(token, process.env.JWTSECRET, (err, decoded) => {
       if (err) return res.status(400).json({ message: "Token expired" });
+      if (decoded.disabled)
+        return res.status(500).json({ message: "account is disable" });
       return res.status(200).json(decoded);
     });
   }

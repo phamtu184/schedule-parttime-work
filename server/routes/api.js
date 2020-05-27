@@ -7,6 +7,7 @@ const authController = require("../controllers/auth.controller");
 router.get("/auth", authController.getProfile);
 router.post("/auth", authController.login);
 /* user  */
+router.get("/user", userController.getUser);
 router.post("/user", userController.addUser);
 /* users  */
 router.get("/users", userController.getUsers);
