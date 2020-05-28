@@ -30,6 +30,7 @@ export default function ViewUser({ props }) {
         setLoading(false);
       })
       .catch((e) => history.push("/users"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Spin spinning={isLoading}>

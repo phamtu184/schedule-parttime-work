@@ -1,29 +1,39 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Table, Spin } from "antd";
-import axios from "axios";
 import columns from "./columnsItem";
-import url from "../../asset/urlConfig";
 
 export default function TableUserList(props) {
-  const { rowSelection, setUserList, userList, isLoading, setLoading } = props;
-  // const [pagination, setPagination] = useState({
-  //   current: 1,
-  //   pageSize: 5,
-  // });
-  // const fetchData = () =>{
-  //   axios.get(`${url.BASE || url.LOCAL}/api/users`, { params: pagination }).then((res) => {
-  //     console.log(res.data)
-  //     // setUserList(res.data.userList);
-  //     // setPagination(res.data.pagination)
-  //     setLoading(false);
-  //   });
-  // }
+  const {
+    rowSelection,
+    fetchData,
+    userList,
+    isLoading,
+    setLoading,
+    pagination,
+    isSearch,
+    searchData,
+    searchValue,
+  } = props;
+
+  const handleTableChange = (page) => {
+    const { fullname, roles, status, userId, username } = searchValue;
+    if (isSearch) {
+      searchData(
+        fullname,
+        roles,
+        status,
+        userId,
+        username,
+        page.current,
+        page.pageSize
+      );
+    } else {
+      fetchData(page.current, page.pageSize);
+    }
+  };
   useEffect(() => {
     setLoading(true);
-    axios.get(`${url.BASE || url.LOCAL}/api/users`).then((res) => {
-      setUserList(res.data);
-      setLoading(false);
-    });
+    fetchData(pagination.current, pagination.pageSize);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
@@ -33,6 +43,8 @@ export default function TableUserList(props) {
         columns={columns}
         dataSource={userList}
         rowSelection={rowSelection}
+        pagination={pagination}
+        onChange={handleTableChange}
         scroll={{ x: true, y: 500 }}
       ></Table>
     </Spin>

@@ -4,8 +4,6 @@ import { Form, Row, Col, Button } from "antd";
 import formItems from "./formSearchItem";
 import { SearchOutlined, UndoOutlined } from "@ant-design/icons";
 import translate from "../../asset/i18n/translate";
-import axios from "axios";
-import url from "../../asset/urlConfig";
 
 const DivForm = styled.div`
   margin-bottom: 16px;
@@ -31,14 +29,12 @@ const tailFormItemLayout = {
   },
 };
 export default function FormSearch(props) {
-  const { onFinish, setLoading, setUserList } = props;
+  const { onFinish, fetchData, pagination, setIsSearch } = props;
   const [form] = Form.useForm();
   const onReset = () => {
     form.resetFields();
-    axios.get(`${url.BASE || url.LOCAL}/api/users`).then((res) => {
-      setUserList(res.data);
-      setLoading(false);
-    });
+    fetchData(pagination.current, pagination.pageSize);
+    setIsSearch(false);
   };
   return (
     <DivForm>

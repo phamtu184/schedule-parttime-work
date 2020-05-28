@@ -18,9 +18,49 @@ export default function User() {
   const [userList, setUserList] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isLoading, setLoading] = useState(false);
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 4,
+    total: 0,
+  });
+  const [isSearch, setIsSearch] = useState(false);
+  const [searchValue, setSearchValue] = useState({});
   const intl = useIntl();
   const onSelectChange = (selectedRowKeys) => {
     setSelectedRowKeys(selectedRowKeys);
+  };
+  const fetchData = (current, pageSize) => {
+    axios
+      .get(`${url.BASE || url.LOCAL}/api/users`, {
+        params: { current, pageSize },
+      })
+      .then((res) => {
+        setUserList(res.data.users);
+        setPagination({ ...pagination, total: res.data.total, current });
+        setLoading(false);
+      });
+  };
+  const searchData = (
+    fullname,
+    roles,
+    status,
+    userId,
+    username,
+    current,
+    pageSize
+  ) => {
+    axios
+      .post(
+        `${url.BASE || url.LOCAL}/api/users`,
+        { fullname, roles, status, userId, username },
+        { params: { current, pageSize } }
+      )
+      .then((res) => {
+        setUserList(res.data.users);
+        setPagination({ ...pagination, total: res.data.total, current });
+        setLoading(false);
+      })
+      .catch((e) => console.log(e));
   };
   const rowSelection = {
     selectedRowKeys,
@@ -31,14 +71,9 @@ export default function User() {
       name: record.username,
     }),
   };
-  const getUserList = () => {
-    axios.get(`${url.BASE || url.LOCAL}/api/users`).then((res) => {
-      setUserList(res.data);
-      setLoading(false);
-    });
-  };
   const onFinish = (value) => {
     const { fullname, roles, status, userId, username } = value;
+    setSearchValue(value);
     setLoading(true);
     if (
       !fullname &&
@@ -47,21 +82,19 @@ export default function User() {
       !userId &&
       !username
     ) {
-      getUserList();
+      fetchData(pagination.current, pagination.pageSize);
+      setIsSearch(false);
     } else {
-      axios
-        .post(`${url.BASE || url.LOCAL}/api/users`, {
-          fullname,
-          roles,
-          status,
-          userId,
-          username,
-        })
-        .then((res) => {
-          setUserList(res.data);
-          setLoading(false);
-        })
-        .catch((e) => console.log(e));
+      searchData(
+        fullname,
+        roles,
+        status,
+        userId,
+        username,
+        pagination.current,
+        pagination.pageSize
+      );
+      setIsSearch(true);
     }
   };
   const deleteUsers = () => {
@@ -75,7 +108,7 @@ export default function User() {
             intl.formatMessage({ id: "success" }),
             intl.formatMessage({ id: "deleteUserSuccess" })
           );
-          getUserList();
+          fetchData(pagination.current, pagination.pageSize);
           setSelectedRowKeys([]);
         }
       })
@@ -101,7 +134,7 @@ export default function User() {
           intl.formatMessage({ id: "success" }),
           intl.formatMessage({ id: "enableUserSuccess" })
         );
-        getUserList();
+        fetchData(pagination.current, pagination.pageSize);
         setSelectedRowKeys([]);
       })
       .catch((e) => {
@@ -126,7 +159,7 @@ export default function User() {
           intl.formatMessage({ id: "success" }),
           intl.formatMessage({ id: "disableUserSuccess" })
         );
-        getUserList();
+        fetchData(pagination.current, pagination.pageSize);
         setSelectedRowKeys([]);
       })
       .catch((e) => {
@@ -149,15 +182,20 @@ export default function User() {
       />
       <FormSearch
         onFinish={onFinish}
-        setLoading={setLoading}
-        setUserList={setUserList}
+        fetchData={fetchData}
+        pagination={pagination}
+        setIsSearch={setIsSearch}
       />
       <TableUserList
         rowSelection={rowSelection}
         userList={userList}
-        setUserList={setUserList}
         isLoading={isLoading}
         setLoading={setLoading}
+        pagination={pagination}
+        fetchData={fetchData}
+        searchData={searchData}
+        isSearch={isSearch}
+        searchValue={searchValue}
       />
     </>
   );

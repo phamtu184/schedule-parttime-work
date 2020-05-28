@@ -34,12 +34,21 @@ module.exports.addUser = async function (req, res) {
 };
 
 module.exports.getUsers = async function (req, res) {
-  const users = await User.find().select("-password -phonenumber").lean();
+  const { current, pageSize } = req.query;
+  const page = current - 1;
+  const usersLength = await User.count();
+  const users = await User.find()
+    .select("-password -phonenumber")
+    .lean()
+    .limit(parseInt(pageSize))
+    .skip(parseInt(page * pageSize));
   if (!users) return res.status(500).json({ message: "users is not exist" });
-  res.status(200).json(formatUsers(users));
+  res.status(200).json({ users: formatUsers(users), total: usersLength });
 };
 module.exports.searchUsers = async function (req, res) {
   const { fullname, roles, status, userId, username } = req.body;
+  const { current, pageSize } = req.query;
+  const page = current - 1;
   const query = [];
   if (!fullname && !roles && !status && !userId && !username)
     return res.status(400).json({ message: "request error" });
@@ -58,10 +67,13 @@ module.exports.searchUsers = async function (req, res) {
   if (roles && roles.length > 0) {
     query.push({ roles: { $all: roles } });
   }
+  const usersLength = await User.find({ $and: query }).count();
   const users = await User.find({ $and: query })
     .select("-password -phonenumber")
-    .lean();
-  res.status(200).json(formatUsers(users));
+    .lean()
+    .limit(parseInt(pageSize))
+    .skip(parseInt(page * pageSize));
+  res.status(200).json({ users: formatUsers(users), total: usersLength });
 };
 
 module.exports.deleteUsers = async function (req, res) {
