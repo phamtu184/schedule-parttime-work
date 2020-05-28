@@ -19,11 +19,31 @@ const columns = [
     title: translate("username"),
     dataIndex: "username",
     key: "username",
+    sorter: (a, b) => {
+      if (a.username < b.username) {
+        return -1;
+      }
+      if (a.username > b.username) {
+        return 1;
+      }
+      return 0;
+    },
+    sortDirections: ["descend", "ascend"],
   },
   {
     title: translate("fullname"),
     dataIndex: "fullname",
     key: "fullname",
+    sorter: (a, b) => {
+      if (a.fullname < b.fullname) {
+        return -1;
+      }
+      if (a.fullname > b.fullname) {
+        return 1;
+      }
+      return 0;
+    },
+    sortDirections: ["descend", "ascend"],
   },
   {
     title: translate("roles"),

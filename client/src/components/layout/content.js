@@ -1,6 +1,6 @@
 import React from "react";
 import { Layout } from "antd";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import PrivateRoute from "../security/privateRoute";
 import PageError from "../errorPage/result";
 import Home from "../home";
@@ -22,25 +22,30 @@ export default function Content() {
       }}
       className="bg-white"
     >
-      <PrivateRoute exact authed={authed} path="/users" component={User} />
-      <PrivateRoute
-        exact
-        authed={authed}
-        path="/users/newuser"
-        component={NewUser}
-      />
-      <PrivateRoute
-        exact
-        authed={authed}
-        path="/users/viewuser/:id"
-        component={ViewUser}
-      />
-      <Route exact path="/customer" component={() => <div>customer</div>} />
-      <Route exact path="/setting" component={() => <div>setting</div>} />
-      <Route path="/calendar" component={() => <div>calendar</div>} />
-      <Route exact path="/404" component={PageError} />
-      <Route path="/" exact component={Home} />
-      <Redirect to="/" />
+      <Switch>
+        <PrivateRoute exact authed={authed} path="/users" component={User} />
+        <PrivateRoute
+          exact
+          authed={authed}
+          path="/users/newuser"
+          component={NewUser}
+        />
+        <PrivateRoute
+          exact
+          authed={authed}
+          path="/users/viewuser/:id"
+          component={ViewUser}
+        />
+        <Route exact path="/customer" component={() => <div>customer</div>} />
+        <Route exact path="/setting" component={() => <div>setting</div>} />
+        <Route exact path="/calendar" component={() => <div>calendar</div>} />
+        <Route exact path="/404" component={PageError} />
+        <Route exact path="/403">
+          <PageError status="403" title="403" subTitle />
+        </Route>
+        <Route path="/" exact component={Home} />
+        <Redirect to="/404" />
+      </Switch>
     </Layout.Content>
   );
 }

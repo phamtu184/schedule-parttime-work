@@ -8,7 +8,9 @@ export default function ErrorPage({ status, title, subTitle }) {
     <Result
       status={status || "404"}
       title={title || "404"}
-      subTitle={subTitle || translate("pageNotExist")}
+      subTitle={
+        subTitle ? translate("pageAuthorized") : translate("pageNotExist")
+      }
       className="text-cap"
       extra={
         <Link to="/">

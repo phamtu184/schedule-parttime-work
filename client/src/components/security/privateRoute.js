@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import checkPrivateRoles from "./checkPrivateRoles";
 export default function PrivateRoute({
   component: Component,
   authed,
@@ -9,12 +10,11 @@ export default function PrivateRoute({
     <Route
       {...rest}
       render={(props) =>
-        authed.indexOf("manager") > -1 ||
-        authed.indexOf("storeManager") > -1 ? (
+        checkPrivateRoles(authed) ? (
           <Component {...props} />
         ) : (
           <Redirect
-            to={{ pathname: "/404", state: { from: props.location } }}
+            to={{ pathname: "/403", state: { from: props.location } }}
           />
         )
       }

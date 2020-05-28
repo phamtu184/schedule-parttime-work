@@ -10,6 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import translate from "../../asset/i18n/translate";
+import checkPrivateRoles from "../security/checkPrivateRoles";
 
 const DivMenuTitle = styled.div`
   height: 29px;
@@ -20,6 +21,7 @@ const DivMenuTitle = styled.div`
 `;
 function MenuSider({ children, location }) {
   const isCollapsed = useSelector((state) => state.setting.isCollapsed);
+  const authed = useSelector((state) => state.auth.roles);
   return (
     <Layout.Sider
       theme="light"
@@ -45,11 +47,15 @@ function MenuSider({ children, location }) {
             {translate("calendar")}
           </NavLink>
         </Menu.Item>
-        <Menu.Item key="/users" icon={<UserAddOutlined />}>
-          <NavLink to="/users" className="text-cap">
-            {translate("users")}
-          </NavLink>
-        </Menu.Item>
+        {checkPrivateRoles(authed) ? (
+          <Menu.Item key="/users" icon={<UserAddOutlined />}>
+            <NavLink to="/users" className="text-cap">
+              {translate("users")}
+            </NavLink>
+          </Menu.Item>
+        ) : (
+          ""
+        )}
         <Menu.Item key="/customer" icon={<TeamOutlined />}>
           <NavLink to="/customer" className="text-cap">
             {translate("customer")}
