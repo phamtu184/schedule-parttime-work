@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import Title from "../common/title";
 import translate from "../../asset/i18n/translate";
 import ButtonList from "./buttonList";
 import FormSearch from "./formSearch";
@@ -9,11 +9,6 @@ import url from "../../asset/urlConfig";
 import { useIntl } from "react-intl";
 import notification from "../common/notification";
 
-const Title = styled.h1`
-  margin-bottom: 36px;
-  font-size: 24px;
-  text-transform: capitalize;
-`;
 export default function User() {
   const [userList, setUserList] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -22,6 +17,7 @@ export default function User() {
     current: 1,
     pageSize: 4,
     total: 0,
+    position: ["bottomCenter"],
   });
   const [isSearch, setIsSearch] = useState(false);
   const [searchValue, setSearchValue] = useState({});
@@ -30,6 +26,7 @@ export default function User() {
     setSelectedRowKeys(selectedRowKeys);
   };
   const fetchData = (current, pageSize) => {
+    setLoading(true);
     axios
       .get(`${url.BASE || url.LOCAL}/api/users`, {
         params: { current, pageSize },
@@ -49,6 +46,7 @@ export default function User() {
     current,
     pageSize
   ) => {
+    setLoading(true);
     axios
       .post(
         `${url.BASE || url.LOCAL}/api/users`,
@@ -74,7 +72,6 @@ export default function User() {
   const onFinish = (value) => {
     const { fullname, roles, status, userId, username } = value;
     setSearchValue(value);
-    setLoading(true);
     if (
       !fullname &&
       (!roles || roles.length < 1) &&

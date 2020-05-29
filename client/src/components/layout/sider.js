@@ -3,7 +3,6 @@ import { NavLink, withRouter } from "react-router-dom";
 import { Menu, Layout } from "antd";
 import {
   UserAddOutlined,
-  SettingOutlined,
   CalendarOutlined,
   TeamOutlined,
 } from "@ant-design/icons";
@@ -59,11 +58,6 @@ function MenuSider({ children, location }) {
         <Menu.Item key="/customer" icon={<TeamOutlined />}>
           <NavLink to="/customer" className="text-cap">
             {translate("customer")}
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item key="/setting" icon={<SettingOutlined />}>
-          <NavLink to="/setting" className="text-cap">
-            {translate("setting")}
           </NavLink>
         </Menu.Item>
       </Menu>

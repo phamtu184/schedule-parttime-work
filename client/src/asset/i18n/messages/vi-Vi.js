@@ -54,6 +54,11 @@ export default {
     len: "{title} phải chứa {characters} kí tự",
     numberValid: "{title} phải là {type}",
     number: "số",
+    time: "thời điểm",
+    // calendar
+    createCalendar: "tạo lịch làm việc",
+    create: "tạo",
+    selectCalendar: "chọn lịch làm việc",
     // event
     userExist: "mã nhân viên hoặc tên đăng nhập đã tồn tại",
     serverError: "lỗi server",

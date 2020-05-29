@@ -7,6 +7,8 @@ import Home from "../home";
 import User from "../user";
 import NewUser from "../user/newUser";
 import ViewUser from "../user/viewUser";
+import Calendar from "../calendar";
+import SettingCalendar from "../calendar/settingCalendar";
 import { useSelector } from "react-redux";
 
 export default function Content() {
@@ -37,8 +39,8 @@ export default function Content() {
           component={ViewUser}
         />
         <Route exact path="/customer" component={() => <div>customer</div>} />
-        <Route exact path="/setting" component={() => <div>setting</div>} />
-        <Route exact path="/calendar" component={() => <div>calendar</div>} />
+        <Route exact path="/calendar/setting" component={SettingCalendar} />
+        <Route exact path="/calendar" component={Calendar} />
         <Route exact path="/404" component={PageError} />
         <Route exact path="/403">
           <PageError status="403" title="403" subTitle />

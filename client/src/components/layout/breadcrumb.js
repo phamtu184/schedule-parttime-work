@@ -7,12 +7,12 @@ import translate from "../../asset/i18n/translate";
 const breadcrumbNameMap = {
   "/404": "404",
   "/403": "403",
+  "/calendar/setting": translate("setting"),
   "/calendar": translate("calendar"),
   "/users": translate("users"),
   "/users/newuser": translate("newUser"),
   "/users/viewuser": translate("viewUser"),
   "/customer": translate("customer"),
-  "/setting": translate("setting"),
 };
 function MenuBreadcrumb({ location }) {
   const isThemeLight = useSelector((state) => state.setting.isThemeLight);

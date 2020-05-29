@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components";
+import Title from "../../common/title";
 import translate from "../../../asset/i18n/translate";
 import { Form, Button } from "antd";
 import { useIntl } from "react-intl";
@@ -9,11 +9,6 @@ import axios from "axios";
 import url from "../../../asset/urlConfig";
 import notification from "../../common/notification";
 
-const Title = styled.h1`
-  margin-bottom: 36px;
-  font-size: 24px;
-  text-transform: capitalize;
-`;
 const formItemLayout = {
   labelCol: {
     md: { span: 6 },

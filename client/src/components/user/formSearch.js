@@ -1,20 +1,10 @@
 import React from "react";
-import styled from "styled-components";
 import { Form, Row, Col, Button } from "antd";
 import formItems from "./formSearchItem";
 import { SearchOutlined, UndoOutlined } from "@ant-design/icons";
+import DivForm from "../common/roundForm";
 import translate from "../../asset/i18n/translate";
 
-const DivForm = styled.div`
-  margin-bottom: 16px;
-  padding: 24px;
-  border-width: 1px;
-  border-style: solid;
-  border-color: rgb(233, 233, 233);
-  border-image: initial;
-  border-radius: 5px;
-  margin-top: 16px;
-`;
 const formItemLayout = {
   labelCol: {
     md: { span: 6 },

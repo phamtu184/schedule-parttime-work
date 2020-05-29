@@ -54,6 +54,11 @@ export default {
     len: "{title} must be exactly {characters} characters",
     numberValid: "{title} is not a valid {type}",
     number: "number",
+    time: "time",
+    // calendar
+    createCalendar: "create calendar",
+    create: "create",
+    selectCalendar: "select calendar",
     // event
     userExist: "user id or username has exist",
     serverError: "server error",

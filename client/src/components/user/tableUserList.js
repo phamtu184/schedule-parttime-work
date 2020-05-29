@@ -45,7 +45,7 @@ export default function TableUserList(props) {
         rowSelection={rowSelection}
         pagination={pagination}
         onChange={handleTableChange}
-        scroll={{ x: true, y: 500 }}
+        scroll={{ x: 800 }}
       ></Table>
     </Spin>
   );
