@@ -23,7 +23,7 @@ export default function FormSearch(props) {
   const [form] = Form.useForm();
   const onReset = () => {
     form.resetFields();
-    fetchData(pagination.current, pagination.pageSize);
+    fetchData(1, pagination.pageSize);
     setIsSearch(false);
   };
   return (

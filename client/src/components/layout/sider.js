@@ -5,6 +5,7 @@ import {
   UserAddOutlined,
   CalendarOutlined,
   TeamOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
@@ -41,11 +42,20 @@ function MenuSider({ children, location }) {
             {translate("home")}
           </NavLink>
         </Menu.Item> */}
-        <Menu.Item key="/calendar" icon={<CalendarOutlined />}>
-          <NavLink to="/calendar" className="text-cap">
-            {translate("calendar")}
+        <Menu.Item key="/schedule" icon={<CalendarOutlined />}>
+          <NavLink to="/schedule" className="text-cap">
+            {translate("schedule")}
           </NavLink>
         </Menu.Item>
+        {checkPrivateRoles(authed) ? (
+          <Menu.Item key="/setting" icon={<SettingOutlined />}>
+            <NavLink to="/setting" className="text-cap">
+              {translate("setting")}
+            </NavLink>
+          </Menu.Item>
+        ) : (
+          ""
+        )}
         {checkPrivateRoles(authed) ? (
           <Menu.Item key="/users" icon={<UserAddOutlined />}>
             <NavLink to="/users" className="text-cap">

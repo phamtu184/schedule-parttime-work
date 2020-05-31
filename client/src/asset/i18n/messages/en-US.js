@@ -6,7 +6,7 @@ export default {
     vietnamese: "vietnamese",
     // router
     home: "home",
-    calendar: "calendar",
+    schedule: "schedule",
     users: "users",
     newUser: "new user",
     viewUser: "view user",
@@ -45,6 +45,9 @@ export default {
     server: "server",
     save: "save",
     reset: "reset",
+    counter: "counter",
+    dinning: "dinning",
+    kitchen: "kitchen",
     // validate register form
     require: "please input {title}",
     whitespace: "{title} cannot be empty",
@@ -55,10 +58,19 @@ export default {
     numberValid: "{title} is not a valid {type}",
     number: "number",
     time: "time",
-    // calendar
-    createCalendar: "create calendar",
+    // schedule
+    createSchedule: "create schedule",
     create: "create",
-    selectCalendar: "select calendar",
+    selectSchedule: "select schedule",
+    settingSchedule: "setting schedule",
+    createRegister: "create register form",
+    monday: "monday",
+    tuesday: "tuesday",
+    wednesday: "wednesday",
+    thursday: "thursday",
+    friday: "friday",
+    saturday: "saturday",
+    sunday: "sunday",
     // event
     userExist: "user id or username has exist",
     serverError: "server error",
@@ -68,6 +80,7 @@ export default {
     disableUserSuccess: "disable user success",
     loginSuccess: "login success",
     loginFail: "username dosen't exist or wrong password",
+    registerScheduleFail: "schedule has exist or schedule must be in future",
     // feedback
     success: "success",
     error: "error",

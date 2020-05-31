@@ -1,30 +1,26 @@
 import React from "react";
 import { Breadcrumb } from "antd";
 import { Link, withRouter } from "react-router-dom";
-import { useSelector } from "react-redux";
 import translate from "../../asset/i18n/translate";
 
 const breadcrumbNameMap = {
   "/404": "404",
   "/403": "403",
-  "/calendar/setting": translate("setting"),
-  "/calendar": translate("calendar"),
+  "/setting": translate("setting"),
+  "/setting/createRegister": translate("createRegister"),
+  "/schedule": translate("schedule"),
   "/users": translate("users"),
   "/users/newuser": translate("newUser"),
   "/users/viewuser": translate("viewUser"),
   "/customer": translate("customer"),
 };
 function MenuBreadcrumb({ location }) {
-  const isThemeLight = useSelector((state) => state.setting.isThemeLight);
   const pathSnippets = location.pathname.split("/").filter((i) => i);
   const extraBreadcrumbItems = pathSnippets.map((_, index) => {
     const url = `/${pathSnippets.slice(0, index + 1).join("/")}`;
     return (
       <Breadcrumb.Item key={url}>
-        <Link
-          className={isThemeLight ? "text-cap" : "color-white text-cap"}
-          to={url}
-        >
+        <Link className="text-cap" to={url}>
           {breadcrumbNameMap[url]}
         </Link>
       </Breadcrumb.Item>
@@ -32,10 +28,7 @@ function MenuBreadcrumb({ location }) {
   });
   const breadcrumbItems = [
     <Breadcrumb.Item key="home">
-      <Link
-        className={isThemeLight ? "text-cap" : "color-white text-cap"}
-        to="/"
-      >
+      <Link className="text-cap" to="/">
         {translate("home")}
       </Link>
     </Breadcrumb.Item>,

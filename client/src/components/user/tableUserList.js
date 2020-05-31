@@ -14,7 +14,6 @@ export default function TableUserList(props) {
     searchData,
     searchValue,
   } = props;
-
   const handleTableChange = (page) => {
     const { fullname, roles, status, userId, username } = searchValue;
     if (isSearch) {

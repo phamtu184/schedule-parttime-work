@@ -7,8 +7,9 @@ import Home from "../home";
 import User from "../user";
 import NewUser from "../user/newUser";
 import ViewUser from "../user/viewUser";
-import Calendar from "../calendar";
-import SettingCalendar from "../calendar/settingCalendar";
+import Schedule from "../schedule";
+import SettingSchedule from "../settingSchedule";
+import CreateRegister from "../settingSchedule/createRegister";
 import { useSelector } from "react-redux";
 
 export default function Content() {
@@ -38,9 +39,20 @@ export default function Content() {
           path="/users/viewuser/:id"
           component={ViewUser}
         />
+        <PrivateRoute
+          exact
+          path="/setting"
+          authed={authed}
+          component={SettingSchedule}
+        />
+        <PrivateRoute
+          exact
+          path="/setting/createRegister"
+          authed={authed}
+          component={CreateRegister}
+        />
         <Route exact path="/customer" component={() => <div>customer</div>} />
-        <Route exact path="/calendar/setting" component={SettingCalendar} />
-        <Route exact path="/calendar" component={Calendar} />
+        <Route exact path="/schedule" component={Schedule} />
         <Route exact path="/404" component={PageError} />
         <Route exact path="/403">
           <PageError status="403" title="403" subTitle />

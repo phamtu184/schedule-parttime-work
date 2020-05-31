@@ -88,7 +88,7 @@ export default function User() {
         status,
         userId,
         username,
-        pagination.current,
+        1,
         pagination.pageSize
       );
       setIsSearch(true);

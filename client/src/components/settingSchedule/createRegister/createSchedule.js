@@ -3,13 +3,13 @@ import { DatePicker, Form } from "antd";
 import Button from "../../common/button";
 import translate from "../../../asset/i18n/translate";
 
-export default function FormCreateCacular(props) {
+export default function FormCreateRegister(props) {
   const { onFinish, onChangeDate } = props;
   return (
     <Form onFinish={onFinish} className="text-cap" layout="inline">
       <Form.Item
-        label={translate("createCalendar")}
-        name="createCalendar"
+        label={translate("createRegister")}
+        name="createRegister"
         rules={[
           {
             required: true,

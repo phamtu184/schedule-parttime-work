@@ -6,7 +6,7 @@ export default {
     vietnamese: "tiếng việt",
     // router
     home: "trang chủ",
-    calendar: "lịch làm việc",
+    schedule: "lịch làm việc",
     users: "nhân viên",
     newUser: "thêm nhân viên",
     viewUser: "thông tin nhân viên",
@@ -45,6 +45,9 @@ export default {
     server: "phục vụ",
     save: "lưu",
     reset: "làm mới",
+    counter: "quầy thu ngân",
+    dinning: "phục vụ",
+    kitchen: "bếp",
     // validate register form
     require: "vui lòng nhập {title}",
     whitespace: "{title} không được có khoảng trống",
@@ -55,10 +58,19 @@ export default {
     numberValid: "{title} phải là {type}",
     number: "số",
     time: "thời điểm",
-    // calendar
-    createCalendar: "tạo lịch làm việc",
+    // Schedule
+    createSchedule: "tạo lịch làm việc",
     create: "tạo",
-    selectCalendar: "chọn lịch làm việc",
+    selectSchedule: "chọn lịch làm việc",
+    settingSchedule: "cài đặt lịch làm việc",
+    createRegister: "tạo bảng đăng kí",
+    monday: "thứ 2",
+    tuesday: "thứ 3",
+    wednesday: "thứ 4",
+    thursday: "thứ 5",
+    friday: "thứ 6",
+    saturday: "thứ 7",
+    sunday: "chủ nhật",
     // event
     userExist: "mã nhân viên hoặc tên đăng nhập đã tồn tại",
     serverError: "lỗi server",
@@ -68,6 +80,7 @@ export default {
     disableUserSuccess: "vô hiệu nhân viên thành công",
     loginSuccess: "đăng nhập thành công",
     loginFail: "tên đăng nhập không tồn tại hoặc sai mật khẩu",
+    registerScheduleFail: "lịch đã tồn tại hoặc lịch phải trong tương lai",
     // feedback
     success: "thành công",
     error: "Lỗi",
