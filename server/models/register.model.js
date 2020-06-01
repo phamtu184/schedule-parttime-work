@@ -10,6 +10,8 @@ const RegisterSchema = new Schema(
     },
     counter: [
       {
+        key: String,
+        isTile: Boolean,
         fullname: String,
         monday: String,
         tuesday: String,
@@ -22,6 +24,8 @@ const RegisterSchema = new Schema(
     ],
     dinning: [
       {
+        key: String,
+        isTile: Boolean,
         fullname: String,
         monday: String,
         tuesday: String,
@@ -34,6 +38,8 @@ const RegisterSchema = new Schema(
     ],
     kitchen: [
       {
+        key: String,
+        isTile: Boolean,
         fullname: String,
         monday: String,
         tuesday: String,
@@ -44,6 +50,7 @@ const RegisterSchema = new Schema(
         sunday: String,
       },
     ],
+    isMain: false,
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "user",

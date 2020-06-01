@@ -71,6 +71,7 @@ export default {
     friday: "thứ 6",
     saturday: "thứ 7",
     sunday: "chủ nhật",
+    upload: "tải lên",
     // event
     userExist: "mã nhân viên hoặc tên đăng nhập đã tồn tại",
     serverError: "lỗi server",

@@ -6,13 +6,14 @@ import { ConfigProvider } from "antd";
 import Vietnamese from "antd/es/locale/vi_VN";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import "moment/locale/vi";
 
 ReactDOM.render(
-  <ConfigProvider locale={Vietnamese}>
-    <Provider store={store}>
+  <Provider store={store}>
+    <ConfigProvider locale={Vietnamese}>
       <App />
-    </Provider>
-  </ConfigProvider>,
+    </ConfigProvider>
+  </Provider>,
   document.getElementById("root")
 );
 

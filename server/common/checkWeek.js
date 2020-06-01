@@ -10,7 +10,7 @@ const checkWeek = (date) => {
   if (year < yyyy) {
     return false;
   }
-  if (week < weekNow) {
+  if (year == yyyy && week < weekNow) {
     return false;
   }
   return true;

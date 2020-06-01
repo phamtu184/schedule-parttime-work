@@ -2,6 +2,7 @@ import React from "react";
 import { DatePicker, Form } from "antd";
 import Button from "../../common/button";
 import translate from "../../../asset/i18n/translate";
+import locale from "antd/es/date-picker/locale/vi_VN";
 
 export default function FormCreateRegister(props) {
   const { onFinish, onChangeDate } = props;
@@ -17,7 +18,7 @@ export default function FormCreateRegister(props) {
           },
         ]}
       >
-        <DatePicker onChange={onChangeDate} picker="week" />
+        <DatePicker onChange={onChangeDate} picker="week" locale={locale} />
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit">

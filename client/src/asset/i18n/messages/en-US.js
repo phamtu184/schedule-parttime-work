@@ -71,6 +71,7 @@ export default {
     friday: "friday",
     saturday: "saturday",
     sunday: "sunday",
+    upload: "upload",
     // event
     userExist: "user id or username has exist",
     serverError: "server error",

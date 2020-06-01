@@ -3,7 +3,7 @@ import { Table, Spin } from "antd";
 import columns from "./columnItem";
 
 export default function TableUserList(props) {
-  const { dataSource, isLoading } = props;
+  const { isLoading, dataSource } = props;
   return (
     <Spin spinning={isLoading}>
       <Table

@@ -1,34 +1,35 @@
 import React, { useState } from "react";
-import { Row, Col } from "antd";
+import { Row, Col, Button } from "antd";
 import Title from "../../common/title";
+import TitleTable from "./title";
 import DivForm from "../../common/roundForm";
-import CreateSchedule from "./createSchedule";
-import SelectSchedule from "./selectSchedule";
-import Table from "./tableSchedule";
+import CreateSchedule from "./createRegister";
+import SelectSchedule from "./selectRegister";
+import Table from "./tableRegister";
 import translate from "../../../asset/i18n/translate";
 import axios from "axios";
 import url from "../../../asset/urlConfig";
 import notification from "../../common/notification";
 import { useIntl } from "react-intl";
+import { useDispatch, useSelector } from "react-redux";
+import { createRegister } from "../../../action/register";
 
 export default function SettingSchedule(props) {
   const [date, setDate] = useState("");
-  const [option, setOption] = useState({});
-  const [dataSource, setDataSource] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const intl = useIntl();
+  const dispatch = useDispatch();
+  const dataSource = useSelector((state) => state.register.dataSource);
+  const title = useSelector((state) => state.register.title);
   const onChangeDate = (date, dateString) => {
     setDate(dateString);
-  };
-  const onChangeCascader = (value, selectedOptions) => {
-    console.log(value, selectedOptions);
   };
   const onFinish = () => {
     setLoading(true);
     axios
       .post(`${url.BASE || url.LOCAL}/api/registerschedule`, { date })
       .then((res) => {
-        const { receptionist, server, cook } = res.data;
+        const { receptionist, server, cook, title } = res.data;
         const rs = [
           { key: "counter", fullname: translate("counter"), isTitle: true },
           ...receptionist,
@@ -37,7 +38,7 @@ export default function SettingSchedule(props) {
           { key: "kitchen", fullname: translate("kitchen"), isTitle: true },
           ...cook,
         ];
-        setDataSource(rs);
+        dispatch(createRegister({ data: rs, title }));
         setLoading(false);
       })
       .catch((e) => {
@@ -58,14 +59,27 @@ export default function SettingSchedule(props) {
             <CreateSchedule onChangeDate={onChangeDate} onFinish={onFinish} />
           </Col>
           <Col xs={24} lg={12}>
-            <SelectSchedule
-              option={option}
-              onChangeCascader={onChangeCascader}
-            />
+            <SelectSchedule />
           </Col>
         </Row>
+        <Button
+          type="primary"
+          className="text-cap mr-7px"
+          disabled={!dataSource.length > 0}
+        >
+          {translate("upload")}
+        </Button>
+        <Button
+          danger
+          type="primary"
+          className="text-cap"
+          disabled={!dataSource.length > 0}
+        >
+          {translate("remove")}
+        </Button>
       </DivForm>
-      <Table dataSource={dataSource} isLoading={isLoading} />
+      <TitleTable title={title} />
+      <Table isLoading={isLoading} dataSource={dataSource} />
     </>
   );
 }

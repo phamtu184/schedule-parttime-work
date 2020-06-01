@@ -5,7 +5,7 @@ import Title from "../common/title";
 export default function Calendar() {
   return (
     <>
-      <Title className="color-dark">{translate("calendar")}</Title>
+      <Title className="color-dark">{translate("schedule")}</Title>
     </>
   );
 }
