@@ -12,7 +12,7 @@ import SettingSchedule from "../settingSchedule";
 import CreateRegister from "../settingSchedule/createRegister";
 import { useSelector } from "react-redux";
 
-export default function Content() {
+function Content() {
   const authed = useSelector((state) => state.auth.roles);
   return (
     <Layout.Content
@@ -63,3 +63,4 @@ export default function Content() {
     </Layout.Content>
   );
 }
+export default React.memo(Content);

@@ -38,7 +38,17 @@ module.exports.createRegisterSchedule = async function (req, res) {
     });
   });
 };
-module.exports.getRegisterSchedule = async function (req, res) {};
+module.exports.getRegisterSchedule = async function (req, res) {
+  const { id } = req.query;
+  const registerValue = await Register.findOne({ registerId: id });
+  const { counter, dinning, kitchen, registerId } = registerValue;
+  res.status(200).json({
+    receptionist: counter,
+    server: dinning,
+    cook: kitchen,
+    title: registerId,
+  });
+};
 module.exports.getRegisterLazily = async function (req, res) {
   const registers = await Register.find().select("registerId");
   const rs = registers.map((item) => {
@@ -70,7 +80,7 @@ module.exports.getRegisterLazily = async function (req, res) {
       children: item.children.map((i) => {
         return {
           label: i,
-          value: i,
+          value: item.value + "-" + i,
         };
       }),
     };

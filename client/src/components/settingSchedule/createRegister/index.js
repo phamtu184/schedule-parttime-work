@@ -13,10 +13,12 @@ import notification from "../../common/notification";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { createRegister } from "../../../action/register";
+import formatResult from "./formatResult";
 
 export default function SettingSchedule(props) {
   const [date, setDate] = useState("");
   const [isLoading, setLoading] = useState(false);
+  const [options, setOptions] = useState([]);
   const intl = useIntl();
   const dispatch = useDispatch();
   const dataSource = useSelector((state) => state.register.dataSource);
@@ -25,20 +27,28 @@ export default function SettingSchedule(props) {
     setDate(dateString);
   };
   const onFinish = () => {
+    fentchRegister();
+  };
+  const fentchRegister = () => {
     setLoading(true);
     axios
       .post(`${url.BASE || url.LOCAL}/api/registerschedule`, { date })
       .then((res) => {
         const { receptionist, server, cook, title } = res.data;
-        const rs = [
-          { key: "counter", fullname: translate("counter"), isTitle: true },
-          ...receptionist,
-          { key: "dinning", fullname: translate("dinning"), isTitle: true },
-          ...server,
-          { key: "kitchen", fullname: translate("kitchen"), isTitle: true },
-          ...cook,
-        ];
-        dispatch(createRegister({ data: rs, title }));
+        dispatch(
+          createRegister({
+            data: formatResult(receptionist, server, cook),
+            title,
+          })
+        );
+        fentchOption();
+        notification(
+          "success",
+          intl.formatMessage({ id: "success" }),
+          intl.formatMessage({ id: "createRegister" }) +
+            " " +
+            intl.formatMessage({ id: "success" })
+        );
         setLoading(false);
       })
       .catch((e) => {
@@ -50,6 +60,16 @@ export default function SettingSchedule(props) {
         setLoading(false);
       });
   };
+  const fentchOption = () => {
+    axios
+      .get(`${url.BASE || url.LOCAL}/api/registerlazily`)
+      .then((res) => {
+        setOptions(res.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
   return (
     <>
       <Title className="color-dark">{translate("createRegister")}</Title>
@@ -59,7 +79,11 @@ export default function SettingSchedule(props) {
             <CreateSchedule onChangeDate={onChangeDate} onFinish={onFinish} />
           </Col>
           <Col xs={24} lg={12}>
-            <SelectSchedule />
+            <SelectSchedule
+              fentchOption={fentchOption}
+              options={options}
+              setLoading={setLoading}
+            />
           </Col>
         </Row>
         <Button
