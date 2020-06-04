@@ -50,7 +50,10 @@ const RegisterSchema = new Schema(
         sunday: String,
       },
     ],
-    isMain: false,
+    isMain: {
+      type: Boolean,
+      default: false,
+    },
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "user",

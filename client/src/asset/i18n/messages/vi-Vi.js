@@ -64,6 +64,8 @@ export default {
     selectSchedule: "chọn lịch làm việc",
     settingSchedule: "cài đặt lịch làm việc",
     createRegister: "tạo bảng đăng kí",
+    deleteRegister: "xóa bảng đăng kí",
+    uploadRegister: "tải bảng đăng kí",
     monday: "thứ 2",
     tuesday: "thứ 3",
     wednesday: "thứ 4",

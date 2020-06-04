@@ -12,7 +12,7 @@ import url from "../../../asset/urlConfig";
 import notification from "../../common/notification";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { createRegister } from "../../../action/register";
+import { createRegister, deleteRegister } from "../../../action/register";
 import formatResult from "./formatResult";
 
 export default function SettingSchedule(props) {
@@ -67,7 +67,55 @@ export default function SettingSchedule(props) {
         setOptions(res.data);
       })
       .catch((e) => {
-        console.log(e);
+        notification(
+          "error",
+          intl.formatMessage({ id: "error" }),
+          intl.formatMessage({ id: "serverError" })
+        );
+      });
+  };
+  const deleteTable = () => {
+    axios
+      .delete(`${url.BASE || url.LOCAL}/api/registerschedule`, {
+        params: title,
+      })
+      .then((res) => {
+        dispatch(deleteRegister());
+        fentchOption();
+        notification(
+          "success",
+          intl.formatMessage({ id: "success" }),
+          intl.formatMessage({ id: "deleteRegister" }) +
+            " " +
+            intl.formatMessage({ id: "success" })
+        );
+      })
+      .catch((e) => {
+        notification(
+          "error",
+          intl.formatMessage({ id: "error" }),
+          intl.formatMessage({ id: "serverError" })
+        );
+      });
+  };
+  const pushToHome = () => {
+    axios
+      .put(`${url.BASE || url.LOCAL}/api/registerschedule`, { title })
+      .then((res) => {
+        notification(
+          "success",
+          intl.formatMessage({ id: "success" }),
+          intl.formatMessage({ id: "uploadRegister" }) +
+            " " +
+            intl.formatMessage({ id: "success" })
+        );
+      })
+      .catch((e) => {
+        notification(
+          "error",
+          intl.formatMessage({ id: "error" }),
+          intl.formatMessage({ id: "serverError" })
+        );
       });
   };
   return (
@@ -90,6 +138,7 @@ export default function SettingSchedule(props) {
           type="primary"
           className="text-cap mr-7px"
           disabled={!dataSource.length > 0}
+          onClick={pushToHome}
         >
           {translate("upload")}
         </Button>
@@ -98,6 +147,7 @@ export default function SettingSchedule(props) {
           type="primary"
           className="text-cap"
           disabled={!dataSource.length > 0}
+          onClick={deleteTable}
         >
           {translate("remove")}
         </Button>

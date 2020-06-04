@@ -11,6 +11,13 @@ const registerReducer = (state = initialState, action) => {
         title: action.payload.title,
       };
     }
+    case "DELETE_REGISTER": {
+      return {
+        ...state,
+        dataSource: [],
+        title: "",
+      };
+    }
     default:
       return state;
   }

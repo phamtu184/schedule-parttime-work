@@ -7,21 +7,29 @@ module.exports.createRegisterSchedule = async function (req, res) {
   const { date } = req.body;
   if (!checkWeek(date))
     return res.status(400).json({ message: "registerForm has exist" });
-  const registerForm = await Register.findOne({ registerId: date }).lean();
+  const registerForm = await Register.findOne({ registerId: date })
+    .lean()
+    .exec();
   if (registerForm)
     return res.status(400).json({ message: "registerForm has exist" });
   const cook = await User.find({
     roles: { $all: "cook" },
     disabled: false,
-  }).select("-username -password -phonenumber -createdAt -updatedAt");
+  })
+    .select("-username -password -phonenumber -createdAt -updatedAt")
+    .exec();
   const receptionist = await User.find({
     roles: { $all: "receptionist" },
     disabled: false,
-  }).select("-username -password -phonenumber -createdAt -updatedAt");
+  })
+    .select("-username -password -phonenumber -createdAt -updatedAt")
+    .exec();
   const server = await User.find({
     roles: { $all: "server" },
     disabled: false,
-  }).select("-username -password -phonenumber -createdAt -updatedAt");
+  })
+    .select("-username -password -phonenumber -createdAt -updatedAt")
+    .exec();
   const newRegister = Register({
     registerId: date,
     counter: formatRegister(receptionist),
@@ -40,7 +48,7 @@ module.exports.createRegisterSchedule = async function (req, res) {
 };
 module.exports.getRegisterSchedule = async function (req, res) {
   const { id } = req.query;
-  const registerValue = await Register.findOne({ registerId: id });
+  const registerValue = await Register.findOne({ registerId: id }).exec();
   const { counter, dinning, kitchen, registerId } = registerValue;
   res.status(200).json({
     receptionist: counter,
@@ -50,7 +58,7 @@ module.exports.getRegisterSchedule = async function (req, res) {
   });
 };
 module.exports.getRegisterLazily = async function (req, res) {
-  const registers = await Register.find().select("registerId");
+  const registers = await Register.find().select("registerId").exec();
   const rs = registers.map((item) => {
     const split = item.registerId.split("-");
     return {
@@ -86,4 +94,22 @@ module.exports.getRegisterLazily = async function (req, res) {
     };
   });
   res.json(result);
+};
+module.exports.deleteRegisterSchedule = async function (req, res) {
+  const id = req.query[0];
+  Register.findOneAndDelete({ registerId: id })
+    .then(() =>
+      res.status(200).json({ message: "delete register form success" })
+    )
+    .catch((e) => res.status(500).json({ message: "server error" }));
+};
+module.exports.putRegisterSchedule = async function (req, res) {
+  const id = req.body.title;
+  Register.updateOne({ isMain: true }, { isMain: false })
+    .then(() => {
+      Register.updateOne({ registerId: id }, { isMain: true }).then(() =>
+        res.status(200).json({ message: "update success" })
+      );
+    })
+    .catch((e) => res.status(500).json({ message: "uppdate fail" }));
 };

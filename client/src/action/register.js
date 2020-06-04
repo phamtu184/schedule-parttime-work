@@ -4,3 +4,9 @@ export const createRegister = (payload) => {
     payload,
   };
 };
+export const deleteRegister = (payload) => {
+  return {
+    type: "DELETE_REGISTER",
+    payload,
+  };
+};

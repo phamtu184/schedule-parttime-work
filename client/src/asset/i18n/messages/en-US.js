@@ -64,6 +64,8 @@ export default {
     selectSchedule: "select schedule",
     settingSchedule: "setting schedule",
     createRegister: "create register form",
+    deleteRegister: "delete register form",
+    uploadRegister: "upload register form",
     monday: "monday",
     tuesday: "tuesday",
     wednesday: "wednesday",
