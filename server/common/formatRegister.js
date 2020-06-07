@@ -1,7 +1,7 @@
-const formatRegister = (users) => {
+const formatRegister = (users, string) => {
   const rs = users.map((item) => {
     return {
-      key: item.userId,
+      key: item.userId + string,
       fullname: item.fullname,
       isTitle: false,
       monday: "",

@@ -5,7 +5,7 @@ import axios from "axios";
 import url from "../../../asset/urlConfig";
 import { useDispatch } from "react-redux";
 import { createRegister } from "../../../action/register";
-import formatResult from "./formatResult";
+import formatResult from "../../common/schedule/formatResult";
 
 export default function SelectSchedule(props) {
   const { options, fentchOption, setLoading } = props;
@@ -18,7 +18,7 @@ export default function SelectSchedule(props) {
     if (value.length > 1) {
       setLoading(true);
       axios
-        .get(`${url.BASE || url.LOCAL}/api/registerschedule`, {
+        .get(`${url.BASE || url.LOCAL}/api/registersetting`, {
           params: { id: value[1] },
         })
         .then((res) => {
@@ -44,7 +44,7 @@ export default function SelectSchedule(props) {
         <Cascader
           onChange={onChangeCascader}
           changeOnSelect
-          style={{ width: 240 }}
+          style={{ maxWidth: 240 }}
           options={options}
         />
       </Form.Item>

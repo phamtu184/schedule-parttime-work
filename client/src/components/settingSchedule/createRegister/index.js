@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { Row, Col, Button } from "antd";
+import { Row, Col, Button, Popconfirm } from "antd";
 import Title from "../../common/title";
-import TitleTable from "./title";
+import TitleTable from "../../common/schedule/title";
 import DivForm from "../../common/roundForm";
 import CreateSchedule from "./createRegister";
 import SelectSchedule from "./selectRegister";
@@ -13,7 +13,7 @@ import notification from "../../common/notification";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { createRegister, deleteRegister } from "../../../action/register";
-import formatResult from "./formatResult";
+import formatResult from "../../common/schedule/formatResult";
 
 export default function SettingSchedule(props) {
   const [date, setDate] = useState("");
@@ -32,7 +32,7 @@ export default function SettingSchedule(props) {
   const fentchRegister = () => {
     setLoading(true);
     axios
-      .post(`${url.BASE || url.LOCAL}/api/registerschedule`, { date })
+      .post(`${url.BASE || url.LOCAL}/api/registersetting`, { date })
       .then((res) => {
         const { receptionist, server, cook, title } = res.data;
         dispatch(
@@ -55,7 +55,7 @@ export default function SettingSchedule(props) {
         notification(
           "error",
           intl.formatMessage({ id: "error" }),
-          intl.formatMessage({ id: "registerScheduleFail" })
+          intl.formatMessage({ id: "registersettingFail" })
         );
         setLoading(false);
       });
@@ -76,7 +76,7 @@ export default function SettingSchedule(props) {
   };
   const deleteTable = () => {
     axios
-      .delete(`${url.BASE || url.LOCAL}/api/registerschedule`, {
+      .delete(`${url.BASE || url.LOCAL}/api/registersetting`, {
         params: title,
       })
       .then((res) => {
@@ -100,7 +100,7 @@ export default function SettingSchedule(props) {
   };
   const pushToHome = () => {
     axios
-      .put(`${url.BASE || url.LOCAL}/api/registerschedule`, { title })
+      .put(`${url.BASE || url.LOCAL}/api/registersetting`, { title })
       .then((res) => {
         notification(
           "success",
@@ -142,15 +142,21 @@ export default function SettingSchedule(props) {
         >
           {translate("upload")}
         </Button>
-        <Button
-          danger
-          type="primary"
-          className="text-cap"
-          disabled={!dataSource.length > 0}
-          onClick={deleteTable}
+        <Popconfirm
+          title={translate("confirmDelete")}
+          onConfirm={deleteTable}
+          okText={translate("yes")}
+          cancelText={translate("no")}
         >
-          {translate("remove")}
-        </Button>
+          <Button
+            danger
+            type="primary"
+            className="text-cap"
+            disabled={!dataSource.length > 0}
+          >
+            {translate("remove")}
+          </Button>
+        </Popconfirm>
       </DivForm>
       <TitleTable title={title} />
       <Table isLoading={isLoading} dataSource={dataSource} />

@@ -10,6 +10,7 @@ import ViewUser from "../user/viewUser";
 import Schedule from "../schedule";
 import SettingSchedule from "../settingSchedule";
 import CreateRegister from "../settingSchedule/createRegister";
+import RegisterSchedule from "../schedule/registerSchedule";
 import { useSelector } from "react-redux";
 
 function Content() {
@@ -53,6 +54,7 @@ function Content() {
         />
         <Route exact path="/customer" component={() => <div>customer</div>} />
         <Route exact path="/schedule" component={Schedule} />
+        <Route exact path="/schedule/register" component={RegisterSchedule} />
         <Route exact path="/404" component={PageError} />
         <Route exact path="/403">
           <PageError status="403" title="403" subTitle />

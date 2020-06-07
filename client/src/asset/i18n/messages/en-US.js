@@ -44,6 +44,7 @@ export default {
     receptionist: "receptionist",
     server: "server",
     save: "save",
+    cancel: "cancel",
     reset: "reset",
     counter: "counter",
     dinning: "dinning",
@@ -74,6 +75,7 @@ export default {
     saturday: "saturday",
     sunday: "sunday",
     upload: "upload",
+    registerSchedule: "register schedule",
     // event
     userExist: "user id or username has exist",
     serverError: "server error",

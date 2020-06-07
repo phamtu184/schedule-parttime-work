@@ -44,6 +44,7 @@ export default {
     receptionist: "nhân viên lễ tân",
     server: "phục vụ",
     save: "lưu",
+    cancel: "hủy",
     reset: "làm mới",
     counter: "quầy thu ngân",
     dinning: "phục vụ",
@@ -74,6 +75,7 @@ export default {
     saturday: "thứ 7",
     sunday: "chủ nhật",
     upload: "tải lên",
+    registerSchedule: "Đăng kí lịch làm",
     // event
     userExist: "mã nhân viên hoặc tên đăng nhập đã tồn tại",
     serverError: "lỗi server",

@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Spin } from "antd";
-import columns from "./columnItem";
+import columns from "../../common/schedule/columnItem";
 
 export default function TableUserList(props) {
   const { isLoading, dataSource } = props;

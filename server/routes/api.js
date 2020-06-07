@@ -2,7 +2,8 @@ var express = require("express");
 var router = express.Router();
 const userController = require("../controllers/user.controller");
 const authController = require("../controllers/auth.controller");
-const registerController = require("../controllers/register.controller");
+const registerSettingController = require("../controllers/registerSetting.controller");
+const registerUserControler = require("../controllers/registerUser.controller");
 
 // auth
 router.get("/auth", authController.getProfile);
@@ -15,10 +16,19 @@ router.get("/users", userController.getUsers);
 router.post("/users", userController.searchUsers);
 router.delete("/users", userController.deleteUsers);
 router.put("/users", userController.modifyStatusUsers);
-// schedule
-router.post("/registerschedule", registerController.createRegisterSchedule);
-router.get("/registerschedule", registerController.getRegisterSchedule);
-router.delete("/registerschedule", registerController.deleteRegisterSchedule);
-router.put("/registerschedule", registerController.putRegisterSchedule);
-router.get("/registerlazily", registerController.getRegisterLazily);
+// register setting schedule
+router.post(
+  "/registersetting",
+  registerSettingController.createRegisterSchedule
+);
+router.get("/registersetting", registerSettingController.getRegisterSchedule);
+router.delete(
+  "/registersetting",
+  registerSettingController.deleteRegisterSchedule
+);
+router.put("/registersetting", registerSettingController.putRegisterSchedule);
+router.get("/registerlazily", registerSettingController.getRegisterLazily);
+// register schedule for user
+router.get("/registeruser", registerUserControler.getRegisterUser);
+
 module.exports = router;

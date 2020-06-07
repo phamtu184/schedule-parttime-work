@@ -36,7 +36,7 @@ module.exports.addUser = async function (req, res) {
 module.exports.getUsers = async function (req, res) {
   const { current, pageSize } = req.query;
   const page = current - 1;
-  const usersLength = await User.count();
+  const usersLength = await User.countDocuments();
   const users = await User.find()
     .select("-password -phonenumber")
     .lean()
@@ -67,7 +67,7 @@ module.exports.searchUsers = async function (req, res) {
   if (roles && roles.length > 0) {
     query.push({ roles: { $all: roles } });
   }
-  const usersLength = await User.find({ $and: query }).count();
+  const usersLength = await User.find({ $and: query }).countDocuments();
   const users = await User.find({ $and: query })
     .select("-password -phonenumber")
     .lean()

@@ -9,6 +9,7 @@ const breadcrumbNameMap = {
   "/setting": translate("setting"),
   "/setting/createRegister": translate("createRegister"),
   "/schedule": translate("schedule"),
+  "/schedule/register": translate("registerSchedule"),
   "/users": translate("users"),
   "/users/newuser": translate("newUser"),
   "/users/viewuser": translate("viewUser"),

@@ -32,16 +32,16 @@ module.exports.createRegisterSchedule = async function (req, res) {
     .exec();
   const newRegister = Register({
     registerId: date,
-    counter: formatRegister(receptionist),
-    dinning: formatRegister(server),
-    kitchen: formatRegister(cook),
+    counter: formatRegister(receptionist, "receptionist"),
+    dinning: formatRegister(server, "server"),
+    kitchen: formatRegister(cook, "cook"),
   });
   newRegister.save((err, register) => {
     if (err) return res.status(500).json({ message: "Server error" });
     res.status(200).json({
-      receptionist: formatRegister(receptionist),
-      server: formatRegister(server),
-      cook: formatRegister(cook),
+      receptionist: formatRegister(receptionist, "receptionist"),
+      server: formatRegister(server, "server"),
+      cook: formatRegister(cook, "cook"),
       title: register.registerId,
     });
   });
