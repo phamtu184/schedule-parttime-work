@@ -17,7 +17,7 @@ const viewItemLayout = {
     lg: { span: 12 },
   },
 };
-export default function ViewUser({ props }) {
+export default function EditUser({ props }) {
   const { id } = useParams();
   const [user, setUser] = useState([]);
   const [isLoading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ export default function ViewUser({ props }) {
   }, []);
   return (
     <>
-      <Title className="color-dark">{translate("viewUser")}</Title>
+      <Title className="color-dark">{translate("editUser")}</Title>
       <Spin spinning={isLoading}>
         <Form.Item label={translate("userId")} {...viewItemLayout}>
           <strong>{user.userId}</strong>

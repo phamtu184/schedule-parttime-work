@@ -1,13 +1,40 @@
-import React from "react";
-import translate from "../../asset/i18n/translate";
+import React, { useState, useEffect } from "react";
 import Title from "../common/title";
-import ButtonList from "./buttonList";
+import TitleTable from "./title";
+import Table from "./tableRegister";
+import translate from "../../asset/i18n/translate";
+import axios from "axios";
+import url from "../../asset/urlConfig";
+import formatResult from "../common/schedule/formatResult";
 
-export default function Calendar() {
+export default function RegisterSchedule() {
+  const [isLoading, setLoading] = useState(false);
+  const [dataSource, setDataSource] = useState([]);
+  const [title, setTitle] = useState("");
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`${url.BASE || url.LOCAL}/api/registeruser`)
+      .then((res) => {
+        const { receptionist, server, cook, title } = res.data;
+        setDataSource(formatResult(receptionist, server, cook));
+        setTitle(title);
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
+      });
+  }, []);
   return (
     <>
-      <Title className="color-dark">{translate("schedule")}</Title>
-      <ButtonList />
+      <Title>{translate("registerSchedule")}</Title>
+      <TitleTable title={title} />
+      <Table
+        isLoading={isLoading}
+        dataSource={dataSource}
+        setDataSource={setDataSource}
+      />
     </>
   );
 }

@@ -3,6 +3,7 @@ import translate from "../../asset/i18n/translate";
 import { Avatar, Space, Tag } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { roleAdmin } from "../security/checkPrivateRoles";
 const columns = [
   {
     title: translate("avatar"),
@@ -74,7 +75,11 @@ const columns = [
     render: (text, record) => (
       <Space size="middle">
         <Link to={`/users/viewuser/${record._id}`}>{translate("view")}</Link>
-        {/* <Link>{translate("edit")}</Link> */}
+        {!roleAdmin(record.roles) ? (
+          <Link to={`/users/edituser/${record._id}`}>{translate("edit")}</Link>
+        ) : (
+          ""
+        )}
       </Space>
     ),
   },

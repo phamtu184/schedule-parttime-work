@@ -10,7 +10,7 @@ import {
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import translate from "../../asset/i18n/translate";
-import checkPrivateRoles from "../security/checkPrivateRoles";
+import { roleManager } from "../security/checkPrivateRoles";
 
 const DivMenuTitle = styled.div`
   height: 29px;
@@ -37,17 +37,12 @@ function MenuSider({ children, location }) {
         defaultSelectedKeys={["/"]}
         selectedKeys={["/" + location.pathname.split("/")[1]]}
       >
-        {/* <Menu.Item key="/" icon={<HomeOutlined />}>
-          <NavLink to="/" className="text-cap">
-            {translate("home")}
-          </NavLink>
-        </Menu.Item> */}
         <Menu.Item key="/schedule" icon={<CalendarOutlined />}>
           <NavLink to="/schedule" className="text-cap">
             {translate("schedule")}
           </NavLink>
         </Menu.Item>
-        {checkPrivateRoles(authed) ? (
+        {roleManager(authed) ? (
           <Menu.Item key="/setting" icon={<SettingOutlined />}>
             <NavLink to="/setting" className="text-cap">
               {translate("setting")}
@@ -56,7 +51,7 @@ function MenuSider({ children, location }) {
         ) : (
           ""
         )}
-        {checkPrivateRoles(authed) ? (
+        {roleManager(authed) ? (
           <Menu.Item key="/users" icon={<UserAddOutlined />}>
             <NavLink to="/users" className="text-cap">
               {translate("users")}

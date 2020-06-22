@@ -24,6 +24,7 @@ module.exports.addUser = async function (req, res) {
         fullname,
         phonenumber,
         roles,
+        avatar: "",
       });
       newUser
         .save()

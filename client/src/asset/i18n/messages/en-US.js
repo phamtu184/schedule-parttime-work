@@ -10,6 +10,7 @@ export default {
     users: "users",
     newUser: "new user",
     viewUser: "view user",
+    editUser: "edit user",
     customer: "customer",
     setting: "setting",
     management: "management",
@@ -38,8 +39,8 @@ export default {
     yes: "yes",
     no: "no",
     // roles
+    admin: "admin",
     manager: "manager",
-    storeManager: "store manager",
     cook: "cook",
     receptionist: "receptionist",
     server: "server",

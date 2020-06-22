@@ -10,6 +10,7 @@ export default {
     users: "nhân viên",
     newUser: "thêm nhân viên",
     viewUser: "thông tin nhân viên",
+    editUser: "sửa nhân viên",
     customer: "khách hàng",
     setting: "cài đặt",
     management: "quản lý",
@@ -38,8 +39,8 @@ export default {
     yes: "có",
     no: "không",
     // roles
+    admin: "quản trị viên",
     manager: "quản lý",
-    storeManager: "cửa hàng trưởng",
     cook: "phụ bếp",
     receptionist: "nhân viên lễ tân",
     server: "phục vụ",

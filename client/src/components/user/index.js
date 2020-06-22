@@ -8,6 +8,8 @@ import axios from "axios";
 import url from "../../asset/urlConfig";
 import { useIntl } from "react-intl";
 import notification from "../common/notification";
+import { roleAdmin, roleManager } from "../security/checkPrivateRoles";
+import { useSelector } from "react-redux";
 
 export default function User() {
   const [userList, setUserList] = useState([]);
@@ -22,6 +24,7 @@ export default function User() {
   const [isSearch, setIsSearch] = useState(false);
   const [searchValue, setSearchValue] = useState({});
   const intl = useIntl();
+  const authed = useSelector((state) => state.auth.roles);
   const onSelectChange = (selectedRowKeys) => {
     setSelectedRowKeys(selectedRowKeys);
   };
@@ -64,7 +67,9 @@ export default function User() {
     selectedRowKeys,
     onChange: onSelectChange,
     getCheckboxProps: (record) => ({
-      disabled: record.roles.indexOf("manager") > -1,
+      disabled: roleAdmin(authed)
+        ? roleAdmin(record.roles)
+        : roleManager(record.roles),
       // Column configuration not to be checked
       name: record.username,
     }),

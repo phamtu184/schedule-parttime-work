@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import checkPrivateRoles from "./checkPrivateRoles";
+import { roleManager } from "./checkPrivateRoles";
 export default function PrivateRoute({
   component: Component,
   authed,
@@ -10,7 +10,7 @@ export default function PrivateRoute({
     <Route
       {...rest}
       render={(props) =>
-        checkPrivateRoles(authed) ? (
+        roleManager(authed) ? (
           <Component {...props} />
         ) : (
           <Redirect

@@ -33,8 +33,8 @@ const formItems = [
     label: translate("roles"),
     input: (
       <Select mode="multiple" style={{ width: "100%" }}>
+        <Option value="admin">{translate("admin")}</Option>
         <Option value="manager">{translate("manager")}</Option>
-        <Option value="storeManager">{translate("storeManager")}</Option>
         <Option value="cook">{translate("cook")}</Option>
         <Option value="receptionist">{translate("receptionist")}</Option>
         <Option value="server">{translate("server")}</Option>
