@@ -11,6 +11,7 @@ router.post("/auth", authController.login);
 /* user  */
 router.get("/user", userController.getUser);
 router.post("/user", userController.addUser);
+router.put("/user", userController.editUser);
 /* users  */
 router.get("/users", userController.getUsers);
 router.post("/users", userController.searchUsers);

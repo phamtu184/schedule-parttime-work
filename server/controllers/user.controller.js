@@ -4,21 +4,18 @@ const formatUsers = require("../common/formatUsers");
 
 module.exports.getUser = async function (req, res) {
   const { id } = req.query;
-  const user = await User.findById(id).lean().select("-password");
+  const user = await User.findById(id).lean();
   if (!user) return res.status(500).json({ message: "user dosen't exist" });
   res.status(200).json(user);
 };
 module.exports.addUser = async function (req, res) {
-  const { userId, username, password, fullname, phonenumber, roles } = req.body;
-  const user = await User.findOne({
-    $or: [{ userId: userId }, { username: username }],
-  });
+  const { username, password, fullname, phonenumber, roles } = req.body;
+  const user = await User.findOne({ username: username });
   if (user) return res.status(400).json({ message: "userExist" });
   bcrypt.genSalt(10, function (err, salt) {
     bcrypt.hash(password, salt, function (err, hash) {
       if (err) return res.status(500).json({ message: "serverError" });
       const newUser = new User({
-        userId,
         username,
         password: hash,
         fullname,
@@ -47,20 +44,17 @@ module.exports.getUsers = async function (req, res) {
   res.status(200).json({ users: formatUsers(users), total: usersLength });
 };
 module.exports.searchUsers = async function (req, res) {
-  const { fullname, roles, status, userId, username } = req.body;
+  const { fullname, roles, status, username } = req.body;
   const { current, pageSize } = req.query;
   const page = current - 1;
   const query = [];
-  if (!fullname && !roles && !status && !userId && !username)
+  if (!fullname && !roles && !status && !username)
     return res.status(400).json({ message: "request error" });
   if (fullname) {
     query.push({ fullname: { $regex: fullname, $options: "i" } });
   }
   if (status) {
     query.push({ disabled: status == "enable" ? false : true });
-  }
-  if (userId) {
-    query.push({ userId: { $regex: userId, $options: "i" } });
   }
   if (username) {
     query.push({ username: { $regex: username, $options: "i" } });
@@ -79,7 +73,7 @@ module.exports.searchUsers = async function (req, res) {
 
 module.exports.deleteUsers = async function (req, res) {
   const query = Object.values(req.query);
-  User.deleteMany({ userId: { $in: query } })
+  User.deleteMany({ _id: { $in: query } })
     .then(() => res.status(200).json({ message: "delete success" }))
     .catch((e) => res.status(500).json({ message: "server error" }));
 };
@@ -87,12 +81,27 @@ module.exports.deleteUsers = async function (req, res) {
 module.exports.modifyStatusUsers = async function (req, res) {
   const { enableAction, selectedRowKeys } = req.body;
   if (enableAction) {
-    User.updateMany({ userId: { $in: selectedRowKeys } }, { disabled: false })
+    User.updateMany({ _id: { $in: selectedRowKeys } }, { disabled: false })
       .then(() => res.status(200).json({ message: "enable user success" }))
       .catch((e) => res.status(500).json({ message: "server error" }));
   } else {
-    User.updateMany({ userId: { $in: selectedRowKeys } }, { disabled: true })
+    User.updateMany({ _id: { $in: selectedRowKeys } }, { disabled: true })
       .then(() => res.status(200).json({ message: "disable user success" }))
       .catch((e) => res.status(500).json({ message: "server error" }));
   }
+};
+
+module.exports.editUser = async function (req, res) {
+  const { username, password, fullname, phonenumber, roles } = req.body;
+  bcrypt.genSalt(10, function (err, salt) {
+    bcrypt.hash(password, salt, function (err, hash) {
+      if (err) return res.status(500).json({ message: "serverError" });
+      User.findOneAndUpdate(
+        { username },
+        { password: hash, fullname, phonenumber, roles }
+      )
+        .then(res.status(200).json("edit user success"))
+        .catch((e) => res.status(500).json({ message: "serverError" }));
+    });
+  });
 };

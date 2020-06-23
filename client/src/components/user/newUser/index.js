@@ -30,11 +30,10 @@ export default function NewUser() {
   const [form] = Form.useForm();
   const intl = useIntl();
   const onFinish = (value) => {
-    const { userId, username, password, fullname, phonenumber, roles } = value;
+    const { username, password, fullname, phonenumber, roles } = value;
     setLoading(true);
     axios
       .post(`${url.BASE || url.LOCAL}/api/user`, {
-        userId,
         username,
         password,
         fullname,

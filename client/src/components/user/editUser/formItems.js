@@ -6,7 +6,7 @@ const formItems = [
   {
     name: "username",
     label: translate("username"),
-    input: <Input />,
+    input: <Input disabled />,
     rules: [
       {
         required: true,

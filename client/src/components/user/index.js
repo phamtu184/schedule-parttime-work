@@ -6,6 +6,7 @@ import FormSearch from "./formSearch";
 import TableUserList from "./tableUserList";
 import axios from "axios";
 import url from "../../asset/urlConfig";
+import { pageSize } from "../../asset/config";
 import { useIntl } from "react-intl";
 import notification from "../common/notification";
 import { roleAdmin, roleManager } from "../security/checkPrivateRoles";
@@ -17,7 +18,7 @@ export default function User() {
   const [isLoading, setLoading] = useState(false);
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 4,
+    pageSize,
     total: 0,
     position: ["bottomCenter"],
   });
@@ -40,20 +41,12 @@ export default function User() {
         setLoading(false);
       });
   };
-  const searchData = (
-    fullname,
-    roles,
-    status,
-    userId,
-    username,
-    current,
-    pageSize
-  ) => {
+  const searchData = (fullname, roles, status, username, current, pageSize) => {
     setLoading(true);
     axios
       .post(
         `${url.BASE || url.LOCAL}/api/users`,
-        { fullname, roles, status, userId, username },
+        { fullname, roles, status, username },
         { params: { current, pageSize } }
       )
       .then((res) => {
@@ -75,27 +68,13 @@ export default function User() {
     }),
   };
   const onFinish = (value) => {
-    const { fullname, roles, status, userId, username } = value;
+    const { fullname, roles, status, username } = value;
     setSearchValue(value);
-    if (
-      !fullname &&
-      (!roles || roles.length < 1) &&
-      !status &&
-      !userId &&
-      !username
-    ) {
+    if (!fullname && (!roles || roles.length < 1) && !status && !username) {
       fetchData(pagination.current, pagination.pageSize);
       setIsSearch(false);
     } else {
-      searchData(
-        fullname,
-        roles,
-        status,
-        userId,
-        username,
-        1,
-        pagination.pageSize
-      );
+      searchData(fullname, roles, status, username, 1, pagination.pageSize);
       setIsSearch(true);
     }
   };
@@ -110,7 +89,7 @@ export default function User() {
             intl.formatMessage({ id: "success" }),
             intl.formatMessage({ id: "deleteUserSuccess" })
           );
-          fetchData(pagination.current, pagination.pageSize);
+          fetchData(1, pagination.pageSize);
           setSelectedRowKeys([]);
         }
       })

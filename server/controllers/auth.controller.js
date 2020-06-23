@@ -17,7 +17,7 @@ module.exports.login = async function (req, res) {
   }
   jwt.sign(
     {
-      id: user.userId,
+      id: user._id,
       fullname: user.fullname,
       roles: user.roles,
       disabled: user.disabled,

@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import { Form, Spin, Tag } from "antd";
+import { Form, Spin, Button } from "antd";
+import formItems from "./formItems";
 import axios from "axios";
 import url from "../../../asset/urlConfig";
 import Title from "../../common/title";
 import translate from "../../../asset/i18n/translate";
+import { useIntl } from "react-intl";
+import { SaveOutlined } from "@ant-design/icons";
+import notification from "../../common/notification";
 
-const viewItemLayout = {
+const formItemLayout = {
   labelCol: {
     md: { span: 6 },
     lg: { span: 4 },
@@ -17,48 +21,107 @@ const viewItemLayout = {
     lg: { span: 12 },
   },
 };
+const tailFormItemLayout = {
+  wrapperCol: {
+    md: { span: 18, offset: 6 },
+    lg: { span: 12, offset: 4 },
+  },
+};
 export default function EditUser({ props }) {
   const { id } = useParams();
-  const [user, setUser] = useState([]);
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
+  const [form] = Form.useForm();
   useEffect(() => {
     setLoading(true);
     axios
       .get(`${url.BASE || url.LOCAL}/api/user`, { params: { id } })
       .then((res) => {
-        setUser(res.data);
+        form.setFieldsValue({ username: res.data.username });
+        form.setFieldsValue({ password: res.data.password });
+        form.setFieldsValue({ confirmPassword: res.data.password });
+        form.setFieldsValue({ fullname: res.data.fullname });
+        form.setFieldsValue({ phonenumber: res.data.phonenumber });
+        form.setFieldsValue({ roles: res.data.roles });
         setLoading(false);
       })
       .catch((e) => history.push("/users"));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const intl = useIntl();
+  const onFinish = (value) => {
+    const { username, password, fullname, phonenumber, roles } = value;
+    setLoading(true);
+    axios
+      .put(`${url.BASE || url.LOCAL}/api/user`, {
+        username,
+        password,
+        fullname,
+        phonenumber,
+        roles,
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          notification(
+            "success",
+            intl.formatMessage({ id: "success" }),
+            intl.formatMessage({ id: "addUserSuccess" })
+          );
+          setLoading(false);
+        }
+      })
+      .catch((err) => {
+        if (err.response.status === 400) {
+          notification(
+            "error",
+            intl.formatMessage({ id: "error" }),
+            intl.formatMessage({ id: "userExist" })
+          );
+          setLoading(false);
+        } else {
+          notification(
+            "error",
+            intl.formatMessage({ id: "error" }),
+            intl.formatMessage({ id: "serverError" })
+          );
+          setLoading(false);
+        }
+      });
+  };
   return (
     <>
       <Title className="color-dark">{translate("editUser")}</Title>
       <Spin spinning={isLoading}>
-        <Form.Item label={translate("userId")} {...viewItemLayout}>
-          <strong>{user.userId}</strong>
-        </Form.Item>
-        <Form.Item label={translate("username")} {...viewItemLayout}>
-          <strong>{user.username}</strong>
-        </Form.Item>
-        <Form.Item label={translate("fullname")} {...viewItemLayout}>
-          <strong>{user.fullname}</strong>
-        </Form.Item>
-        <Form.Item label={translate("phonenumber")} {...viewItemLayout}>
-          <strong>{user.phonenumber}</strong>
-        </Form.Item>
-        <Form.Item label={translate("status")} {...viewItemLayout}>
-          <Tag color={!user.disable ? "green" : "volcano"}>
-            {!user.disable ? translate("enable") : translate("disable")}
-          </Tag>
-        </Form.Item>
-        <Form.Item label={translate("roles")} {...viewItemLayout}>
-          {user.roles
-            ? user.roles.map((tag) => <Tag key={tag}>{translate(tag)}</Tag>)
-            : ""}
-        </Form.Item>
+        <Form
+          {...formItemLayout}
+          name="edit-user"
+          onFinish={onFinish}
+          scrollToFirstError
+          form={form}
+        >
+          {formItems.map((item) => (
+            <Form.Item
+              name={item.name}
+              label={item.label}
+              className="color-dark text-cap"
+              key={item.name}
+              rules={item.rules}
+            >
+              {item.input}
+            </Form.Item>
+          ))}
+          <Form.Item {...tailFormItemLayout}>
+            <Button
+              type="primary"
+              htmlType="submit"
+              className="text-cap mr-7px"
+              icon={<SaveOutlined className="mr-7px" />}
+              loading={isLoading}
+            >
+              {translate("save")}
+            </Button>
+          </Form.Item>
+        </Form>
       </Spin>
     </>
   );

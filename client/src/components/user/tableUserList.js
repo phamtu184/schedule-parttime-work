@@ -15,13 +15,12 @@ export default function TableUserList(props) {
     searchValue,
   } = props;
   const handleTableChange = (page) => {
-    const { fullname, roles, status, userId, username } = searchValue;
+    const { fullname, roles, status, username } = searchValue;
     if (isSearch) {
       searchData(
         fullname,
         roles,
         status,
-        userId,
         username,
         page.current,
         page.pageSize

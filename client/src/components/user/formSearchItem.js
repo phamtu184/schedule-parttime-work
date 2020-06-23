@@ -4,11 +4,6 @@ import translate from "../../asset/i18n/translate";
 const { Option } = Select;
 const formItems = [
   {
-    name: "userId",
-    label: translate("userId"),
-    input: <Input />,
-  },
-  {
     name: "username",
     label: translate("username"),
     input: <Input />,

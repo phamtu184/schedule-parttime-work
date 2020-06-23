@@ -24,7 +24,7 @@ connection.once("open", () => {
   console.log("Mongoose success connect");
 });
 var corsOptions = {
-  origin: "localhost:3000",
+  origin: process.env.URLHOST,
   optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
 };
 app.use(cors(corsOptions));
