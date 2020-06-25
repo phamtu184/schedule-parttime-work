@@ -50,7 +50,7 @@ export default {
     counter: "quầy thu ngân",
     dinning: "phục vụ",
     kitchen: "bếp",
-    // validate register form
+    // validate Schedule form
     require: "vui lòng nhập {title}",
     whitespace: "{title} không được có khoảng trống",
     max: "{title} không được quá {characters} kí tự",
@@ -65,9 +65,8 @@ export default {
     create: "tạo",
     selectSchedule: "chọn lịch làm việc",
     settingSchedule: "cài đặt lịch làm việc",
-    createRegister: "tạo bảng đăng kí",
-    deleteRegister: "xóa bảng đăng kí",
-    uploadRegister: "tải bảng đăng kí",
+    deleteSchedule: "xóa lịch làm việc",
+    uploadSchedule: "tải lịch làm việc",
     monday: "thứ 2",
     tuesday: "thứ 3",
     wednesday: "thứ 4",

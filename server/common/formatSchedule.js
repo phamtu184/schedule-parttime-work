@@ -1,4 +1,4 @@
-const formatRegister = (users, string) => {
+const formatSchedule = (users, string) => {
   const rs = users.map((item) => {
     return {
       key: item.userId + string,
@@ -15,4 +15,4 @@ const formatRegister = (users, string) => {
   });
   return rs;
 };
-module.exports = formatRegister;
+module.exports = formatSchedule;

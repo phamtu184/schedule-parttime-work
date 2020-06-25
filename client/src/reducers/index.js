@@ -1,11 +1,11 @@
 import { combineReducers } from "redux";
 import authReducer from "./auth";
 import settingReducer from "./setting";
-import registerReducer from "./register";
+import scheduleReducer from "./schedule";
 
 const rootReducer = combineReducers({
   auth: authReducer,
   setting: settingReducer,
-  register: registerReducer,
+  schedule: scheduleReducer,
 });
 export default rootReducer;

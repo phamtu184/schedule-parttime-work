@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const RegisterSchema = new Schema(
+const ScheduleSchema = new Schema(
   {
-    registerId: {
+    scheduleId: {
       type: String,
       unique: true,
       required: true,
@@ -66,5 +66,5 @@ const RegisterSchema = new Schema(
   { timestamps: true }
 );
 
-const Register = mongoose.model("Register", RegisterSchema);
-module.exports = Register;
+const Schedule = mongoose.model("Schedule", ScheduleSchema);
+module.exports = Schedule;

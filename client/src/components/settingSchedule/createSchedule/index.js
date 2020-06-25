@@ -3,16 +3,16 @@ import { Row, Col, Button, Popconfirm } from "antd";
 import Title from "../../common/title";
 import TitleTable from "../../common/schedule/title";
 import DivForm from "../../common/roundForm";
-import CreateSchedule from "./createRegister";
-import SelectSchedule from "./selectRegister";
-import Table from "./tableRegister";
+import CreateSchedule from "./create";
+import SelectSchedule from "./select";
+import Table from "./table";
 import translate from "../../../asset/i18n/translate";
 import axios from "axios";
 import url from "../../../asset/urlConfig";
 import notification from "../../common/notification";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
-import { createRegister, deleteRegister } from "../../../action/register";
+import { createSchedule, deleteSchedule } from "../../../action/schedule";
 import formatResult from "../../common/schedule/formatResult";
 
 export default function SettingSchedule(props) {
@@ -21,22 +21,22 @@ export default function SettingSchedule(props) {
   const [options, setOptions] = useState([]);
   const intl = useIntl();
   const dispatch = useDispatch();
-  const dataSource = useSelector((state) => state.register.dataSource);
-  const title = useSelector((state) => state.register.title);
+  const dataSource = useSelector((state) => state.schedule.dataSource);
+  const title = useSelector((state) => state.schedule.title);
   const onChangeDate = (date, dateString) => {
     setDate(dateString);
   };
   const onFinish = () => {
-    fentchRegister();
+    fentchSchedule();
   };
-  const fentchRegister = () => {
+  const fentchSchedule = () => {
     setLoading(true);
     axios
-      .post(`${url.BASE || url.LOCAL}/api/registersetting`, { date })
+      .post(`${url.BASE || url.LOCAL}/api/schedule`, { date })
       .then((res) => {
         const { receptionist, server, cook, title } = res.data;
         dispatch(
-          createRegister({
+          createSchedule({
             data: formatResult(receptionist, server, cook),
             title,
           })
@@ -45,7 +45,7 @@ export default function SettingSchedule(props) {
         notification(
           "success",
           intl.formatMessage({ id: "success" }),
-          intl.formatMessage({ id: "createRegister" }) +
+          intl.formatMessage({ id: "createSchedule" }) +
             " " +
             intl.formatMessage({ id: "success" })
         );
@@ -55,14 +55,14 @@ export default function SettingSchedule(props) {
         notification(
           "error",
           intl.formatMessage({ id: "error" }),
-          intl.formatMessage({ id: "registersettingFail" })
+          intl.formatMessage({ id: "registerScheduleFail" })
         );
         setLoading(false);
       });
   };
   const fentchOption = () => {
     axios
-      .get(`${url.BASE || url.LOCAL}/api/registerlazily`)
+      .get(`${url.BASE || url.LOCAL}/api/schedulelazily`)
       .then((res) => {
         setOptions(res.data);
       })
@@ -76,16 +76,16 @@ export default function SettingSchedule(props) {
   };
   const deleteTable = () => {
     axios
-      .delete(`${url.BASE || url.LOCAL}/api/registersetting`, {
+      .delete(`${url.BASE || url.LOCAL}/api/schedule`, {
         params: title,
       })
       .then((res) => {
-        dispatch(deleteRegister());
+        dispatch(deleteSchedule());
         fentchOption();
         notification(
           "success",
           intl.formatMessage({ id: "success" }),
-          intl.formatMessage({ id: "deleteRegister" }) +
+          intl.formatMessage({ id: "deleteSchedule" }) +
             " " +
             intl.formatMessage({ id: "success" })
         );
@@ -100,12 +100,12 @@ export default function SettingSchedule(props) {
   };
   const pushToHome = () => {
     axios
-      .put(`${url.BASE || url.LOCAL}/api/registersetting`, { title })
+      .put(`${url.BASE || url.LOCAL}/api/schedule`, { title })
       .then((res) => {
         notification(
           "success",
           intl.formatMessage({ id: "success" }),
-          intl.formatMessage({ id: "uploadRegister" }) +
+          intl.formatMessage({ id: "uploadSchedule" }) +
             " " +
             intl.formatMessage({ id: "success" })
         );
@@ -120,7 +120,7 @@ export default function SettingSchedule(props) {
   };
   return (
     <>
-      <Title className="color-dark">{translate("createRegister")}</Title>
+      <Title className="color-dark">{translate("createSchedule")}</Title>
       <DivForm>
         <Row>
           <Col xs={24} lg={12}>

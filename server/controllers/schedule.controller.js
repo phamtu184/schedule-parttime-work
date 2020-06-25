@@ -1,17 +1,17 @@
 const User = require("../models/user.model");
-const Register = require("../models/register.model");
-const formatRegister = require("../common/formatRegister");
+const Schedule = require("../models/schedule.model");
+const formatSchedule = require("../common/formatSchedule");
 const checkWeek = require("../common/checkWeek");
 
-module.exports.createRegisterSchedule = async function (req, res) {
+module.exports.createSchedule = async function (req, res) {
   const { date } = req.body;
   if (!checkWeek(date))
-    return res.status(400).json({ message: "registerForm has exist" });
-  const registerForm = await Register.findOne({ registerId: date })
+    return res.status(400).json({ message: "ScheduleForm has exist" });
+  const scheduleForm = await Schedule.findOne({ registerId: date })
     .lean()
     .exec();
-  if (registerForm)
-    return res.status(400).json({ message: "registerForm has exist" });
+  if (scheduleForm)
+    return res.status(400).json({ message: "ScheduleForm has exist" });
   const cook = await User.find({
     roles: { $all: "cook" },
     disabled: false,
@@ -30,37 +30,37 @@ module.exports.createRegisterSchedule = async function (req, res) {
   })
     .select("-username -password -phonenumber -createdAt -updatedAt")
     .exec();
-  const newRegister = Register({
-    registerId: date,
-    counter: formatRegister(receptionist, "receptionist"),
-    dinning: formatRegister(server, "server"),
-    kitchen: formatRegister(cook, "cook"),
+  const newSchedule = Schedule({
+    scheduleId: date,
+    counter: formatSchedule(receptionist, "receptionist"),
+    dinning: formatSchedule(server, "server"),
+    kitchen: formatSchedule(cook, "cook"),
   });
-  newRegister.save((err, register) => {
+  newSchedule.save((err, schedule) => {
     if (err) return res.status(500).json({ message: "Server error" });
     res.status(200).json({
-      receptionist: formatRegister(receptionist, "receptionist"),
-      server: formatRegister(server, "server"),
-      cook: formatRegister(cook, "cook"),
-      title: register.registerId,
+      receptionist: formatSchedule(receptionist, "receptionist"),
+      server: formatSchedule(server, "server"),
+      cook: formatSchedule(cook, "cook"),
+      title: schedule.scheduleId,
     });
   });
 };
-module.exports.getRegisterSchedule = async function (req, res) {
+module.exports.getSchedule = async function (req, res) {
   const { id } = req.query;
-  const registerValue = await Register.findOne({ registerId: id }).exec();
-  const { counter, dinning, kitchen, registerId } = registerValue;
+  const scheduleValue = await Schedule.findOne({ scheduleId: id }).exec();
+  const { counter, dinning, kitchen, scheduleId } = scheduleValue;
   res.status(200).json({
     receptionist: counter,
     server: dinning,
     cook: kitchen,
-    title: registerId,
+    title: scheduleId,
   });
 };
-module.exports.getRegisterLazily = async function (req, res) {
-  const registers = await Register.find().select("registerId").exec();
-  const rs = registers.map((item) => {
-    const split = item.registerId.split("-");
+module.exports.getScheduleLazily = async function (req, res) {
+  const schedules = await Schedule.find().select("scheduleId").exec();
+  const rs = schedules.map((item) => {
+    const split = item.scheduleId.split("-");
     return {
       value: split[0],
       children: split[1],
@@ -95,21 +95,34 @@ module.exports.getRegisterLazily = async function (req, res) {
   });
   res.json(result);
 };
-module.exports.deleteRegisterSchedule = async function (req, res) {
+module.exports.deleteSchedule = async function (req, res) {
   const id = req.query[0];
-  Register.findOneAndDelete({ registerId: id })
+  Schedule.findOneAndDelete({ scheduleId: id })
     .then(() =>
-      res.status(200).json({ message: "delete register form success" })
+      res.status(200).json({ message: "delete Schedule form success" })
     )
     .catch((e) => res.status(500).json({ message: "server error" }));
 };
-module.exports.putRegisterSchedule = async function (req, res) {
+module.exports.putSchedule = async function (req, res) {
   const id = req.body.title;
-  Register.updateOne({ isMain: true }, { isMain: false })
+  Schedule.updateOne({ isMain: true }, { isMain: false })
     .then(() => {
-      Register.updateOne({ registerId: id }, { isMain: true }).then(() =>
+      Schedule.updateOne({ scheduleId: id }, { isMain: true }).then(() =>
         res.status(200).json({ message: "update success" })
       );
     })
     .catch((e) => res.status(500).json({ message: "uppdate fail" }));
+};
+
+module.exports.getScheduleUser = async function (req, res) {
+  const scheduleCurrent = await Schedule.findOne({ isMain: true }).exec();
+  if (!scheduleCurrent)
+    return res.status(400).json({ message: "cannot find any colection" });
+  const { counter, dinning, kitchen, scheduleId } = scheduleCurrent;
+  res.status(200).json({
+    receptionist: counter,
+    server: dinning,
+    cook: kitchen,
+    title: scheduleId,
+  });
 };

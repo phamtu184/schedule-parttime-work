@@ -4,13 +4,13 @@ import Button from "../../common/button";
 import translate from "../../../asset/i18n/translate";
 import locale from "antd/es/date-picker/locale/vi_VN";
 
-export default function FormCreateRegister(props) {
+export default function FormCreateSchedule(props) {
   const { onFinish, onChangeDate } = props;
   return (
     <Form onFinish={onFinish} className="text-cap" layout="inline">
       <Form.Item
-        label={translate("createRegister")}
-        name="createRegister"
+        label={translate("createSchedule")}
+        name="createSchedule"
         rules={[
           {
             required: true,

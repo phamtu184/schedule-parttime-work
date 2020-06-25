@@ -7,9 +7,9 @@ import { Link } from "react-router-dom";
 export default function ButtonList(props) {
   return (
     <div style={{ marginBottom: "5px" }}>
-      <Link to="/setting/createRegister">
+      <Link to="/setting/createSchedule">
         <Button type="primary" icon={<PlusOutlined />}>
-          {translate("createRegister")}
+          {translate("createSchedule")}
         </Button>
       </Link>
     </div>

@@ -4,7 +4,7 @@ import translate from "../../../asset/i18n/translate";
 import axios from "axios";
 import url from "../../../asset/urlConfig";
 import { useDispatch } from "react-redux";
-import { createRegister } from "../../../action/register";
+import { createSchedule } from "../../../action/schedule";
 import formatResult from "../../common/schedule/formatResult";
 
 export default function SelectSchedule(props) {
@@ -18,13 +18,13 @@ export default function SelectSchedule(props) {
     if (value.length > 1) {
       setLoading(true);
       axios
-        .get(`${url.BASE || url.LOCAL}/api/registersetting`, {
+        .get(`${url.BASE || url.LOCAL}/api/schedule`, {
           params: { id: value[1] },
         })
         .then((res) => {
           const { receptionist, server, cook, title } = res.data;
           dispatch(
-            createRegister({
+            createSchedule({
               data: formatResult(receptionist, server, cook),
               title,
             })

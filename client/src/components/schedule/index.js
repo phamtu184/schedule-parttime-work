@@ -14,7 +14,7 @@ export default function RegisterSchedule() {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`${url.BASE || url.LOCAL}/api/registeruser`)
+      .get(`${url.BASE || url.LOCAL}/api/scheduleuser`)
       .then((res) => {
         const { receptionist, server, cook, title } = res.data;
         setDataSource(formatResult(receptionist, server, cook));

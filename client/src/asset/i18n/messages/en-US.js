@@ -50,7 +50,7 @@ export default {
     counter: "counter",
     dinning: "dinning",
     kitchen: "kitchen",
-    // validate register form
+    // validate Schedule form
     require: "please input {title}",
     whitespace: "{title} cannot be empty",
     max: "{title} cannot be longer than {characters} characters",
@@ -65,9 +65,8 @@ export default {
     create: "create",
     selectSchedule: "select schedule",
     settingSchedule: "setting schedule",
-    createRegister: "create register form",
-    deleteRegister: "delete register form",
-    uploadRegister: "upload register form",
+    deleteSchedule: "delete Schedule form",
+    uploadSchedule: "upload Schedule form",
     monday: "monday",
     tuesday: "tuesday",
     wednesday: "wednesday",
