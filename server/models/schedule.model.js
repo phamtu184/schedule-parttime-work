@@ -54,6 +54,22 @@ const ScheduleSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    isRegister: {
+      type: Boolean,
+      default: false,
+    },
+    shift1: {
+      type: [Number],
+      required: true,
+    },
+    shift2: {
+      type: [Number],
+      required: true,
+    },
+    moneyPerHour: {
+      type: Number,
+      required: true,
+    },
     createdBy: {
       type: Schema.Types.ObjectId,
       ref: "user",

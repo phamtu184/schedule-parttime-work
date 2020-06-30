@@ -1,8 +1,9 @@
 const formatSchedule = (users, string) => {
   const rs = users.map((item) => {
     return {
-      key: item.userId + string,
+      key: item._id + string,
       fullname: item.fullname,
+      isModify: false,
       isTitle: false,
       monday: "",
       tuesday: "",

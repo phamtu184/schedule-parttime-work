@@ -16,29 +16,42 @@ import { createSchedule, deleteSchedule } from "../../../action/schedule";
 import formatResult from "../../common/schedule/formatResult";
 
 export default function SettingSchedule(props) {
-  const [date, setDate] = useState("");
   const [isLoading, setLoading] = useState(false);
   const [options, setOptions] = useState([]);
   const intl = useIntl();
   const dispatch = useDispatch();
   const dataSource = useSelector((state) => state.schedule.dataSource);
   const title = useSelector((state) => state.schedule.title);
-  const onChangeDate = (date, dateString) => {
-    setDate(dateString);
-  };
-  const onFinish = () => {
-    fentchSchedule();
-  };
-  const fentchSchedule = () => {
+  const shift1 = useSelector((state) => state.schedule.shift1);
+  const shift2 = useSelector((state) => state.schedule.shift2);
+  const moneyPerHour = useSelector((state) => state.schedule.moneyPerHour);
+  const onFinish = (value) => {
+    const { time, shift1, shift2, moneyPerHour } = value;
     setLoading(true);
     axios
-      .post(`${url.BASE || url.LOCAL}/api/schedule`, { date })
+      .post(`${url.BASE || url.LOCAL}/api/schedule`, {
+        date: `${time.year()}-${time.week()}`,
+        shift1: [shift1[0].hours(), shift1[1].hours()],
+        shift2: [shift2[0].hours(), shift2[1].hours()],
+        money: moneyPerHour,
+      })
       .then((res) => {
-        const { receptionist, server, cook, title } = res.data;
+        const {
+          receptionist,
+          server,
+          cook,
+          title,
+          shift1,
+          shift2,
+          moneyPerHour,
+        } = res.data;
         dispatch(
           createSchedule({
             data: formatResult(receptionist, server, cook),
             title,
+            shift1,
+            shift2,
+            moneyPerHour,
           })
         );
         fentchOption();
@@ -124,7 +137,7 @@ export default function SettingSchedule(props) {
       <DivForm>
         <Row>
           <Col xs={24} lg={12}>
-            <CreateSchedule onChangeDate={onChangeDate} onFinish={onFinish} />
+            <CreateSchedule onFinish={onFinish} />
           </Col>
           <Col xs={24} lg={12}>
             <SelectSchedule
@@ -158,7 +171,12 @@ export default function SettingSchedule(props) {
           </Button>
         </Popconfirm>
       </DivForm>
-      <TitleTable title={title} />
+      <TitleTable
+        title={title}
+        shift1={shift1}
+        shift2={shift2}
+        moneyPerHour={moneyPerHour}
+      />
       <Table isLoading={isLoading} dataSource={dataSource} />
     </>
   );

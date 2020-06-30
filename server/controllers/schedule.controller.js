@@ -1,12 +1,9 @@
 const User = require("../models/user.model");
 const Schedule = require("../models/schedule.model");
 const formatSchedule = require("../common/formatSchedule");
-const checkWeek = require("../common/checkWeek");
 
 module.exports.createSchedule = async function (req, res) {
-  const { date } = req.body;
-  if (!checkWeek(date))
-    return res.status(400).json({ message: "ScheduleForm has exist" });
+  const { date, shift1, shift2, money } = req.body;
   const scheduleForm = await Schedule.findOne({ registerId: date })
     .lean()
     .exec();
@@ -35,6 +32,9 @@ module.exports.createSchedule = async function (req, res) {
     counter: formatSchedule(receptionist, "receptionist"),
     dinning: formatSchedule(server, "server"),
     kitchen: formatSchedule(cook, "cook"),
+    shift1,
+    shift2,
+    moneyPerHour: money,
   });
   newSchedule.save((err, schedule) => {
     if (err) return res.status(500).json({ message: "Server error" });
@@ -43,18 +43,32 @@ module.exports.createSchedule = async function (req, res) {
       server: formatSchedule(server, "server"),
       cook: formatSchedule(cook, "cook"),
       title: schedule.scheduleId,
+      shift1: schedule.shift1,
+      shift2: schedule.shift2,
+      moneyPerHour: schedule.moneyPerHour,
     });
   });
 };
 module.exports.getSchedule = async function (req, res) {
   const { id } = req.query;
   const scheduleValue = await Schedule.findOne({ scheduleId: id }).exec();
-  const { counter, dinning, kitchen, scheduleId } = scheduleValue;
+  const {
+    counter,
+    dinning,
+    kitchen,
+    scheduleId,
+    shift1,
+    shift2,
+    moneyPerHour,
+  } = scheduleValue;
   res.status(200).json({
     receptionist: counter,
     server: dinning,
     cook: kitchen,
     title: scheduleId,
+    shift1,
+    shift2,
+    moneyPerHour,
   });
 };
 module.exports.getScheduleLazily = async function (req, res) {
@@ -118,11 +132,22 @@ module.exports.getScheduleUser = async function (req, res) {
   const scheduleCurrent = await Schedule.findOne({ isMain: true }).exec();
   if (!scheduleCurrent)
     return res.status(400).json({ message: "cannot find any colection" });
-  const { counter, dinning, kitchen, scheduleId } = scheduleCurrent;
+  const {
+    counter,
+    dinning,
+    kitchen,
+    scheduleId,
+    shift1,
+    shift2,
+    moneyPerHour,
+  } = scheduleCurrent;
   res.status(200).json({
     receptionist: counter,
     server: dinning,
     cook: kitchen,
     title: scheduleId,
+    shift1,
+    shift2,
+    moneyPerHour,
   });
 };

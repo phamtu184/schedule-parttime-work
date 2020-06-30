@@ -1,4 +1,4 @@
-var moment = require("moment");
+import moment from "moment";
 const checkWeek = (date) => {
   var today = new Date();
   var dd = today.getDate();
@@ -10,9 +10,9 @@ const checkWeek = (date) => {
   if (year < yyyy) {
     return false;
   }
-  if (year == yyyy && week < weekNow) {
+  if (year === yyyy && week < weekNow) {
     return false;
   }
   return true;
 };
-module.exports = checkWeek;
+export default checkWeek;

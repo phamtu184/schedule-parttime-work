@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Table, Spin, Form, Typography, Button } from "antd";
 //import Button from "../../common/button";
-import translate from "../../asset/i18n/translate";
+import translate from "../../../asset/i18n/translate";
 import { useSelector } from "react-redux";
 import EditableCell from "./editCell";
 const { Title } = Typography;

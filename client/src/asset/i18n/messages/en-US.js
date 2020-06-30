@@ -60,6 +60,8 @@ export default {
     numberValid: "{title} is not a valid {type}",
     number: "number",
     time: "time",
+    scheduleFuture: "schedule must be in future",
+    timeSimilar: "time do not similar",
     // schedule
     createSchedule: "create schedule",
     create: "create",
@@ -76,6 +78,9 @@ export default {
     sunday: "sunday",
     upload: "upload",
     registerSchedule: "register schedule",
+    shift1: "shift 1",
+    shift2: "shift 2",
+    moneyPerHour: "money per hour",
     // event
     userExist: "user id or username has exist",
     serverError: "server error",
@@ -84,8 +89,8 @@ export default {
     enableUserSuccess: "enable user success",
     disableUserSuccess: "disable user success",
     loginSuccess: "login success",
-    loginFail: "username dosen't exist or wrong password",
-    registerScheduleFail: "schedule has exist or schedule must be in future",
+    loginFail: "account dosen't exist or wrong password",
+    registerScheduleFail: "schedule has exist",
     // feedback
     success: "success",
     error: "error",

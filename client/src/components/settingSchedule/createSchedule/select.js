@@ -22,11 +22,22 @@ export default function SelectSchedule(props) {
           params: { id: value[1] },
         })
         .then((res) => {
-          const { receptionist, server, cook, title } = res.data;
+          const {
+            receptionist,
+            server,
+            cook,
+            title,
+            shift1,
+            shift2,
+            moneyPerHour,
+          } = res.data;
           dispatch(
             createSchedule({
               data: formatResult(receptionist, server, cook),
               title,
+              shift1,
+              shift2,
+              moneyPerHour,
             })
           );
           setLoading(false);

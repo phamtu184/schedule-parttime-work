@@ -60,6 +60,8 @@ export default {
     numberValid: "{title} phải là {type}",
     number: "số",
     time: "thời điểm",
+    scheduleFuture: "thời gian phải trong tương lai",
+    timeSimilar: "thời gian không được giống nhau",
     // Schedule
     createSchedule: "tạo lịch làm việc",
     create: "tạo",
@@ -76,6 +78,9 @@ export default {
     sunday: "chủ nhật",
     upload: "tải lên",
     registerSchedule: "Đăng kí lịch làm",
+    shift1: "Ca 1",
+    shift2: "ca 2",
+    moneyPerHour: "Số tiền trên 1 giờ",
     // event
     userExist: "mã nhân viên hoặc tên đăng nhập đã tồn tại",
     serverError: "lỗi server",
@@ -84,8 +89,8 @@ export default {
     enableUserSuccess: "kích hoạt nhân viên thành công",
     disableUserSuccess: "vô hiệu nhân viên thành công",
     loginSuccess: "đăng nhập thành công",
-    loginFail: "tên đăng nhập không tồn tại hoặc sai mật khẩu",
-    registerScheduleFail: "lịch đã tồn tại hoặc lịch phải trong tương lai",
+    loginFail: "tài khoản không tồn tại hoặc sai mật khẩu",
+    registerScheduleFail: "lịch đã tồn tại",
     // feedback
     success: "thành công",
     error: "Lỗi",

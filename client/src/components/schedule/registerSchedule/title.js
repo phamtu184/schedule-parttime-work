@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import translate from "../../asset/i18n/translate";
+import translate from "../../../asset/i18n/translate";
 
 const DivTitle = styled.div`
   h3 {

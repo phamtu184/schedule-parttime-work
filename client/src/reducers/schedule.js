@@ -1,6 +1,9 @@
 const initialState = {
   dataSource: [],
   title: "",
+  shift1: "",
+  shift2: "",
+  moneyPerHour: "",
 };
 const scheduleReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -9,6 +12,9 @@ const scheduleReducer = (state = initialState, action) => {
         ...state,
         dataSource: action.payload.data,
         title: action.payload.title,
+        shift1: action.payload.shift1,
+        shift2: action.payload.shift1,
+        moneyPerHour: action.payload.moneyPerHour,
       };
     }
     case "DELETE_SCHEDULE": {
@@ -16,6 +22,9 @@ const scheduleReducer = (state = initialState, action) => {
         ...state,
         dataSource: [],
         title: "",
+        shift1: "",
+        shift2: "",
+        moneyPerHour: "",
       };
     }
     default:
