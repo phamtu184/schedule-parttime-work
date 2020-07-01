@@ -1,5 +1,6 @@
 import React from "react";
 import { Select, Form } from "antd";
+import translate from "../../../asset/i18n/translate";
 const { Option } = Select;
 const EditableCell = ({
   editing,
@@ -21,9 +22,18 @@ const EditableCell = ({
           }}
         >
           <Select style={{ width: 80 }}>
-            <Option value="am">AM</Option>
-            <Option value="pm">PM</Option>
-            <Option value="all">ALL</Option>
+            <Option className="text-cap" value="shift1">
+              {translate("shift1")}
+            </Option>
+            <Option className="text-cap" value="shift2">
+              {translate("shift2")}
+            </Option>
+            <Option className="text-cap" value="all">
+              {translate("allDay")}
+            </Option>
+            <Option className="text-cap" value="off">
+              {translate("off")}
+            </Option>
           </Select>
         </Form.Item>
       ) : (

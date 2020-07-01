@@ -117,19 +117,19 @@ module.exports.deleteSchedule = async function (req, res) {
     )
     .catch((e) => res.status(500).json({ message: "server error" }));
 };
-module.exports.putSchedule = async function (req, res) {
+module.exports.putRegisterSchedule = async function (req, res) {
   const id = req.body.title;
-  Schedule.updateOne({ isMain: true }, { isMain: false })
+  Schedule.updateOne({ isRegister: true }, { isRegister: false })
     .then(() => {
-      Schedule.updateOne({ scheduleId: id }, { isMain: true }).then(() =>
+      Schedule.updateOne({ scheduleId: id }, { isRegister: true }).then(() =>
         res.status(200).json({ message: "update success" })
       );
     })
     .catch((e) => res.status(500).json({ message: "uppdate fail" }));
 };
 
-module.exports.getScheduleUser = async function (req, res) {
-  const scheduleCurrent = await Schedule.findOne({ isMain: true }).exec();
+module.exports.getRegisterSchedule = async function (req, res) {
+  const scheduleCurrent = await Schedule.findOne({ isRegister: true }).exec();
   if (!scheduleCurrent)
     return res.status(400).json({ message: "cannot find any colection" });
   const {

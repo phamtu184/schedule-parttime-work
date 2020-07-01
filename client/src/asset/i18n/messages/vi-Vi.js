@@ -81,6 +81,9 @@ export default {
     shift1: "Ca 1",
     shift2: "ca 2",
     moneyPerHour: "Số tiền trên 1 giờ",
+    //scheduleRegister
+    allDay: "Cả ngày",
+    off: "nghỉ",
     // event
     userExist: "mã nhân viên hoặc tên đăng nhập đã tồn tại",
     serverError: "lỗi server",

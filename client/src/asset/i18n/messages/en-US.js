@@ -81,6 +81,9 @@ export default {
     shift1: "shift 1",
     shift2: "shift 2",
     moneyPerHour: "money per hour",
+    //scheduleRegister
+    allDay: "all day",
+    off: "off",
     // event
     userExist: "user id or username has exist",
     serverError: "server error",

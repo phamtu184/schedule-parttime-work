@@ -55,18 +55,17 @@ function Content() {
         />
         <PrivateRoute
           exact
-          path="/schedule/registerSchedule"
-          authed={authed}
-          component={RegisterSchedule}
-        />
-        <PrivateRoute
-          exact
           path="/setting/createSchedule"
           authed={authed}
           component={CreateSchedule}
         />
         <Route exact path="/customer" component={() => <div>customer</div>} />
         <Route exact path="/schedule" component={Schedule} />
+        <Route
+          exact
+          path="/schedule/registerSchedule"
+          component={RegisterSchedule}
+        />
         <Route exact path="/404" component={PageError} />
         <Route exact path="/403">
           <PageError status="403" title="403" subTitle />

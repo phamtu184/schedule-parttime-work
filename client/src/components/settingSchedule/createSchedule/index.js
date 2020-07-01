@@ -113,7 +113,7 @@ export default function SettingSchedule(props) {
   };
   const pushToHome = () => {
     axios
-      .put(`${url.BASE || url.LOCAL}/api/schedule`, { title })
+      .put(`${url.BASE || url.LOCAL}/api/registerschedule`, { title })
       .then((res) => {
         notification(
           "success",
