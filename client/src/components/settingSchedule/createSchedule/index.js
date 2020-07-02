@@ -7,13 +7,12 @@ import CreateSchedule from "./create";
 import SelectSchedule from "./select";
 import Table from "./table";
 import translate from "../../../asset/i18n/translate";
-import axios from "axios";
-import url from "../../../asset/urlConfig";
 import notification from "../../common/notification";
 import { useIntl } from "react-intl";
 import { useDispatch, useSelector } from "react-redux";
 import { createSchedule, deleteSchedule } from "../../../action/schedule";
 import formatResult from "../../common/schedule/formatResult";
+import scheduleApi from "../../../api/scheduleApi";
 
 export default function SettingSchedule(props) {
   const [isLoading, setLoading] = useState(false);
@@ -25,111 +24,100 @@ export default function SettingSchedule(props) {
   const shift1 = useSelector((state) => state.schedule.shift1);
   const shift2 = useSelector((state) => state.schedule.shift2);
   const moneyPerHour = useSelector((state) => state.schedule.moneyPerHour);
-  const onFinish = (value) => {
+  const onFinish = async (value) => {
     const { time, shift1, shift2, moneyPerHour } = value;
+    const body = {
+      date: `${time.year()}-${time.week()}`,
+      shift1: [shift1[0].hours(), shift1[1].hours()],
+      shift2: [shift2[0].hours(), shift2[1].hours()],
+      money: moneyPerHour,
+    };
     setLoading(true);
-    axios
-      .post(`${url.BASE || url.LOCAL}/api/schedule`, {
-        date: `${time.year()}-${time.week()}`,
-        shift1: [shift1[0].hours(), shift1[1].hours()],
-        shift2: [shift2[0].hours(), shift2[1].hours()],
-        money: moneyPerHour,
-      })
-      .then((res) => {
-        const {
-          receptionist,
-          server,
-          cook,
+    try {
+      const res = await scheduleApi.createSchedule(body);
+      const {
+        receptionist,
+        server,
+        cook,
+        title,
+        shift1,
+        shift2,
+        moneyPerHour,
+      } = res;
+      dispatch(
+        createSchedule({
+          data: formatResult(receptionist, server, cook),
           title,
           shift1,
           shift2,
           moneyPerHour,
-        } = res.data;
-        dispatch(
-          createSchedule({
-            data: formatResult(receptionist, server, cook),
-            title,
-            shift1,
-            shift2,
-            moneyPerHour,
-          })
-        );
-        fentchOption();
-        notification(
-          "success",
-          intl.formatMessage({ id: "success" }),
-          intl.formatMessage({ id: "createSchedule" }) +
-            " " +
-            intl.formatMessage({ id: "success" })
-        );
-        setLoading(false);
-      })
-      .catch((e) => {
-        notification(
-          "error",
-          intl.formatMessage({ id: "error" }),
-          intl.formatMessage({ id: "registerScheduleFail" })
-        );
-        setLoading(false);
-      });
+        })
+      );
+      fentchOption();
+      notification(
+        "success",
+        intl.formatMessage({ id: "success" }),
+        intl.formatMessage({ id: "createSchedule" }) +
+          " " +
+          intl.formatMessage({ id: "success" })
+      );
+      setLoading(false);
+    } catch (e) {
+      notification(
+        "error",
+        intl.formatMessage({ id: "error" }),
+        intl.formatMessage({ id: "registerScheduleFail" })
+      );
+      setLoading(false);
+    }
   };
-  const fentchOption = () => {
-    axios
-      .get(`${url.BASE || url.LOCAL}/api/schedulelazily`)
-      .then((res) => {
-        setOptions(res.data);
-      })
-      .catch((e) => {
-        notification(
-          "error",
-          intl.formatMessage({ id: "error" }),
-          intl.formatMessage({ id: "serverError" })
-        );
-      });
+  const fentchOption = async () => {
+    try {
+      const res = await scheduleApi.getScheduleLazily();
+      setOptions(res);
+    } catch (e) {
+      console.log(e);
+    }
   };
-  const deleteTable = () => {
-    axios
-      .delete(`${url.BASE || url.LOCAL}/api/schedule`, {
-        params: title,
-      })
-      .then((res) => {
-        dispatch(deleteSchedule());
-        fentchOption();
-        notification(
-          "success",
-          intl.formatMessage({ id: "success" }),
-          intl.formatMessage({ id: "deleteSchedule" }) +
-            " " +
-            intl.formatMessage({ id: "success" })
-        );
-      })
-      .catch((e) => {
-        notification(
-          "error",
-          intl.formatMessage({ id: "error" }),
-          intl.formatMessage({ id: "serverError" })
-        );
-      });
+  const deleteTable = async () => {
+    try {
+      await scheduleApi.deleteSchedule({ title });
+      dispatch(deleteSchedule());
+      fentchOption();
+      notification(
+        "success",
+        intl.formatMessage({ id: "success" }),
+        intl.formatMessage({ id: "deleteSchedule" }) +
+          " " +
+          intl.formatMessage({ id: "success" })
+      );
+    } catch (e) {
+      console.log(e);
+      notification(
+        "error",
+        intl.formatMessage({ id: "error" }),
+        intl.formatMessage({ id: "serverError" })
+      );
+    }
   };
-  const pushToHome = () => {
-    axios
-      .put(`${url.BASE || url.LOCAL}/api/registerschedule`, { title })
-      .then((res) => {
-        notification(
-          "success",
-          intl.formatMessage({ id: "success" }),
-          intl.formatMessage({ id: "uploadSchedule" }) +
-            " " +
-            intl.formatMessage({ id: "success" })
-        );
-      })
-      .catch((e) => {
-        notification(
-          "error",
-          intl.formatMessage({ id: "error" }),
-          intl.formatMessage({ id: "serverError" })
-        );
-      });
+  const pushToHome = async () => {
+    try {
+      await scheduleApi.putRegisterSchedule({ title });
+      notification(
+        "success",
+        intl.formatMessage({ id: "success" }),
+        intl.formatMessage({ id: "uploadSchedule" }) +
+          " " +
+          intl.formatMessage({ id: "success" })
+      );
+    } catch (e) {
+      console.log(e);
+      notification(
+        "error",
+        intl.formatMessage({ id: "error" }),
+        intl.formatMessage({ id: "serverError" })
+      );
+    }
   };
   return (
     <>

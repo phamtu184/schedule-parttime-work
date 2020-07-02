@@ -3,13 +3,12 @@ import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Form, Spin, Button } from "antd";
 import formItems from "./formItems";
-import axios from "axios";
-import url from "../../../asset/urlConfig";
 import Title from "../../common/title";
 import translate from "../../../asset/i18n/translate";
 import { useIntl } from "react-intl";
 import { SaveOutlined } from "@ant-design/icons";
 import notification from "../../common/notification";
+import userApi from "../../../api/userApi";
 
 const formItemLayout = {
   labelCol: {
@@ -33,60 +32,53 @@ export default function EditUser({ props }) {
   const history = useHistory();
   const [form] = Form.useForm();
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${url.BASE || url.LOCAL}/api/user`, { params: { id } })
-      .then((res) => {
-        form.setFieldsValue({ username: res.data.username });
-        form.setFieldsValue({ password: res.data.password });
-        form.setFieldsValue({ confirmPassword: res.data.password });
-        form.setFieldsValue({ fullname: res.data.fullname });
-        form.setFieldsValue({ phonenumber: res.data.phonenumber });
-        form.setFieldsValue({ roles: res.data.roles });
+    const getData = async () => {
+      setLoading(true);
+      try {
+        const params = { id };
+        const res = await userApi.getUser(params);
+        form.setFieldsValue({ username: res.username });
+        form.setFieldsValue({ password: res.password });
+        form.setFieldsValue({ confirmPassword: res.password });
+        form.setFieldsValue({ fullname: res.fullname });
+        form.setFieldsValue({ phonenumber: res.phonenumber });
+        form.setFieldsValue({ roles: res.roles });
         setLoading(false);
-      })
-      .catch((e) => history.push("/users"));
+      } catch (e) {
+        history.push("/users");
+      }
+    };
+    getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const intl = useIntl();
-  const onFinish = (value) => {
-    const { username, password, fullname, phonenumber, roles } = value;
+  const onFinish = async (value) => {
     setLoading(true);
-    axios
-      .put(`${url.BASE || url.LOCAL}/api/user`, {
-        username,
-        password,
-        fullname,
-        phonenumber,
-        roles,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          notification(
-            "success",
-            intl.formatMessage({ id: "success" }),
-            intl.formatMessage({ id: "addUserSuccess" })
-          );
-          setLoading(false);
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 400) {
-          notification(
-            "error",
-            intl.formatMessage({ id: "error" }),
-            intl.formatMessage({ id: "userExist" })
-          );
-          setLoading(false);
-        } else {
-          notification(
-            "error",
-            intl.formatMessage({ id: "error" }),
-            intl.formatMessage({ id: "serverError" })
-          );
-          setLoading(false);
-        }
-      });
+    try {
+      await userApi.editUser(value);
+      notification(
+        "success",
+        intl.formatMessage({ id: "success" }),
+        intl.formatMessage({ id: "editUserSuccess" })
+      );
+      setLoading(false);
+    } catch (err) {
+      if (err.response.status === 400) {
+        notification(
+          "error",
+          intl.formatMessage({ id: "error" }),
+          intl.formatMessage({ id: "userExist" })
+        );
+        setLoading(false);
+      } else {
+        notification(
+          "error",
+          intl.formatMessage({ id: "error" }),
+          intl.formatMessage({ id: "serverError" })
+        );
+        setLoading(false);
+      }
+    }
   };
   return (
     <>

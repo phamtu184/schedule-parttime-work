@@ -93,6 +93,7 @@ export default {
     deleteUserSuccess: "xóa nhân viên thành công",
     enableUserSuccess: "kích hoạt nhân viên thành công",
     disableUserSuccess: "vô hiệu nhân viên thành công",
+    editUserSuccess: "sửa nhân viên thành công",
     loginSuccess: "đăng nhập thành công",
     loginFail: "tài khoản không tồn tại hoặc sai mật khẩu",
     registerScheduleFail: "lịch đã tồn tại",

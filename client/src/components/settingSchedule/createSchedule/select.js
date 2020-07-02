@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
 import { Cascader, Form } from "antd";
 import translate from "../../../asset/i18n/translate";
-import axios from "axios";
-import url from "../../../asset/urlConfig";
 import { useDispatch } from "react-redux";
 import { createSchedule } from "../../../action/schedule";
 import formatResult from "../../common/schedule/formatResult";
+import scheduleApi from "../../../api/scheduleApi";
 
 export default function SelectSchedule(props) {
   const { options, fentchOption, setLoading } = props;
@@ -14,35 +13,33 @@ export default function SelectSchedule(props) {
     fentchOption();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const onChangeCascader = (value) => {
+  const onChangeCascader = async (value) => {
     if (value.length > 1) {
       setLoading(true);
-      axios
-        .get(`${url.BASE || url.LOCAL}/api/schedule`, {
-          params: { id: value[1] },
-        })
-        .then((res) => {
-          const {
-            receptionist,
-            server,
-            cook,
+      try {
+        const rs = await scheduleApi.getSchedule({ id: value[1] });
+        const {
+          receptionist,
+          server,
+          cook,
+          title,
+          shift1,
+          shift2,
+          moneyPerHour,
+        } = rs;
+        dispatch(
+          createSchedule({
+            data: formatResult(receptionist, server, cook),
             title,
             shift1,
             shift2,
             moneyPerHour,
-          } = res.data;
-          dispatch(
-            createSchedule({
-              data: formatResult(receptionist, server, cook),
-              title,
-              shift1,
-              shift2,
-              moneyPerHour,
-            })
-          );
-          setLoading(false);
-        })
-        .catch((e) => console.log(e));
+          })
+        );
+        setLoading(false);
+      } catch (e) {
+        console.log(e);
+      }
     }
   };
   return (

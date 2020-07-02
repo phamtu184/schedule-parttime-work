@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import { Form, Spin, Tag } from "antd";
-import axios from "axios";
-import url from "../../../asset/urlConfig";
 import Title from "../../common/title";
 import translate from "../../../asset/i18n/translate";
+import userApi from "../../../api/userApi";
 
 const viewItemLayout = {
   labelCol: {
@@ -23,23 +22,24 @@ export default function ViewUser({ props }) {
   const [isLoading, setLoading] = useState(false);
   const history = useHistory();
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${url.BASE || url.LOCAL}/api/user`, { params: { id } })
-      .then((res) => {
-        setUser(res.data);
+    const getData = async () => {
+      setLoading(true);
+      try {
+        const params = { id };
+        const res = await userApi.getUser(params);
+        setUser(res);
         setLoading(false);
-      })
-      .catch((e) => history.push("/users"));
+      } catch (e) {
+        history.push("/users");
+      }
+    };
+    getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
       <Title className="color-dark">{translate("viewUser")}</Title>
       <Spin spinning={isLoading}>
-        <Form.Item label={translate("userId")} {...viewItemLayout}>
-          <strong>{user.userId}</strong>
-        </Form.Item>
         <Form.Item label={translate("username")} {...viewItemLayout}>
           <strong>{user.username}</strong>
         </Form.Item>

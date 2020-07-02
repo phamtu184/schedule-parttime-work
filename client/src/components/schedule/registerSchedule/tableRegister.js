@@ -42,6 +42,7 @@ export default function TableRegister(props) {
       const row = await form.validateFields();
       const newData = [...dataSource];
       const index = newData.findIndex((item) => key === item.key);
+      console.log(row);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });

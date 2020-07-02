@@ -1,0 +1,30 @@
+import axiosClient from "./axiosClient";
+
+const scheduleApi = {
+  getSchedule: (params) => {
+    const url = "/api/schedule";
+    return axiosClient.get(url, { params });
+  },
+  createSchedule: (body) => {
+    const url = "/api/schedule";
+    return axiosClient.post(url, body);
+  },
+  getScheduleLazily: () => {
+    const url = "/api/schedulelazily";
+    return axiosClient.get(url);
+  },
+  deleteSchedule: (params) => {
+    const url = "/api/schedule";
+    return axiosClient.delete(url, { params });
+  },
+  putRegisterSchedule: (body) => {
+    const url = "/api/registerschedule";
+    return axiosClient.put(url, body);
+  },
+  getRegisterSchedule: (params) => {
+    const url = "/api/registerschedule";
+    return axiosClient.get(url, { params });
+  },
+};
+
+export default scheduleApi;

@@ -5,9 +5,8 @@ import { Form, Button } from "antd";
 import { useIntl } from "react-intl";
 import formItems from "./formItems";
 import { SaveOutlined, UndoOutlined } from "@ant-design/icons";
-import axios from "axios";
-import url from "../../../asset/urlConfig";
 import notification from "../../common/notification";
+import userApi from "../../../api/userApi";
 
 const formItemLayout = {
   labelCol: {
@@ -29,50 +28,38 @@ export default function NewUser() {
   const [isLoading, setLoading] = useState(false);
   const [form] = Form.useForm();
   const intl = useIntl();
-  const onFinish = (value) => {
-    const { username, password, fullname, phonenumber, roles } = value;
+  const onFinish = async (value) => {
     setLoading(true);
-    axios
-      .post(`${url.BASE || url.LOCAL}/api/user`, {
-        username,
-        password,
-        fullname,
-        phonenumber,
-        roles,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          notification(
-            "success",
-            intl.formatMessage({ id: "success" }),
-            intl.formatMessage({ id: "addUserSuccess" })
-          );
-          setLoading(false);
-          form.resetFields();
-        }
-      })
-      .catch((err) => {
-        if (err.response.status === 400) {
-          notification(
-            "error",
-            intl.formatMessage({ id: "error" }),
-            intl.formatMessage({ id: "userExist" })
-          );
-          setLoading(false);
-        } else {
-          notification(
-            "error",
-            intl.formatMessage({ id: "error" }),
-            intl.formatMessage({ id: "serverError" })
-          );
-          setLoading(false);
-        }
-      });
+    try {
+      await userApi.addUser(value);
+      notification(
+        "success",
+        intl.formatMessage({ id: "success" }),
+        intl.formatMessage({ id: "addUserSuccess" })
+      );
+      setLoading(false);
+      form.resetFields();
+    } catch (err) {
+      if (err.response.status === 400) {
+        notification(
+          "error",
+          intl.formatMessage({ id: "error" }),
+          intl.formatMessage({ id: "userExist" })
+        );
+        setLoading(false);
+      } else {
+        notification(
+          "error",
+          intl.formatMessage({ id: "error" }),
+          intl.formatMessage({ id: "serverError" })
+        );
+        setLoading(false);
+      }
+    }
   };
   const onReset = () => {
     form.resetFields();
   };
-
   return (
     <>
       <Title className="color-dark">{translate("newUser")}</Title>

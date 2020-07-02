@@ -4,13 +4,12 @@ import translate from "../../asset/i18n/translate";
 import ButtonList from "./buttonList";
 import FormSearch from "./formSearch";
 import TableUserList from "./tableUserList";
-import axios from "axios";
-import url from "../../asset/urlConfig";
 import { pageSize } from "../../asset/config";
 import { useIntl } from "react-intl";
 import notification from "../common/notification";
 import { roleAdmin, roleManager } from "../security/checkPrivateRoles";
 import { useSelector } from "react-redux";
+import userApi from "../../api/userApi";
 
 export default function User() {
   const [userList, setUserList] = useState([]);
@@ -29,32 +28,37 @@ export default function User() {
   const onSelectChange = (selectedRowKeys) => {
     setSelectedRowKeys(selectedRowKeys);
   };
-  const fetchData = (current, pageSize) => {
+  const fetchData = async (current, pageSize) => {
     setLoading(true);
-    axios
-      .get(`${url.BASE || url.LOCAL}/api/users`, {
-        params: { current, pageSize },
-      })
-      .then((res) => {
-        setUserList(res.data.users);
-        setPagination({ ...pagination, total: res.data.total, current });
-        setLoading(false);
-      });
+    try {
+      const params = { current, pageSize };
+      const res = await userApi.getUsers(params);
+      setUserList(res.users);
+      setPagination({ ...pagination, total: res.total, current });
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
   };
-  const searchData = (fullname, roles, status, username, current, pageSize) => {
+  const searchData = async (
+    fullname,
+    roles,
+    status,
+    username,
+    current,
+    pageSize
+  ) => {
     setLoading(true);
-    axios
-      .post(
-        `${url.BASE || url.LOCAL}/api/users`,
-        { fullname, roles, status, username },
-        { params: { current, pageSize } }
-      )
-      .then((res) => {
-        setUserList(res.data.users);
-        setPagination({ ...pagination, total: res.data.total, current });
-        setLoading(false);
-      })
-      .catch((e) => console.log(e));
+    try {
+      const params = { current, pageSize };
+      const body = { fullname, roles, status, username };
+      const res = await userApi.searchUsers(body, params);
+      setUserList(res.users);
+      setPagination({ ...pagination, total: res.total, current });
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const rowSelection = {
     selectedRowKeys,
@@ -78,79 +82,74 @@ export default function User() {
       setIsSearch(true);
     }
   };
-  const deleteUsers = () => {
+  const deleteUsers = async () => {
     setLoading(true);
-    axios
-      .delete(`${url.BASE || url.LOCAL}/api/users`, { params: selectedRowKeys })
-      .then((res) => {
-        if (res.status === 200) {
-          notification(
-            "success",
-            intl.formatMessage({ id: "success" }),
-            intl.formatMessage({ id: "deleteUserSuccess" })
-          );
-          fetchData(1, pagination.pageSize);
-          setSelectedRowKeys([]);
-        }
-      })
-      .catch((e) => {
-        notification(
-          "error",
-          intl.formatMessage({ id: "error" }),
-          intl.formatMessage({ id: "serverError" })
-        );
-        setLoading(false);
-      });
+    try {
+      const params = { selectedRowKeys };
+      await userApi.deleteUsers(params);
+      notification(
+        "success",
+        intl.formatMessage({ id: "success" }),
+        intl.formatMessage({ id: "deleteUserSuccess" })
+      );
+      fetchData(1, pagination.pageSize);
+      setSelectedRowKeys([]);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      notification(
+        "error",
+        intl.formatMessage({ id: "error" }),
+        intl.formatMessage({ id: "serverError" })
+      );
+      setLoading(false);
+    }
   };
-  const enableUsers = () => {
+  const enableUsers = async () => {
     setLoading(true);
-    axios
-      .put(`${url.BASE || url.LOCAL}/api/users`, {
-        enableAction: true,
-        selectedRowKeys,
-      })
-      .then((res) => {
-        notification(
-          "success",
-          intl.formatMessage({ id: "success" }),
-          intl.formatMessage({ id: "enableUserSuccess" })
-        );
-        fetchData(pagination.current, pagination.pageSize);
-        setSelectedRowKeys([]);
-      })
-      .catch((e) => {
-        notification(
-          "error",
-          intl.formatMessage({ id: "error" }),
-          intl.formatMessage({ id: "serverError" })
-        );
-        setLoading(false);
-      });
+    try {
+      const body = { enableAction: true, selectedRowKeys };
+      await userApi.enableUsers(body);
+      notification(
+        "success",
+        intl.formatMessage({ id: "success" }),
+        intl.formatMessage({ id: "enableUserSuccess" })
+      );
+      fetchData(pagination.current, pagination.pageSize);
+      setSelectedRowKeys([]);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      notification(
+        "error",
+        intl.formatMessage({ id: "error" }),
+        intl.formatMessage({ id: "serverError" })
+      );
+      setLoading(false);
+    }
   };
-  const disableUsers = () => {
+  const disableUsers = async () => {
     setLoading(true);
-    axios
-      .put(`${url.BASE || url.LOCAL}/api/users`, {
-        enableAction: false,
-        selectedRowKeys,
-      })
-      .then((res) => {
-        notification(
-          "success",
-          intl.formatMessage({ id: "success" }),
-          intl.formatMessage({ id: "disableUserSuccess" })
-        );
-        fetchData(pagination.current, pagination.pageSize);
-        setSelectedRowKeys([]);
-      })
-      .catch((e) => {
-        notification(
-          "error",
-          intl.formatMessage({ id: "error" }),
-          intl.formatMessage({ id: "serverError" })
-        );
-        setLoading(false);
-      });
+    try {
+      const body = { selectedRowKeys };
+      await userApi.enableUsers(body);
+      notification(
+        "success",
+        intl.formatMessage({ id: "success" }),
+        intl.formatMessage({ id: "disableUserSuccess" })
+      );
+      fetchData(pagination.current, pagination.pageSize);
+      setSelectedRowKeys([]);
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+      notification(
+        "error",
+        intl.formatMessage({ id: "error" }),
+        intl.formatMessage({ id: "serverError" })
+      );
+      setLoading(false);
+    }
   };
   return (
     <>

@@ -3,9 +3,8 @@ import Title from "../../common/title";
 import TitleTable from "../../common/schedule/title";
 import Table from "./tableRegister";
 import translate from "../../../asset/i18n/translate";
-import axios from "axios";
-import url from "../../../asset/urlConfig";
 import formatResult from "../../common/schedule/formatResult";
+import scheduleApi from "../../../api/scheduleApi";
 
 export default function RegisterSchedule() {
   const [isLoading, setLoading] = useState(false);
@@ -17,10 +16,10 @@ export default function RegisterSchedule() {
     money: 0,
   });
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`${url.BASE || url.LOCAL}/api/registerschedule`)
-      .then((res) => {
+    const getSchedule = async () => {
+      setLoading(true);
+      try {
+        const res = await scheduleApi.getRegisterSchedule();
         const {
           receptionist,
           server,
@@ -29,16 +28,16 @@ export default function RegisterSchedule() {
           shift1,
           shift2,
           moneyPerHour,
-        } = res.data;
+        } = res;
         setDataSource(formatResult(receptionist, server, cook));
         setTitle(title);
         setLoading(false);
         setInfoTitle({ shift1, shift2, money: moneyPerHour });
-      })
-      .catch((e) => {
+      } catch (e) {
         console.log(e);
-        setLoading(false);
-      });
+      }
+    };
+    getSchedule();
   }, []);
   return (
     <>

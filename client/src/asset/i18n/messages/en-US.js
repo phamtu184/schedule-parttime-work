@@ -93,6 +93,7 @@ export default {
     deleteUserSuccess: "delete user success",
     enableUserSuccess: "enable user success",
     disableUserSuccess: "disable user success",
+    editUserSuccess: "edit user success",
     loginSuccess: "login success",
     loginFail: "account dosen't exist or wrong password",
     registerScheduleFail: "schedule has exist",

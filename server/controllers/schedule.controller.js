@@ -110,7 +110,7 @@ module.exports.getScheduleLazily = async function (req, res) {
   res.json(result);
 };
 module.exports.deleteSchedule = async function (req, res) {
-  const id = req.query[0];
+  const id = req.query.title;
   Schedule.findOneAndDelete({ scheduleId: id })
     .then(() =>
       res.status(200).json({ message: "delete Schedule form success" })
