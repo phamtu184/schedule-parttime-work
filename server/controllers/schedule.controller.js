@@ -4,7 +4,7 @@ const formatSchedule = require("../common/formatSchedule");
 
 module.exports.createSchedule = async function (req, res) {
   const { date, shift1, shift2, money } = req.body;
-  const scheduleForm = await Schedule.findOne({ registerId: date })
+  const scheduleForm = await Schedule.findOne({ scheduleId: date })
     .lean()
     .exec();
   if (scheduleForm)

@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Table, Spin, Form, Typography, Button } from "antd";
-//import Button from "../../common/button";
 import translate from "../../../asset/i18n/translate";
 import { useSelector } from "react-redux";
 import EditableCell from "./editCell";
 const { Title } = Typography;
 const renderContent = (value, row, index) => {
   const obj = {
-    children: value,
+    children: value ? translate(value) : value,
     props: {},
   };
   if (row.isTitle) {
@@ -15,7 +14,7 @@ const renderContent = (value, row, index) => {
   }
   return obj;
 };
-export default function TableUserList(props) {
+export default function TableRegister(props) {
   const { isLoading, dataSource, setDataSource } = props;
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");

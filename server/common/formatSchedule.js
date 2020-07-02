@@ -12,6 +12,7 @@ const formatSchedule = (users, string) => {
       friday: "",
       saturday: "",
       sunday: "",
+      totalHour: 0,
     };
   });
   return rs;

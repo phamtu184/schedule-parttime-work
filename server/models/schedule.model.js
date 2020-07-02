@@ -20,6 +20,7 @@ const ScheduleSchema = new Schema(
         friday: String,
         saturday: String,
         sunday: String,
+        totalHour: Number,
       },
     ],
     dinning: [
@@ -34,6 +35,7 @@ const ScheduleSchema = new Schema(
         friday: String,
         saturday: String,
         sunday: String,
+        totalHour: Number,
       },
     ],
     kitchen: [
@@ -48,6 +50,7 @@ const ScheduleSchema = new Schema(
         friday: String,
         saturday: String,
         sunday: String,
+        totalHour: Number,
       },
     ],
     isMain: {

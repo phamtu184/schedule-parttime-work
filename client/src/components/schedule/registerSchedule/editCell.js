@@ -20,6 +20,12 @@ const EditableCell = ({
           style={{
             margin: 0,
           }}
+          rules={[
+            {
+              required: true,
+              message: translate("require", { title: translate("shift") }),
+            },
+          ]}
         >
           <Select style={{ width: 80 }}>
             <Option className="text-cap" value="shift1">

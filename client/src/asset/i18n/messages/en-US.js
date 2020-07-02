@@ -84,6 +84,8 @@ export default {
     //scheduleRegister
     allDay: "all day",
     off: "off",
+    shift: "Shift",
+    all: "all",
     // event
     userExist: "user id or username has exist",
     serverError: "server error",

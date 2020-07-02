@@ -84,6 +84,8 @@ export default {
     //scheduleRegister
     allDay: "Cả ngày",
     off: "nghỉ",
+    shift: "Ca",
+    all: "Cả ngày",
     // event
     userExist: "mã nhân viên hoặc tên đăng nhập đã tồn tại",
     serverError: "lỗi server",
