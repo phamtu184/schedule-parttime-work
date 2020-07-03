@@ -3,6 +3,7 @@ var router = express.Router();
 const userController = require("../controllers/user.controller");
 const authController = require("../controllers/auth.controller");
 const scheduleController = require("../controllers/schedule.controller");
+const registerController = require("../controllers/register.controller");
 
 // auth
 router.get("/auth", authController.getProfile);
@@ -20,9 +21,10 @@ router.put("/users", userController.modifyStatusUsers);
 router.post("/schedule", scheduleController.createSchedule);
 router.get("/schedule", scheduleController.getSchedule);
 router.delete("/schedule", scheduleController.deleteSchedule);
-router.put("/registerschedule", scheduleController.putRegisterSchedule);
+router.put("/schedule", scheduleController.putRegisterSchedule);
 router.get("/schedulelazily", scheduleController.getScheduleLazily);
-
-router.get("/registerschedule", scheduleController.getRegisterSchedule);
+// schedule register
+router.get("/registerschedule", registerController.getRegisterSchedule);
+router.put("/registerschedule", registerController.userRegisterSchedule);
 
 module.exports = router;

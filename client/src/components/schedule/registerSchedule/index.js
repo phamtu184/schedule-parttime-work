@@ -49,6 +49,7 @@ export default function RegisterSchedule() {
         moneyPerHour={infoTitle.money}
       />
       <Table
+        title={title}
         isLoading={isLoading}
         dataSource={dataSource}
         setDataSource={setDataSource}

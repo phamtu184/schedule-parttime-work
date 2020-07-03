@@ -22,7 +22,11 @@ export default function Login() {
         })
         .then((res) => {
           dispatch(
-            login({ fullname: res.data.fullname, roles: res.data.roles })
+            login({
+              fullname: res.data.fullname,
+              roles: res.data.roles,
+              id: res.data.id,
+            })
           );
           history.push("/");
         })

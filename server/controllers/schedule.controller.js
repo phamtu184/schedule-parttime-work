@@ -127,27 +127,3 @@ module.exports.putRegisterSchedule = async function (req, res) {
     })
     .catch((e) => res.status(500).json({ message: "uppdate fail" }));
 };
-
-module.exports.getRegisterSchedule = async function (req, res) {
-  const scheduleCurrent = await Schedule.findOne({ isRegister: true }).exec();
-  if (!scheduleCurrent)
-    return res.status(400).json({ message: "cannot find any colection" });
-  const {
-    counter,
-    dinning,
-    kitchen,
-    scheduleId,
-    shift1,
-    shift2,
-    moneyPerHour,
-  } = scheduleCurrent;
-  res.status(200).json({
-    receptionist: counter,
-    server: dinning,
-    cook: kitchen,
-    title: scheduleId,
-    shift1,
-    shift2,
-    moneyPerHour,
-  });
-};

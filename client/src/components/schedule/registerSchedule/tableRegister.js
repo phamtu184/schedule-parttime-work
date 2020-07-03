@@ -3,6 +3,8 @@ import { Table, Spin, Form, Typography, Button } from "antd";
 import translate from "../../../asset/i18n/translate";
 import { useSelector } from "react-redux";
 import EditableCell from "./editCell";
+import scheduleApi from "../../../api/scheduleApi";
+
 const { Title } = Typography;
 const renderContent = (value, row, index) => {
   const obj = {
@@ -15,7 +17,7 @@ const renderContent = (value, row, index) => {
   return obj;
 };
 export default function TableRegister(props) {
-  const { isLoading, dataSource, setDataSource } = props;
+  const { isLoading, dataSource, setDataSource, title } = props;
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const fullname = useSelector((state) => state.auth.fullname);
@@ -42,12 +44,12 @@ export default function TableRegister(props) {
       const row = await form.validateFields();
       const newData = [...dataSource];
       const index = newData.findIndex((item) => key === item.key);
-      console.log(row);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, { ...item, ...row });
         setDataSource(newData);
         setEditingKey("");
+        await scheduleApi.userRegisterSchedule({ title, item: newData[index] });
       } else {
         newData.push(row);
         setDataSource(newData);

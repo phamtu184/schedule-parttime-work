@@ -26,9 +26,11 @@ module.exports.login = async function (req, res) {
     { expiresIn: 1000 * 60 * 60 * 24 },
     (err, token) => {
       if (err) return res.status(500).json({ message: "Lỗi server" });
-      res
-        .status(200)
-        .json({ token, fullname: user.fullname, roles: user.roles });
+      res.status(200).json({
+        token,
+        fullname: user.fullname,
+        roles: user.roles,
+      });
     }
   );
 };

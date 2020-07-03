@@ -18,12 +18,16 @@ const scheduleApi = {
     return axiosClient.delete(url, { params });
   },
   putRegisterSchedule: (body) => {
-    const url = "/api/registerschedule";
+    const url = "/api/schedule";
     return axiosClient.put(url, body);
   },
   getRegisterSchedule: (params) => {
     const url = "/api/registerschedule";
     return axiosClient.get(url, { params });
+  },
+  userRegisterSchedule: (body) => {
+    const url = "/api/registerschedule";
+    return axiosClient.put(url, body);
   },
 };
 
