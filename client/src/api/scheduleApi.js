@@ -21,9 +21,9 @@ const scheduleApi = {
     const url = "/api/schedule";
     return axiosClient.put(url, body);
   },
-  getRegisterSchedule: (params) => {
+  getRegisterSchedule: () => {
     const url = "/api/registerschedule";
-    return axiosClient.get(url, { params });
+    return axiosClient.get(url);
   },
   userRegisterSchedule: (body) => {
     const url = "/api/registerschedule";

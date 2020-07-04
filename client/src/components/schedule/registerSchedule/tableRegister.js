@@ -4,6 +4,8 @@ import translate from "../../../asset/i18n/translate";
 import { useSelector } from "react-redux";
 import EditableCell from "./editCell";
 import scheduleApi from "../../../api/scheduleApi";
+import { useIntl } from "react-intl";
+import notification from "../../common/notification";
 
 const { Title } = Typography;
 const renderContent = (value, row, index) => {
@@ -17,9 +19,10 @@ const renderContent = (value, row, index) => {
   return obj;
 };
 export default function TableRegister(props) {
-  const { isLoading, dataSource, setDataSource, title } = props;
+  const { isLoading, dataSource, setDataSource, title, infoTitle } = props;
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
+  const intl = useIntl();
   const fullname = useSelector((state) => state.auth.fullname);
   const isEditing = (record) => record.key === editingKey;
   const edit = (record) => {
@@ -49,7 +52,18 @@ export default function TableRegister(props) {
         newData.splice(index, 1, { ...item, ...row });
         setDataSource(newData);
         setEditingKey("");
-        await scheduleApi.userRegisterSchedule({ title, item: newData[index] });
+        await scheduleApi.userRegisterSchedule({
+          title,
+          item: newData[index],
+          infoTitle,
+        });
+        notification(
+          "success",
+          intl.formatMessage({ id: "success" }),
+          intl.formatMessage({ id: "registerSchedule" }) +
+            " " +
+            intl.formatMessage({ id: "success" })
+        );
       } else {
         newData.push(row);
         setDataSource(newData);

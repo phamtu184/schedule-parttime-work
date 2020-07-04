@@ -53,6 +53,7 @@ export default function RegisterSchedule() {
         isLoading={isLoading}
         dataSource={dataSource}
         setDataSource={setDataSource}
+        infoTitle={infoTitle}
       />
     </>
   );
