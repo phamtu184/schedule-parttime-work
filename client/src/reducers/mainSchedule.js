@@ -7,9 +7,9 @@ const initialState = {
     money: 0,
   },
 };
-const scheduleReducer = (state = initialState, action) => {
+const mainScheduleReducer = (state = initialState, action) => {
   switch (action.type) {
-    case "CREATE_SCHEDULE": {
+    case "CREATE_MAIN_SCHEDULE": {
       return {
         ...state,
         dataSource: action.payload.data,
@@ -17,11 +17,17 @@ const scheduleReducer = (state = initialState, action) => {
         infoTitle: action.payload.infoTitle,
       };
     }
-    case "DELETE_SCHEDULE": {
+    case "SET_MAIN_SCHEDULE": {
+      return {
+        ...state,
+        dataSource: action.payload.data,
+      };
+    }
+    case "DELETE_MAIN_SCHEDULE": {
       return initialState;
     }
     default:
       return state;
   }
 };
-export default scheduleReducer;
+export default mainScheduleReducer;

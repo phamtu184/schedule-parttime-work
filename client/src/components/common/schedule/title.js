@@ -7,7 +7,8 @@ const DivTitle = styled.div`
     text-align: center;
   }
 `;
-export default function Title({ title, shift1, shift2, moneyPerHour }) {
+export default function Title({ title, infoTitle }) {
+  const { shift1, shift2, moneyPerHour } = infoTitle;
   return (
     <DivTitle>
       <h3>

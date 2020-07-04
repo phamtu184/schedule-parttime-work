@@ -42,12 +42,7 @@ export default function RegisterSchedule() {
   return (
     <>
       <Title>{translate("registerSchedule")}</Title>
-      <TitleTable
-        title={title}
-        shift1={infoTitle.shift1}
-        shift2={infoTitle.shift2}
-        moneyPerHour={infoTitle.money}
-      />
+      <TitleTable title={title} infoTitle={infoTitle} />
       <Table
         title={title}
         isLoading={isLoading}

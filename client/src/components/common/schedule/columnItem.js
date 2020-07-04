@@ -4,7 +4,7 @@ import translate from "../../../asset/i18n/translate";
 const { Title } = Typography;
 const renderContent = (value, row, index) => {
   const obj = {
-    children: value,
+    children: value ? translate(value) : value,
     props: {},
   };
   if (row.isTitle) {
@@ -12,6 +12,7 @@ const renderContent = (value, row, index) => {
   }
   return obj;
 };
+
 const columns = [
   {
     title: translate("fullname"),

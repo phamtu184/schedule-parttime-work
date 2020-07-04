@@ -2,12 +2,11 @@ import React, { useEffect } from "react";
 import { Cascader, Form } from "antd";
 import translate from "../../../asset/i18n/translate";
 import { useDispatch } from "react-redux";
-import { createSchedule } from "../../../action/schedule";
 import formatResult from "../../common/schedule/formatResult";
 import scheduleApi from "../../../api/scheduleApi";
 
 export default function SelectSchedule(props) {
-  const { options, fentchOption, setLoading } = props;
+  const { options, fentchOption, setLoading, action } = props;
   const dispatch = useDispatch();
   useEffect(() => {
     fentchOption();
@@ -18,22 +17,12 @@ export default function SelectSchedule(props) {
       setLoading(true);
       try {
         const rs = await scheduleApi.getSchedule({ id: value[1] });
-        const {
-          receptionist,
-          server,
-          cook,
-          title,
-          shift1,
-          shift2,
-          moneyPerHour,
-        } = rs;
+        const { receptionist, server, cook, title, infoTitle } = rs;
         dispatch(
-          createSchedule({
+          action({
             data: formatResult(receptionist, server, cook),
             title,
-            shift1,
-            shift2,
-            moneyPerHour,
+            infoTitle,
           })
         );
         setLoading(false);

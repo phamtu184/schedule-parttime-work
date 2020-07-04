@@ -21,9 +21,7 @@ export default function SettingSchedule(props) {
   const dispatch = useDispatch();
   const dataSource = useSelector((state) => state.schedule.dataSource);
   const title = useSelector((state) => state.schedule.title);
-  const shift1 = useSelector((state) => state.schedule.shift1);
-  const shift2 = useSelector((state) => state.schedule.shift2);
-  const moneyPerHour = useSelector((state) => state.schedule.moneyPerHour);
+  const infoTitle = useSelector((state) => state.schedule.infoTitle);
   const onFinish = async (value) => {
     const { time, shift1, shift2, moneyPerHour } = value;
     const body = {
@@ -35,22 +33,12 @@ export default function SettingSchedule(props) {
     setLoading(true);
     try {
       const res = await scheduleApi.createSchedule(body);
-      const {
-        receptionist,
-        server,
-        cook,
-        title,
-        shift1,
-        shift2,
-        moneyPerHour,
-      } = res;
+      const { receptionist, server, cook, title, infoTitle } = res;
       dispatch(
         createSchedule({
           data: formatResult(receptionist, server, cook),
           title,
-          shift1,
-          shift2,
-          moneyPerHour,
+          infoTitle,
         })
       );
       fentchOption();
@@ -132,6 +120,7 @@ export default function SettingSchedule(props) {
               fentchOption={fentchOption}
               options={options}
               setLoading={setLoading}
+              action={createSchedule}
             />
           </Col>
         </Row>
@@ -159,12 +148,7 @@ export default function SettingSchedule(props) {
           </Button>
         </Popconfirm>
       </DivForm>
-      <TitleTable
-        title={title}
-        shift1={shift1}
-        shift2={shift2}
-        moneyPerHour={moneyPerHour}
-      />
+      <TitleTable title={title} infoTitle={infoTitle} />
       <Table isLoading={isLoading} dataSource={dataSource} />
     </>
   );

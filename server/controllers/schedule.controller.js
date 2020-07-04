@@ -43,9 +43,11 @@ module.exports.createSchedule = async function (req, res) {
       server: formatSchedule(server, "server"),
       cook: formatSchedule(cook, "cook"),
       title: schedule.scheduleId,
-      shift1: schedule.shift1,
-      shift2: schedule.shift2,
-      moneyPerHour: schedule.moneyPerHour,
+      infoTitle: {
+        shift1: schedule.shift1,
+        shift2: schedule.shift2,
+        moneyPerHour: schedule.moneyPerHour,
+      },
     });
   });
 };
@@ -66,9 +68,11 @@ module.exports.getSchedule = async function (req, res) {
     server: dinning,
     cook: kitchen,
     title: scheduleId,
-    shift1,
-    shift2,
-    moneyPerHour,
+    infoTitle: {
+      shift1,
+      shift2,
+      moneyPerHour,
+    },
   });
 };
 module.exports.getScheduleLazily = async function (req, res) {
