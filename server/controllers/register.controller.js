@@ -48,3 +48,13 @@ module.exports.userRegisterSchedule = async function (req, res) {
     .then((rs) => res.status(200).json({ message: "register success" }))
     .catch((e) => console.log(e));
 };
+module.exports.putToMainSchedule = async function (req, res) {
+  const id = req.body.title;
+  Schedule.updateOne({ isMain: true }, { isMain: false })
+    .then(() => {
+      Schedule.updateOne({ scheduleId: id }, { isMain: true })
+        .then(() => res.status(200).json({ message: "update success" }))
+        .catch((e) => res.status(500).json({ message: "uppdate fail" }));
+    })
+    .catch((e) => res.status(500).json({ message: "uppdate fail" }));
+};

@@ -130,13 +130,14 @@ export default function SettingSchedule(props) {
           disabled={!dataSource.length > 0}
           onClick={pushToHome}
         >
-          {translate("upload")}
+          {translate("uploadToRegister")}
         </Button>
         <Popconfirm
           title={translate("confirmDelete")}
           onConfirm={deleteTable}
           okText={translate("yes")}
           cancelText={translate("no")}
+          disabled={!dataSource.length > 0}
         >
           <Button
             danger

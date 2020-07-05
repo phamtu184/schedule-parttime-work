@@ -4,10 +4,12 @@ import translate from "../../../asset/i18n/translate";
 import { useDispatch } from "react-redux";
 import formatResult from "../../common/schedule/formatResult";
 import scheduleApi from "../../../api/scheduleApi";
+import { useIntl } from "react-intl";
 
 export default function SelectSchedule(props) {
   const { options, fentchOption, setLoading, action } = props;
   const dispatch = useDispatch();
+  const intl = useIntl();
   useEffect(() => {
     fentchOption();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,6 +45,7 @@ export default function SelectSchedule(props) {
           changeOnSelect
           style={{ maxWidth: 240 }}
           options={options}
+          placeholder={intl.formatMessage({ id: "plsSelect" })}
         />
       </Form.Item>
     </Form>

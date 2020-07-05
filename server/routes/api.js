@@ -26,5 +26,6 @@ router.get("/schedulelazily", scheduleController.getScheduleLazily);
 // schedule register
 router.get("/registerschedule", registerController.getRegisterSchedule);
 router.put("/registerschedule", registerController.userRegisterSchedule);
+router.put("/mainschedule", registerController.putToMainSchedule);
 
 module.exports = router;

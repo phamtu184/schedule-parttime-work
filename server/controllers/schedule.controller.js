@@ -125,9 +125,9 @@ module.exports.putRegisterSchedule = async function (req, res) {
   const id = req.body.title;
   Schedule.updateOne({ isRegister: true }, { isRegister: false })
     .then(() => {
-      Schedule.updateOne({ scheduleId: id }, { isRegister: true }).then(() =>
-        res.status(200).json({ message: "update success" })
-      );
+      Schedule.updateOne({ scheduleId: id }, { isRegister: true })
+        .then(() => res.status(200).json({ message: "update success" }))
+        .catch((e) => res.status(500).json({ message: "uppdate fail" }));
     })
     .catch((e) => res.status(500).json({ message: "uppdate fail" }));
 };

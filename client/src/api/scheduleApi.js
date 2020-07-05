@@ -29,6 +29,10 @@ const scheduleApi = {
     const url = "/api/registerschedule";
     return axiosClient.put(url, body);
   },
+  putToMainSchedule: (body) => {
+    const url = "/api/mainschedule";
+    return axiosClient.put(url, body);
+  },
 };
 
 export default scheduleApi;

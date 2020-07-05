@@ -146,31 +146,35 @@ export default function TableRegister(props) {
       key: "action",
       render: (_, record) => {
         const editable = isEditing(record);
-        return editable ? (
-          <span>
+        return !record.isTitle ? (
+          editable ? (
+            <span>
+              <Button
+                className="text-cap"
+                type="primary"
+                onClick={() => save(record.key)}
+                style={{
+                  marginRight: 8,
+                }}
+              >
+                {translate("save")}
+              </Button>
+              <Button className="text-cap" onClick={cancel}>
+                {translate("cancel")}
+              </Button>
+            </span>
+          ) : (
             <Button
               className="text-cap"
               type="primary"
-              onClick={() => save(record.key)}
-              style={{
-                marginRight: 8,
-              }}
+              disabled={editingKey !== ""}
+              onClick={() => edit(record)}
             >
-              {translate("save")}
+              {translate("edit")}
             </Button>
-            <Button className="text-cap" onClick={cancel}>
-              {translate("cancel")}
-            </Button>
-          </span>
+          )
         ) : (
-          <Button
-            className="text-cap"
-            type="primary"
-            disabled={editingKey !== ""}
-            onClick={() => edit(record)}
-          >
-            {translate("edit")}
-          </Button>
+          ""
         );
       },
     },
