@@ -30,6 +30,16 @@ const formItems = [
           characters: "3",
         }),
       },
+      () => ({
+        validator(rule, value) {
+          if (!value || !/\s/.test(value)) {
+            return Promise.resolve();
+          }
+          return Promise.reject(
+            translate("whitespace", { title: translate("username") })
+          );
+        },
+      }),
     ],
   },
   {
@@ -59,6 +69,16 @@ const formItems = [
           characters: "3",
         }),
       },
+      () => ({
+        validator(rule, value) {
+          if (!value || !/\s/.test(value)) {
+            return Promise.resolve();
+          }
+          return Promise.reject(
+            translate("invalid", { title: translate("password") })
+          );
+        },
+      }),
     ],
   },
   {
@@ -124,17 +144,19 @@ const formItems = [
         required: true,
         message: translate("require", { title: translate("phonenumber") }),
       },
-      {
-        whitespace: true,
-        message: translate("whitespace", { title: translate("phonenumber") }),
-      },
-      {
-        len: 10,
-        message: translate("len", {
-          title: translate("phonenumber"),
-          characters: "10",
-        }),
-      },
+      () => ({
+        validator(rule, value) {
+          if (
+            !value ||
+            /(01|02|03|04|05|06|07|08|09)+([0-9]{8})\b/.test(value)
+          ) {
+            return Promise.resolve();
+          }
+          return Promise.reject(
+            translate("invalid", { title: translate("phonenumber") })
+          );
+        },
+      }),
     ],
   },
   {

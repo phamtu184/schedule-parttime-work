@@ -52,6 +52,7 @@ export default {
     kitchen: "kitchen",
     // validate Schedule form
     require: "please input {title}",
+    invalid: "{title} invalid",
     whitespace: "{title} cannot be empty",
     max: "{title} cannot be longer than {characters} characters",
     min: "{title} must be at least {characters} characters",

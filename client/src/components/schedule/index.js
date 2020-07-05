@@ -36,6 +36,7 @@ export default function Schedule() {
         setInfoTitle({ shift1, shift2, moneyPerHour });
       } catch (e) {
         console.log(e);
+        setLoading(false);
       }
     };
     getSchedule();

@@ -52,6 +52,7 @@ export default {
     kitchen: "bếp",
     // validate Schedule form
     require: "vui lòng nhập {title}",
+    invalid: "{title} không hợp lệ",
     whitespace: "{title} không được có khoảng trống",
     max: "{title} không được quá {characters} kí tự",
     min: "{title} ít nhất {characters} kí tự",

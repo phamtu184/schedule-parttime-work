@@ -34,6 +34,7 @@ export default function RegisterSchedule() {
         setLoading(false);
         setInfoTitle({ shift1, shift2, moneyPerHour });
       } catch (e) {
+        setLoading(false);
         console.log(e);
       }
     };
