@@ -58,3 +58,31 @@ module.exports.putToMainSchedule = async function (req, res) {
     })
     .catch((e) => res.status(500).json({ message: "uppdate fail" }));
 };
+
+module.exports.getMainSchedule = async function (req, res) {
+  try {
+    const scheduleCurrent = await Schedule.findOne({ isMain: true }).lean();
+    if (!scheduleCurrent)
+      return res.status(400).json({ message: "cannot find any colection" });
+    const {
+      counter,
+      dinning,
+      kitchen,
+      scheduleId,
+      shift1,
+      shift2,
+      moneyPerHour,
+    } = scheduleCurrent;
+    res.status(200).json({
+      receptionist: counter,
+      server: dinning,
+      cook: kitchen,
+      title: scheduleId,
+      shift1,
+      shift2,
+      moneyPerHour,
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};

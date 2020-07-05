@@ -1,6 +1,10 @@
 import axiosClient from "./axiosClient";
 
 const scheduleApi = {
+  getMainSchedule: () => {
+    const url = "/api/mainschedule";
+    return axiosClient.get(url);
+  },
   getSchedule: (params) => {
     const url = "/api/schedule";
     return axiosClient.get(url, { params });

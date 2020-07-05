@@ -13,7 +13,7 @@ export default function RegisterSchedule() {
   const [infoTitle, setInfoTitle] = useState({
     shift1: [],
     shift2: [],
-    money: 0,
+    moneyPerHour: 0,
   });
   useEffect(() => {
     const getSchedule = async () => {
@@ -32,7 +32,7 @@ export default function RegisterSchedule() {
         setDataSource(formatResult(receptionist, server, cook));
         setTitle(title);
         setLoading(false);
-        setInfoTitle({ shift1, shift2, money: moneyPerHour });
+        setInfoTitle({ shift1, shift2, moneyPerHour });
       } catch (e) {
         console.log(e);
       }
