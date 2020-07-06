@@ -33,27 +33,36 @@ module.exports.userRegisterSchedule = async function (req, res) {
   const place = item.key.slice(24, item.key.length);
   const totalHour = countTotalHours(item, infoTitle);
   const newItem = { ...item, totalHour };
+  console.log(place);
   Schedule.findOneAndUpdate(
-    place === "counter"
+    place === "receptionist"
       ? { scheduleId: title, "counter.key": item.key }
-      : place === "dinning"
+      : place === "server"
       ? { scheduleId: title, "dinning.key": item.key }
       : { scheduleId: title, "kitchen.key": item.key },
-    place === "counter"
+    place === "receptionist"
       ? { $set: { "counter.$": newItem } }
-      : place === "dinning"
+      : place === "server"
       ? { $set: { "dinning.$": newItem } }
       : { $set: { "kitchen.$": newItem } }
   )
-    .then((rs) => res.status(200).json({ message: "register success" }))
-    .catch((e) => console.log(e));
+    .then((rs) => {
+      if (rs) return res.status(200).json({ message: "register success" });
+      return res.status(500).json({ message: "uppdate fail" });
+    })
+    .catch((e) => {
+      res.status(500).json({ message: "uppdate fail" });
+    });
 };
 module.exports.putToMainSchedule = async function (req, res) {
   const id = req.body.title;
   Schedule.updateOne({ isMain: true }, { isMain: false })
     .then(() => {
       Schedule.updateOne({ scheduleId: id }, { isMain: true })
-        .then(() => res.status(200).json({ message: "update success" }))
+        .then((rs) => {
+          if (rs) return res.status(200).json({ message: "update success" });
+          return res.status(500).json({ message: "uppdate fail" });
+        })
         .catch((e) => res.status(500).json({ message: "uppdate fail" }));
     })
     .catch((e) => res.status(500).json({ message: "uppdate fail" }));

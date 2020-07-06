@@ -100,7 +100,10 @@ module.exports.editUser = async function (req, res) {
         { username },
         { password: hash, fullname, phonenumber, roles }
       )
-        .then(res.status(200).json("edit user success"))
+        .then((rs) => {
+          if (rs) return res.status(200).json("edit user success");
+          return res.status(500).json({ message: "serverError" });
+        })
         .catch((e) => res.status(500).json({ message: "serverError" }));
     });
   });

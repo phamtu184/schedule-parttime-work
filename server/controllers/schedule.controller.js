@@ -116,17 +116,26 @@ module.exports.getScheduleLazily = async function (req, res) {
 module.exports.deleteSchedule = async function (req, res) {
   const id = req.query.title;
   Schedule.findOneAndDelete({ scheduleId: id })
-    .then(() =>
-      res.status(200).json({ message: "delete Schedule form success" })
-    )
-    .catch((e) => res.status(500).json({ message: "server error" }));
+    .then((rs) => {
+      if (rs)
+        return res
+          .status(200)
+          .json({ message: "delete Schedule form success" });
+      return res.status(500).json({ message: "server error" });
+    })
+    .catch((e) => {
+      return res.status(500).json({ message: "server error" });
+    });
 };
 module.exports.putRegisterSchedule = async function (req, res) {
   const id = req.body.title;
   Schedule.updateOne({ isRegister: true }, { isRegister: false })
     .then(() => {
       Schedule.updateOne({ scheduleId: id }, { isRegister: true })
-        .then(() => res.status(200).json({ message: "update success" }))
+        .then((rs) => {
+          if (rs) return res.status(200).json({ message: "update success" });
+          return res.status(500).json({ message: "server error" });
+        })
         .catch((e) => res.status(500).json({ message: "uppdate fail" }));
     })
     .catch((e) => res.status(500).json({ message: "uppdate fail" }));
