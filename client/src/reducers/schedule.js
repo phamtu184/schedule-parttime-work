@@ -17,6 +17,12 @@ const scheduleReducer = (state = initialState, action) => {
         infoTitle: action.payload.infoTitle,
       };
     }
+    case "SET_SCHEDULE": {
+      return {
+        ...state,
+        dataSource: action.payload.data,
+      };
+    }
     case "DELETE_SCHEDULE": {
       return initialState;
     }

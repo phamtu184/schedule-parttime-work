@@ -127,14 +127,14 @@ module.exports.deleteSchedule = async function (req, res) {
       return res.status(500).json({ message: "server error" });
     });
 };
-module.exports.putRegisterSchedule = async function (req, res) {
+module.exports.putToMainSchedule = async function (req, res) {
   const id = req.body.title;
-  Schedule.updateOne({ isRegister: true }, { isRegister: false })
+  Schedule.updateOne({ isMain: true }, { isMain: false })
     .then(() => {
-      Schedule.updateOne({ scheduleId: id }, { isRegister: true })
+      Schedule.updateOne({ scheduleId: id }, { isMain: true })
         .then((rs) => {
           if (rs) return res.status(200).json({ message: "update success" });
-          return res.status(500).json({ message: "server error" });
+          return res.status(500).json({ message: "uppdate fail" });
         })
         .catch((e) => res.status(500).json({ message: "uppdate fail" }));
     })

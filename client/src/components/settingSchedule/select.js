@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Cascader, Form } from "antd";
-import translate from "../../../asset/i18n/translate";
+import translate from "../../asset/i18n/translate";
 import { useDispatch } from "react-redux";
-import formatResult from "../../common/schedule/formatResult";
-import scheduleApi from "../../../api/scheduleApi";
+import formatResult from "../common/schedule/formatResult";
+import scheduleApi from "../../api/scheduleApi";
 import { useIntl } from "react-intl";
 
 export default function SelectSchedule(props) {

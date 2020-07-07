@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Table, Spin, Form, Typography, Button } from "antd";
 import translate from "../../asset/i18n/translate";
 import { useDispatch } from "react-redux";
-import EditableCell from "../schedule/registerSchedule/editCell";
+import EditableCell from "./editCell";
 import scheduleApi from "../../api/scheduleApi";
 import { useIntl } from "react-intl";
 import notification from "../common/notification";
-import { setSchedule } from "../../action/mainSchedule";
+import { setSchedule } from "../../action/schedule";
 
 const { Title } = Typography;
 const renderContent = (value, row, index) => {

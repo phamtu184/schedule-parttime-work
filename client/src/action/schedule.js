@@ -4,6 +4,12 @@ export const createSchedule = (payload) => {
     payload,
   };
 };
+export const setSchedule = (payload) => {
+  return {
+    type: "SET_SCHEDULE",
+    payload,
+  };
+};
 export const deleteSchedule = (payload) => {
   return {
     type: "DELETE_SCHEDULE",

@@ -21,11 +21,9 @@ router.put("/users", userController.modifyStatusUsers);
 router.post("/schedule", scheduleController.createSchedule);
 router.get("/schedule", scheduleController.getSchedule);
 router.delete("/schedule", scheduleController.deleteSchedule);
-router.put("/schedule", scheduleController.putRegisterSchedule);
+router.put("/schedule", registerController.putToMainSchedule);
 router.get("/schedulelazily", scheduleController.getScheduleLazily);
 // schedule register
-router.get("/registerschedule", registerController.getRegisterSchedule);
 router.put("/registerschedule", registerController.userRegisterSchedule);
-router.put("/mainschedule", registerController.putToMainSchedule);
 router.get("/mainschedule", registerController.getMainSchedule);
 module.exports = router;

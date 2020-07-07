@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import translate from "../../asset/i18n/translate";
 import Title from "../common/title";
-import ButtonList from "./buttonList";
 import TitleTable from "../common/schedule/title";
 import Table from "./table";
 import scheduleApi from "../../api/scheduleApi";
@@ -44,7 +43,6 @@ export default function Schedule() {
   return (
     <>
       <Title className="color-dark">{translate("schedule")}</Title>
-      <ButtonList />
       <TitleTable title={title} infoTitle={infoTitle} />
       <Table isLoading={isLoading} dataSource={dataSource} />
     </>

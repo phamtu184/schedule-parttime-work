@@ -1,6 +1,6 @@
 import React from "react";
 import { Select, Form } from "antd";
-import translate from "../../../asset/i18n/translate";
+import translate from "../../asset/i18n/translate";
 const { Option } = Select;
 const EditableCell = ({
   editing,

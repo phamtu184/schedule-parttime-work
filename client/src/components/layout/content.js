@@ -9,9 +9,7 @@ import NewUser from "../user/newUser";
 import ViewUser from "../user/viewUser";
 import EditUser from "../user/editUser";
 import Schedule from "../schedule";
-import RegisterSchedule from "../schedule/registerSchedule";
 import SettingSchedule from "../settingSchedule";
-import CreateSchedule from "../settingSchedule/createSchedule";
 import { useSelector } from "react-redux";
 
 function Content() {
@@ -53,19 +51,8 @@ function Content() {
           authed={authed}
           component={SettingSchedule}
         />
-        <PrivateRoute
-          exact
-          path="/setting/createSchedule"
-          authed={authed}
-          component={CreateSchedule}
-        />
         <Route exact path="/customer" component={() => <div>customer</div>} />
         <Route exact path="/schedule" component={Schedule} />
-        <Route
-          exact
-          path="/schedule/registerSchedule"
-          component={RegisterSchedule}
-        />
         <Route exact path="/404" component={PageError} />
         <Route exact path="/403">
           <PageError status="403" title="403" subTitle />
