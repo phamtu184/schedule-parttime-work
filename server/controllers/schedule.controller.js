@@ -4,6 +4,9 @@ const formatSchedule = require("../common/formatSchedule");
 
 module.exports.createSchedule = async function (req, res) {
   const { date, shift1, shift2, money } = req.body;
+  if (!money || !date || !shift1 || !shift2) {
+    return res.status(400).json({ message: "bad request" });
+  }
   const scheduleForm = await Schedule.findOne({ scheduleId: date })
     .lean()
     .exec();
@@ -53,6 +56,9 @@ module.exports.createSchedule = async function (req, res) {
 };
 module.exports.getSchedule = async function (req, res) {
   const { id } = req.query;
+  if (!id) {
+    return res.status(400).json({ message: "bad request" });
+  }
   const scheduleValue = await Schedule.findOne({ scheduleId: id }).exec();
   const {
     counter,
@@ -115,6 +121,9 @@ module.exports.getScheduleLazily = async function (req, res) {
 };
 module.exports.deleteSchedule = async function (req, res) {
   const id = req.query.title;
+  if (!id) {
+    return res.status(400).json({ message: "bad request" });
+  }
   Schedule.findOneAndDelete({ scheduleId: id })
     .then((rs) => {
       if (rs)
@@ -129,6 +138,9 @@ module.exports.deleteSchedule = async function (req, res) {
 };
 module.exports.putToMainSchedule = async function (req, res) {
   const id = req.body.title;
+  if (!id) {
+    return res.status(400).json({ message: "bad request" });
+  }
   Schedule.updateOne({ isMain: true }, { isMain: false })
     .then(() => {
       Schedule.updateOne({ scheduleId: id }, { isMain: true })

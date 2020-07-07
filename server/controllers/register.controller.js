@@ -3,6 +3,9 @@ const countTotalHours = require("../common/countTotalHours");
 
 module.exports.userRegisterSchedule = async function (req, res) {
   const { title, item, infoTitle } = req.body;
+  if (!title || !item || !infoTitle) {
+    return res.status(400).json({ message: "bad request" });
+  }
   const place = item.key.slice(24, item.key.length);
   const totalHour = countTotalHours(item, infoTitle);
   const newItem = { ...item, totalHour };
@@ -29,6 +32,9 @@ module.exports.userRegisterSchedule = async function (req, res) {
 };
 module.exports.putToMainSchedule = async function (req, res) {
   const id = req.body.title;
+  if (!id) {
+    return res.status(400).json({ message: "bad request" });
+  }
   Schedule.updateOne({ isMain: true }, { isMain: false })
     .then(() => {
       Schedule.updateOne({ scheduleId: id }, { isMain: true })

@@ -4,6 +4,9 @@ const jwt = require("jsonwebtoken");
 
 module.exports.login = async function (req, res) {
   const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({ message: "bad request" });
+  }
   const user = await User.findOne({ username }).exec();
   if (!user) {
     return res.status(400).json({ message: "user dosen't exist" });
