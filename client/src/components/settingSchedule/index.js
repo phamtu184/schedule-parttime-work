@@ -76,7 +76,7 @@ export default function SettingSchedule() {
       <Title className="color-dark">{translate("settingSchedule")}</Title>
       <Link to="/setting/newschedule">
         <Button type="primary" icon={<UserAddOutlined />}>
-          {translate("new")}
+          {translate("createSchedule")}
         </Button>
       </Link>
       <DivForm>

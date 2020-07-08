@@ -1,5 +1,5 @@
 import React from "react";
-import { Input, InputNumber, DatePicker, TimePicker } from "antd";
+import { InputNumber, DatePicker, TimePicker } from "antd";
 import translate from "../../../asset/i18n/translate";
 import locale from "antd/es/date-picker/locale/vi_VN";
 import checkWeek from "./checkWeek";
