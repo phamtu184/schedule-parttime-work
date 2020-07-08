@@ -32,12 +32,14 @@ module.exports.createSchedule = async function (req, res) {
     .exec();
   const newSchedule = Schedule({
     scheduleId: date,
-    counter: formatSchedule(receptionist, "receptionist"),
-    dinning: formatSchedule(server, "server"),
-    kitchen: formatSchedule(cook, "cook"),
+    receptionist: formatSchedule(receptionist, "receptionist"),
+    server: formatSchedule(server, "server"),
+    cook: formatSchedule(cook, "cook"),
     shift1,
     shift2,
-    moneyPerHour: money,
+    moneyReceptionist: money.moneyReceptionist,
+    moneyServer: money.moneyServer,
+    moneyCook: money.moneyCook,
   });
   newSchedule.save((err, schedule) => {
     if (err) return res.status(500).json({ message: "Server error" });
@@ -49,7 +51,9 @@ module.exports.createSchedule = async function (req, res) {
       infoTitle: {
         shift1: schedule.shift1,
         shift2: schedule.shift2,
-        moneyPerHour: schedule.moneyPerHour,
+        moneyReceptionist: schedule.moneyReceptionist,
+        moneyServer: schedule.moneyServer,
+        moneyCook: schedule.moneyCook,
       },
     });
   });
@@ -61,23 +65,27 @@ module.exports.getSchedule = async function (req, res) {
   }
   const scheduleValue = await Schedule.findOne({ scheduleId: id }).exec();
   const {
-    counter,
-    dinning,
-    kitchen,
+    receptionist,
+    server,
+    cook,
     scheduleId,
     shift1,
     shift2,
-    moneyPerHour,
+    moneyReceptionist,
+    moneyServer,
+    moneyCook,
   } = scheduleValue;
   res.status(200).json({
-    receptionist: counter,
-    server: dinning,
-    cook: kitchen,
+    receptionist,
+    server,
+    cook,
     title: scheduleId,
     infoTitle: {
       shift1,
       shift2,
-      moneyPerHour,
+      moneyReceptionist,
+      moneyServer,
+      moneyCook,
     },
   });
 };

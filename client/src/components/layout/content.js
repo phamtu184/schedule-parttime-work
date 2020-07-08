@@ -10,6 +10,7 @@ import ViewUser from "../user/viewUser";
 import EditUser from "../user/editUser";
 import Schedule from "../schedule";
 import SettingSchedule from "../settingSchedule";
+import NewSchedule from "../settingSchedule/createSchedule";
 import { useSelector } from "react-redux";
 
 function Content() {
@@ -50,6 +51,12 @@ function Content() {
           path="/setting"
           authed={authed}
           component={SettingSchedule}
+        />
+        <PrivateRoute
+          exact
+          path="/setting/newschedule"
+          authed={authed}
+          component={NewSchedule}
         />
         <Route exact path="/customer" component={() => <div>customer</div>} />
         <Route exact path="/schedule" component={Schedule} />

@@ -82,6 +82,9 @@ export default {
     shift1: "Ca 1",
     shift2: "ca 2",
     moneyPerHour: "Số tiền trên 1 giờ",
+    moneyReceptionist: "Tiền lương tiếp tân",
+    moneyServer: "Tiền lương phục vụ",
+    moneyCook: "Tiền lương phụ bếp",
     plsSelect: "Vui lòng chọn",
     //scheduleRegister
     allDay: "Cả ngày",

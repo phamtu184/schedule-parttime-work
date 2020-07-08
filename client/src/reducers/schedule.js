@@ -4,7 +4,9 @@ const initialState = {
   infoTitle: {
     shift1: [],
     shift2: [],
-    money: 0,
+    moneyReceptionist: 0,
+    moneyServer: 0,
+    moneyCook: 0,
   },
 };
 const scheduleReducer = (state = initialState, action) => {

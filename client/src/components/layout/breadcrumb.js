@@ -7,6 +7,7 @@ const breadcrumbNameMap = {
   "/404": "404",
   "/403": "403",
   "/setting": translate("setting"),
+  "/setting/newschedule": translate("createSchedule"),
   "/schedule": translate("schedule"),
   "/users": translate("users"),
   "/users/newuser": translate("newUser"),

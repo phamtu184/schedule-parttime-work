@@ -82,6 +82,9 @@ export default {
     shift1: "shift 1",
     shift2: "shift 2",
     moneyPerHour: "money per hour",
+    moneyReceptionist: "money per hour Receptionist",
+    moneyServer: "money per hour Server",
+    moneyCook: "money per hour Cook",
     plsSelect: "Please select",
     //scheduleRegister
     allDay: "all day",

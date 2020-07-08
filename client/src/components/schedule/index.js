@@ -13,7 +13,9 @@ export default function Schedule() {
   const [infoTitle, setInfoTitle] = useState({
     shift1: [],
     shift2: [],
-    moneyPerHour: 0,
+    moneyReceptionist: 0,
+    moneyServer: 0,
+    moneyCook: 0,
   });
   useEffect(() => {
     const getSchedule = async () => {
@@ -27,12 +29,20 @@ export default function Schedule() {
           title,
           shift1,
           shift2,
-          moneyPerHour,
+          moneyReceptionist,
+          moneyServer,
+          moneyCook,
         } = res;
         setDataSource(formatResult(receptionist, server, cook));
         setTitle(title);
         setLoading(false);
-        setInfoTitle({ shift1, shift2, moneyPerHour });
+        setInfoTitle({
+          shift1,
+          shift2,
+          moneyReceptionist,
+          moneyServer,
+          moneyCook,
+        });
       } catch (e) {
         console.log(e);
         setLoading(false);

@@ -9,18 +9,17 @@ module.exports.userRegisterSchedule = async function (req, res) {
   const place = item.key.slice(24, item.key.length);
   const totalHour = countTotalHours(item, infoTitle);
   const newItem = { ...item, totalHour };
-  console.log(place);
   Schedule.findOneAndUpdate(
     place === "receptionist"
-      ? { scheduleId: title, "counter.key": item.key }
+      ? { scheduleId: title, "receptionist.key": item.key }
       : place === "server"
-      ? { scheduleId: title, "dinning.key": item.key }
-      : { scheduleId: title, "kitchen.key": item.key },
+      ? { scheduleId: title, "server.key": item.key }
+      : { scheduleId: title, "cook.key": item.key },
     place === "receptionist"
-      ? { $set: { "counter.$": newItem } }
+      ? { $set: { "receptionist.$": newItem } }
       : place === "server"
-      ? { $set: { "dinning.$": newItem } }
-      : { $set: { "kitchen.$": newItem } }
+      ? { $set: { "server.$": newItem } }
+      : { $set: { "cook.$": newItem } }
   )
     .then((rs) => {
       if (rs) return res.status(200).json({ message: "register success" });
@@ -53,22 +52,26 @@ module.exports.getMainSchedule = async function (req, res) {
     if (!scheduleCurrent)
       return res.status(400).json({ message: "cannot find any colection" });
     const {
-      counter,
-      dinning,
-      kitchen,
+      receptionist,
+      server,
+      cook,
       scheduleId,
       shift1,
       shift2,
-      moneyPerHour,
+      moneyReceptionist,
+      moneyServer,
+      moneyCook,
     } = scheduleCurrent;
     res.status(200).json({
-      receptionist: counter,
-      server: dinning,
-      cook: kitchen,
+      receptionist,
+      server,
+      cook,
       title: scheduleId,
       shift1,
       shift2,
-      moneyPerHour,
+      moneyReceptionist,
+      moneyServer,
+      moneyCook,
     });
   } catch (e) {
     console.log(e);

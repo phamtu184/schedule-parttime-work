@@ -3,7 +3,7 @@ import { DatePicker, Form, TimePicker, InputNumber } from "antd";
 import Button from "../common/button";
 import translate from "../../asset/i18n/translate";
 import locale from "antd/es/date-picker/locale/vi_VN";
-import checkWeek from "./checkWeek";
+import checkWeek from "./createSchedule/checkWeek";
 
 const { RangePicker } = TimePicker;
 

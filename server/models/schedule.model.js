@@ -8,7 +8,7 @@ const ScheduleSchema = new Schema(
       unique: true,
       required: true,
     },
-    counter: [
+    receptionist: [
       {
         key: String,
         isTile: Boolean,
@@ -23,7 +23,7 @@ const ScheduleSchema = new Schema(
         totalHour: Number,
       },
     ],
-    dinning: [
+    server: [
       {
         key: String,
         isTile: Boolean,
@@ -38,7 +38,7 @@ const ScheduleSchema = new Schema(
         totalHour: Number,
       },
     ],
-    kitchen: [
+    cook: [
       {
         key: String,
         isTile: Boolean,
@@ -57,10 +57,6 @@ const ScheduleSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    isRegister: {
-      type: Boolean,
-      default: false,
-    },
     shift1: {
       type: [Number],
       required: true,
@@ -69,7 +65,15 @@ const ScheduleSchema = new Schema(
       type: [Number],
       required: true,
     },
-    moneyPerHour: {
+    moneyReceptionist: {
+      type: Number,
+      required: true,
+    },
+    moneyServer: {
+      type: Number,
+      required: true,
+    },
+    moneyCook: {
       type: Number,
       required: true,
     },
