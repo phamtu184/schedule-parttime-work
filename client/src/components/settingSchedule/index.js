@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import Title from "../common/title";
 import DivForm from "../common/roundForm";
 import { Button, Popconfirm } from "antd";
-import { UserAddOutlined } from "@ant-design/icons";
+import { FileAddOutlined } from "@ant-design/icons";
 import SelectSchedule from "./select";
 import { createSchedule, deleteSchedule } from "../../action/schedule";
 import scheduleApi from "../../api/scheduleApi";
@@ -75,7 +75,7 @@ export default function SettingSchedule() {
     <>
       <Title className="color-dark">{translate("settingSchedule")}</Title>
       <Link to="/setting/newschedule">
-        <Button type="primary" icon={<UserAddOutlined />}>
+        <Button type="primary" icon={<FileAddOutlined />}>
           {translate("createSchedule")}
         </Button>
       </Link>

@@ -1,5 +1,6 @@
+const countTotalHours = require("./countTotalHours");
 const shift = ["shift1", "shift2", "off"];
-const formatSchedule = (users, string) => {
+const formatSchedule = (users, string, infoTitle) => {
   let current = 0;
   const rs = users.map((item) => {
     return {
@@ -44,6 +45,9 @@ const formatSchedule = (users, string) => {
   for (let i = 0; i < rs.length; i++) {
     rs[i].sunday = shift[numProblem(current)];
     current++;
+  }
+  for (let i = 0; i < rs.length; i++) {
+    rs[i].totalHour = countTotalHours(rs[i], infoTitle);
   }
   return rs;
 };

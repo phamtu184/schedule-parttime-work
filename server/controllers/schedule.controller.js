@@ -30,11 +30,12 @@ module.exports.createSchedule = async function (req, res) {
   })
     .select("-username -password -phonenumber -createdAt -updatedAt")
     .exec();
+  const infoTitle = { shift1, shift2 };
   const newSchedule = Schedule({
     scheduleId: date,
-    receptionist: formatSchedule(receptionist, "receptionist"),
-    server: formatSchedule(server, "server"),
-    cook: formatSchedule(cook, "cook"),
+    receptionist: formatSchedule(receptionist, "receptionist", infoTitle),
+    server: formatSchedule(server, "server", infoTitle),
+    cook: formatSchedule(cook, "cook", infoTitle),
     shift1,
     shift2,
     moneyReceptionist: money.moneyReceptionist,
@@ -44,9 +45,9 @@ module.exports.createSchedule = async function (req, res) {
   newSchedule.save((err, schedule) => {
     if (err) return res.status(500).json({ message: "Server error" });
     res.status(200).json({
-      receptionist: formatSchedule(receptionist, "receptionist"),
-      server: formatSchedule(server, "server"),
-      cook: formatSchedule(cook, "cook"),
+      receptionist: formatSchedule(receptionist, "receptionist", infoTitle),
+      server: formatSchedule(server, "server", infoTitle),
+      cook: formatSchedule(cook, "cook", infoTitle),
       title: schedule.scheduleId,
       infoTitle: {
         shift1: schedule.shift1,

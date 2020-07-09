@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography } from "antd";
-import translate from "../../../asset/i18n/translate";
+import translate from "../../asset/i18n/translate";
 const { Title } = Typography;
 const renderContent = (value, row, index) => {
   const obj = {
