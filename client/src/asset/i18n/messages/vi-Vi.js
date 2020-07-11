@@ -11,9 +11,10 @@ export default {
     newUser: "thêm nhân viên",
     viewUser: "thông tin nhân viên",
     editUser: "sửa nhân viên",
-    customer: "khách hàng",
+    statistic: "thống kê",
     setting: "cài đặt",
     management: "quản lý",
+    profile: "Hồ sơ của tôi",
     // user section
     new: "thêm",
     remove: "xóa",

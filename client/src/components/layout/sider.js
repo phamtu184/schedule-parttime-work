@@ -60,9 +60,9 @@ function MenuSider({ children, location }) {
         ) : (
           ""
         )}
-        <Menu.Item key="/customer" icon={<TeamOutlined />}>
-          <NavLink to="/customer" className="text-cap">
-            {translate("customer")}
+        <Menu.Item key="/statistic" icon={<TeamOutlined />}>
+          <NavLink to="/statistic" className="text-cap">
+            {translate("statistic")}
           </NavLink>
         </Menu.Item>
       </Menu>

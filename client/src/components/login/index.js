@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import LoginForm from "./loginForm";
 import { useIntl } from "react-intl";
 import axios from "axios";
@@ -13,27 +13,27 @@ export default function Login() {
   const intl = useIntl();
   const history = useHistory();
   const dispatch = useDispatch();
-  useEffect(() => {
-    const token = localStorage.authToken;
-    if (token) {
-      axios
-        .get(`${url.BASE || url.LOCAL}/api/auth`, {
-          headers: { Authorization: token },
-        })
-        .then((res) => {
-          dispatch(
-            login({
-              fullname: res.data.fullname,
-              roles: res.data.roles,
-              id: res.data.id,
-            })
-          );
-          history.push("/");
-        })
-        .catch((e) => {});
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.authToken;
+  //   if (token) {
+  //     axios
+  //       .get(`${url.BASE || url.LOCAL}/api/auth`, {
+  //         headers: { Authorization: token },
+  //       })
+  //       .then((res) => {
+  //         dispatch(
+  //           login({
+  //             fullname: res.data.fullname,
+  //             roles: res.data.roles,
+  //             id: res.data.id,
+  //           })
+  //         );
+  //         history.push("/");
+  //       })
+  //       .catch((e) => {});
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
   const onFinish = (value) => {
     const { username, password } = value;
     setLoading(true);
@@ -48,7 +48,11 @@ export default function Login() {
           );
           localStorage.authToken = res.data.token;
           dispatch(
-            login({ fullname: res.data.fullname, roles: res.data.roles })
+            login({
+              fullname: res.data.fullname,
+              roles: res.data.roles,
+              id: res.data.id,
+            })
           );
           setLoading(false);
           history.push("/");

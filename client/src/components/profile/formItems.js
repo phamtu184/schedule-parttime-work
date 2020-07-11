@@ -1,6 +1,6 @@
 import React from "react";
 import { Input, Select } from "antd";
-import translate from "../../../asset/i18n/translate";
+import translate from "../../asset/i18n/translate";
 const { Option } = Select;
 const formItems = [
   {
@@ -166,7 +166,7 @@ const formItems = [
     name: "roles",
     label: translate("roles"),
     input: (
-      <Select mode="multiple" style={{ width: "100%" }}>
+      <Select mode="multiple" style={{ width: "100%" }} disabled>
         {/* <Option value="admin">{translate("admin")}</Option> */}
         <Option value="manager">{translate("manager")}</Option>
         <Option value="cook">{translate("cook")}</Option>

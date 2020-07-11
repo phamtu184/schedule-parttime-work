@@ -40,7 +40,11 @@ export default function Header() {
         })
         .then((res) => {
           dispatch(
-            login({ fullname: res.data.fullname, roles: res.data.roles })
+            login({
+              fullname: res.data.fullname,
+              roles: res.data.roles,
+              id: res.data.id,
+            })
           );
         })
         .catch((e) => {
@@ -57,9 +61,12 @@ export default function Header() {
     dispatch(logout());
     history.push("/login");
   };
+  const toProfile = () => {
+    history.push("/profile");
+  };
   const menu = (
     <Menu>
-      <Menu.Item>
+      <Menu.Item onClick={toProfile}>
         <UserOutlined />
         <span className="text-cap">{translate("editProfile")}</span>
       </Menu.Item>

@@ -11,9 +11,10 @@ export default {
     newUser: "new user",
     viewUser: "view user",
     editUser: "edit user",
-    customer: "customer",
+    statistic: "statistic",
     setting: "setting",
     management: "management",
+    profile: "my profile",
     // user section
     new: "new",
     remove: "remove",

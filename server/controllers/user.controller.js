@@ -110,22 +110,36 @@ module.exports.modifyStatusUsers = async function (req, res) {
 };
 
 module.exports.editUser = async function (req, res) {
-  const { username, password, fullname, phonenumber, roles } = req.body;
-  if (!username || !password || !fullname || !phonenumber || !roles) {
+  const { username, password, fullname, phonenumber, roles, avatar } = req.body;
+  if (!username || !fullname || !phonenumber || !roles) {
     return res.status(400).json({ message: "bad request" });
   }
-  bcrypt.genSalt(10, function (err, salt) {
-    bcrypt.hash(password, salt, function (err, hash) {
-      if (err) return res.status(500).json({ message: "serverError" });
-      User.findOneAndUpdate(
-        { username },
-        { password: hash, fullname, phonenumber, roles }
-      )
-        .then((rs) => {
-          if (rs) return res.status(200).json("edit user success");
-          return res.status(500).json({ message: "serverError" });
-        })
-        .catch((e) => res.status(500).json({ message: "serverError" }));
+  if (!password) {
+    User.findOneAndUpdate(
+      { username },
+      { fullname, phonenumber, roles, avatar }
+    )
+      .then((rs) => {
+        if (rs) return res.status(200).json("edit user success");
+        return res.status(500).json({ message: "serverError" });
+      })
+      .catch((e) => res.status(500).json({ message: "serverError" }));
+  } else {
+    bcrypt.genSalt(10, function (err, salt) {
+      bcrypt.hash(password, salt, function (err, hash) {
+        if (err) return res.status(500).json({ message: "serverError" });
+        User.findOneAndUpdate(
+          { username },
+          { password: hash, fullname, phonenumber, roles, avatar }
+        )
+          .then((rs) => {
+            if (rs) return res.status(200).json("edit user success");
+            return res.status(500).json({ message: "serverError" });
+          })
+          .catch((e) => {
+            return res.status(500).json({ message: "serverError" });
+          });
+      });
     });
-  });
+  }
 };

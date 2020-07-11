@@ -1,14 +1,19 @@
 const initialState = {
   fullname: "",
+  id: "",
   roles: [],
 };
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case "LOGIN": {
-      return { fullname: action.payload.fullname, roles: action.payload.roles };
+      return {
+        fullname: action.payload.fullname,
+        roles: action.payload.roles,
+        id: action.payload.id,
+      };
     }
     case "LOGOUT": {
-      return { fullname: "", roles: [] };
+      return initialState;
     }
     default:
       return state;

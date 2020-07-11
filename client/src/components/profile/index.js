@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useHistory } from "react-router-dom";
 import { Form, Spin, Button, Upload } from "antd";
-import formItems from "./formItems";
-import Title from "../../common/title";
-import translate from "../../../asset/i18n/translate";
-import { useIntl } from "react-intl";
 import { SaveOutlined, LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import notification from "../../common/notification";
-import userApi from "../../../api/userApi";
+import { useHistory } from "react-router-dom";
+import { useIntl } from "react-intl";
+import translate from "../../asset/i18n/translate";
+import notification from "../common/notification";
+import userApi from "../../api/userApi";
+import { useSelector } from "react-redux";
+import formItems from "./formItems";
+import { getBase64 } from "./function";
+import Title from "../common/title";
 import ImgCrop from "antd-img-crop";
 
 const formItemLayout = {
@@ -26,19 +28,18 @@ const tailFormItemLayout = {
     lg: { span: 12, offset: 4 },
   },
 };
-export default function EditUser({ props }) {
-  const { id } = useParams();
+export default function Profile() {
   const [isLoading, setLoading] = useState(false);
   const [loadingImg, setLoadingImg] = useState(false);
   const [imgUrl, setImgUrl] = useState("");
-  const history = useHistory();
   const [form] = Form.useForm();
+  const history = useHistory();
+  const id = useSelector((state) => state.auth.id);
   useEffect(() => {
     const getData = async () => {
       setLoading(true);
       try {
-        const params = { id };
-        const res = await userApi.getUser(params);
+        const res = await userApi.getUser({ id });
         form.setFieldsValue({ username: res.username });
         form.setFieldsValue({ fullname: res.fullname });
         form.setFieldsValue({ phonenumber: res.phonenumber });
@@ -46,12 +47,18 @@ export default function EditUser({ props }) {
         setImgUrl(res.avatar);
         setLoading(false);
       } catch (e) {
-        history.push("/users");
+        history.push("/");
       }
     };
     getData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  const uploadButton = (
+    <div>
+      {loadingImg ? <LoadingOutlined /> : <PlusOutlined />}
+      <div>{translate("upload")}</div>
+    </div>
+  );
   const intl = useIntl();
   const onFinish = async (value) => {
     setLoading(true);
@@ -116,15 +123,9 @@ export default function EditUser({ props }) {
     const imgWindow = window.open(src);
     imgWindow.document.write(image.outerHTML);
   };
-  const uploadButton = (
-    <div>
-      {loadingImg ? <LoadingOutlined /> : <PlusOutlined />}
-      <div>{translate("upload")}</div>
-    </div>
-  );
   return (
     <>
-      <Title className="color-dark">{translate("editUser")}</Title>
+      <Title className="color-dark">{translate("profile")}</Title>
       <Spin spinning={isLoading}>
         <Form
           {...formItemLayout}
@@ -182,9 +183,4 @@ export default function EditUser({ props }) {
       </Spin>
     </>
   );
-}
-function getBase64(img, callback) {
-  const reader = new FileReader();
-  reader.addEventListener("load", () => callback(reader.result));
-  reader.readAsDataURL(img);
 }
