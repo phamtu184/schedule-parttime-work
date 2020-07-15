@@ -12,6 +12,7 @@ import Schedule from "../schedule";
 import SettingSchedule from "../settingSchedule";
 import NewSchedule from "../settingSchedule/createSchedule";
 import Profile from "../profile";
+import Statistic from "../statistic";
 import { useSelector } from "react-redux";
 
 function Content() {
@@ -60,7 +61,7 @@ function Content() {
           component={NewSchedule}
         />
         <Route exact path="/profile" component={Profile} />
-        <Route exact path="/statistic" component={() => <div>statistic</div>} />
+        <Route exact path="/statistic" component={Statistic} />
         <Route exact path="/schedule" component={Schedule} />
         <Route exact path="/404" component={PageError} />
         <Route exact path="/403">

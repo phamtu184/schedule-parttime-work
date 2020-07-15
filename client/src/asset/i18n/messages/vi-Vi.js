@@ -109,5 +109,7 @@ export default {
     pageNotExist: "trang mà bạn truy cập không tồn tại",
     pageAuthorized: "bạn không được quyền truy cập vào trang này",
     backHome: "về trang chủ",
+    // statistic
+    selectUser: "chọn nhân viên",
   },
 };

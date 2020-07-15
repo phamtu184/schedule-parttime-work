@@ -53,10 +53,6 @@ const ScheduleSchema = new Schema(
         totalHour: Number,
       },
     ],
-    isMain: {
-      type: Boolean,
-      default: false,
-    },
     shift1: {
       type: [Number],
       required: true,
@@ -77,14 +73,19 @@ const ScheduleSchema = new Schema(
       type: Number,
       required: true,
     },
-    createdBy: {
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
-    updatedBy: {
-      type: Schema.Types.ObjectId,
-      ref: "user",
-    },
+    comment: [
+      {
+        content: String,
+        ofUser: {
+          type: Schema.Types.ObjectId,
+          ref: "User",
+        },
+        time: {
+          type: Date,
+          default: Date.now,
+        },
+      },
+    ],
   },
   { timestamps: true }
 );

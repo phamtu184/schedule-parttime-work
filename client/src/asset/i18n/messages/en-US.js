@@ -109,5 +109,7 @@ export default {
     pageNotExist: "Sorry, the page you visited does not exist",
     pageAuthorized: "Sorry, you are not authorized to access this page",
     backHome: "back home",
+    // statistic
+    selectUser: "select user",
   },
 };

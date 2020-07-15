@@ -52,25 +52,6 @@ export default function SettingSchedule() {
       );
     }
   };
-  const pushToHome = async () => {
-    try {
-      await scheduleApi.putToMainSchedule({ title });
-      notification(
-        "success",
-        intl.formatMessage({ id: "success" }),
-        intl.formatMessage({ id: "uploadSchedule" }) +
-          " " +
-          intl.formatMessage({ id: "success" })
-      );
-    } catch (e) {
-      console.log(e);
-      notification(
-        "error",
-        intl.formatMessage({ id: "error" }),
-        intl.formatMessage({ id: "serverError" })
-      );
-    }
-  };
   return (
     <>
       <Title className="color-dark">{translate("settingSchedule")}</Title>
@@ -86,14 +67,6 @@ export default function SettingSchedule() {
           setLoading={setLoading}
           action={createSchedule}
         />
-        <Button
-          type="primary"
-          className="text-cap mr-7px"
-          disabled={!dataSource.length > 0}
-          onClick={pushToHome}
-        >
-          {translate("upload")}
-        </Button>
         <Popconfirm
           title={translate("confirmDelete")}
           onConfirm={deleteTable}

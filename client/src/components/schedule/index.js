@@ -5,9 +5,12 @@ import TitleTable from "../common/schedule/title";
 import Table from "./table";
 import scheduleApi from "../../api/scheduleApi";
 import formatResult from "../common/schedule/formatResult";
+import DivForm from "../common/roundForm";
+import SelectSchedule from "./select";
 
 export default function Schedule() {
   const [isLoading, setLoading] = useState(false);
+  const [options, setOptions] = useState([]);
   const [dataSource, setDataSource] = useState([]);
   const [title, setTitle] = useState("");
   const [infoTitle, setInfoTitle] = useState({
@@ -50,9 +53,27 @@ export default function Schedule() {
     };
     getSchedule();
   }, []);
+  const fentchOption = async () => {
+    try {
+      const res = await scheduleApi.getScheduleLazily();
+      setOptions(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
   return (
     <>
       <Title className="color-dark">{translate("schedule")}</Title>
+      <DivForm>
+        <SelectSchedule
+          fentchOption={fentchOption}
+          options={options}
+          setLoading={setLoading}
+          setDataSource={setDataSource}
+          setInfoTitle={setInfoTitle}
+          setTitle={setTitle}
+        />
+      </DivForm>
       <TitleTable title={title} infoTitle={infoTitle} />
       <Table isLoading={isLoading} dataSource={dataSource} />
     </>

@@ -22,10 +22,6 @@ const scheduleApi = {
     return axiosClient.delete(url, { params });
   },
   userRegisterSchedule: (body) => {
-    const url = "/api/registerschedule";
-    return axiosClient.put(url, body);
-  },
-  putToMainSchedule: (body) => {
     const url = "/api/schedule";
     return axiosClient.put(url, body);
   },

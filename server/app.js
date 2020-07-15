@@ -5,6 +5,8 @@ var cookieParser = require("cookie-parser");
 var logger = require("morgan");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const socketio = require("socket.io");
+
 var app = express();
 
 var apiRouter = require("./routes/api");
@@ -35,5 +37,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api", apiRouter);
+
+// connect socketio
+var io = socketio();
+app.io = io;
+require("./config/socketio")(io);
 
 module.exports = app;
