@@ -29,6 +29,7 @@ export default function ButtonList(props) {
       >
         <Button
           type="primary"
+          danger
           icon={<UserDeleteOutlined />}
           disabled={!hasSelected}
         >
@@ -44,10 +45,10 @@ export default function ButtonList(props) {
         {translate("enable")}
       </Button>
       <Button
-        type="primary"
         icon={<StopOutlined />}
         disabled={!hasSelected}
         onClick={disableUsers}
+        danger
       >
         {translate("disable")}
       </Button>

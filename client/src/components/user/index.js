@@ -3,6 +3,7 @@ import Title from "../common/title";
 import translate from "../../asset/i18n/translate";
 import ButtonList from "./buttonList";
 import FormSearch from "./formSearch";
+import FormStatistic from "./statistic";
 import TableUserList from "./tableUserList";
 import { pageSize } from "../../asset/config";
 import { useIntl } from "react-intl";
@@ -15,12 +16,7 @@ export default function User() {
   const [userList, setUserList] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [isLoading, setLoading] = useState(false);
-  const [pagination, setPagination] = useState({
-    current: 1,
-    pageSize,
-    total: 0,
-    position: ["bottomCenter"],
-  });
+  const [pagination, setPagination] = useState(pageSize);
   const [isSearch, setIsSearch] = useState(false);
   const [searchValue, setSearchValue] = useState({});
   const intl = useIntl();
@@ -160,6 +156,7 @@ export default function User() {
         enableUsers={enableUsers}
         disableUsers={disableUsers}
       />
+      <FormStatistic selectedRowKeys={selectedRowKeys} />
       <FormSearch
         onFinish={onFinish}
         fetchData={fetchData}

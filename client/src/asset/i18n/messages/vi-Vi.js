@@ -111,5 +111,6 @@ export default {
     backHome: "về trang chủ",
     // statistic
     selectUser: "chọn nhân viên",
+    requireSelect:'Phải chọn từ 1 trở lên!'
   },
 };

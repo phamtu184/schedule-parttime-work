@@ -4,7 +4,6 @@ import { Menu, Layout } from "antd";
 import {
   UserAddOutlined,
   CalendarOutlined,
-  TeamOutlined,
   SettingOutlined,
 } from "@ant-design/icons";
 import { useSelector } from "react-redux";
@@ -60,11 +59,11 @@ function MenuSider({ children, location }) {
         ) : (
           ""
         )}
-        <Menu.Item key="/statistic" icon={<TeamOutlined />}>
+        {/* <Menu.Item key="/statistic" icon={<TeamOutlined />}>
           <NavLink to="/statistic" className="text-cap">
             {translate("statistic")}
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
       {children}
     </Layout.Sider>

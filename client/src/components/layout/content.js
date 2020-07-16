@@ -60,8 +60,13 @@ function Content() {
           authed={authed}
           component={NewSchedule}
         />
+        <PrivateRoute
+          exact
+          path="/users/statistic"
+          authed={authed}
+          component={Statistic}
+        />
         <Route exact path="/profile" component={Profile} />
-        <Route exact path="/statistic" component={Statistic} />
         <Route exact path="/schedule" component={Schedule} />
         <Route exact path="/404" component={PageError} />
         <Route exact path="/403">

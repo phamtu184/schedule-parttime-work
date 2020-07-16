@@ -111,5 +111,6 @@ export default {
     backHome: "back home",
     // statistic
     selectUser: "select user",
+    requireSelect:'More Than One Must Be Selected!'
   },
 };
