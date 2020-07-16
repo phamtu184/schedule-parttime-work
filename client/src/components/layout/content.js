@@ -12,7 +12,6 @@ import Schedule from "../schedule";
 import SettingSchedule from "../settingSchedule";
 import NewSchedule from "../settingSchedule/createSchedule";
 import Profile from "../profile";
-import Statistic from "../statistic";
 import { useSelector } from "react-redux";
 
 function Content() {
@@ -59,12 +58,6 @@ function Content() {
           path="/setting/newschedule"
           authed={authed}
           component={NewSchedule}
-        />
-        <PrivateRoute
-          exact
-          path="/users/statistic"
-          authed={authed}
-          component={Statistic}
         />
         <Route exact path="/profile" component={Profile} />
         <Route exact path="/schedule" component={Schedule} />

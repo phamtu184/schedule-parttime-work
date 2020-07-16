@@ -5,6 +5,7 @@ const formatSchedule = (users, string, infoTitle) => {
   const rs = users.map((item) => {
     return {
       key: item._id + string,
+      userId: item._id,
       fullname: item.fullname,
       isModify: false,
       isTitle: false,

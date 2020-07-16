@@ -11,6 +11,7 @@ const ScheduleSchema = new Schema(
     receptionist: [
       {
         key: String,
+        userId: Schema.Types.ObjectId,
         isTile: Boolean,
         fullname: String,
         monday: String,
@@ -26,6 +27,7 @@ const ScheduleSchema = new Schema(
     server: [
       {
         key: String,
+        userId: Schema.Types.ObjectId,
         isTile: Boolean,
         fullname: String,
         monday: String,
@@ -41,6 +43,7 @@ const ScheduleSchema = new Schema(
     cook: [
       {
         key: String,
+        userId: Schema.Types.ObjectId,
         isTile: Boolean,
         fullname: String,
         monday: String,

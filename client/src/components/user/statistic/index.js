@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import translate from "../../../asset/i18n/translate";
+import DivForm from "../../common/roundForm";
 import { Form, Button, DatePicker } from "antd";
 import { ScheduleOutlined } from "@ant-design/icons";
 import statisticApi from "../../../api/statisticApi";
-import { useHistory } from "react-router-dom";
 import locale from "antd/es/date-picker/locale/vi_VN";
+
 const { RangePicker } = DatePicker;
 export default function FormStatistic(props) {
   const { selectedRowKeys } = props;
   const [form] = Form.useForm();
   const hasSelected = selectedRowKeys.length > 0;
-  const history = useHistory();
   const onFinish = async (value) => {
     const week1 = {
       week: value.time[0].week(),
@@ -22,15 +22,16 @@ export default function FormStatistic(props) {
       year: value.time[1].year(),
       weeksInYear: value.time[1].weeksInYear(),
     };
-    await statisticApi.postStatistic(
-      { week1, week2 },
-      { params: selectedRowKeys }
-    );
-    history.push("/users/statistic");
+    const rs = await statisticApi.postStatistic({
+      week1,
+      week2,
+      usersId: selectedRowKeys,
+    });
+    console.log(rs);
   };
   return (
-    <>
-      <Form form={form} name="edit-user" onFinish={onFinish}>
+    <DivForm>
+      <Form form={form} name="edit-user" onFinish={onFinish} layout="inline">
         <Form.Item
           name="time"
           label={translate("time")}
@@ -55,6 +56,6 @@ export default function FormStatistic(props) {
           </Button>
         </Form.Item>
       </Form>
-    </>
+    </DivForm>
   );
 }

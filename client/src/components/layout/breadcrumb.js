@@ -14,7 +14,6 @@ const breadcrumbNameMap = {
   "/users/viewuser": translate("viewUser"),
   "/users/edituser": translate("editUser"),
   "/profile": translate("profile"),
-  "/users/statistic": translate("statistic"),
 };
 function MenuBreadcrumb({ location }) {
   const pathSnippets = location.pathname.split("/").filter((i) => i);
