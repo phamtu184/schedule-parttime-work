@@ -84,7 +84,7 @@ export default function SettingSchedule() {
           </Button>
         </Popconfirm>
       </DivForm>
-      <TitleTable title={title} infoTitle={infoTitle} />
+      {/* <TitleTable title={title} infoTitle={infoTitle} /> */}
       <Table
         isLoading={isLoading}
         dataSource={dataSource}

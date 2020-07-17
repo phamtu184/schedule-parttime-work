@@ -69,6 +69,16 @@ const columns = [
     ),
   },
   {
+    title: translate("totalHour"),
+    dataIndex: "totalHour",
+    key: "totalHour",
+  },
+  {
+    title: translate("totalMoney"),
+    dataIndex: "totalMoney",
+    key: "totalMoney",
+  },
+  {
     title: translate("action"),
     dataIndex: "action",
     key: "action",

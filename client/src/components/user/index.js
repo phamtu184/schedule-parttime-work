@@ -156,7 +156,11 @@ export default function User() {
         enableUsers={enableUsers}
         disableUsers={disableUsers}
       />
-      <FormStatistic selectedRowKeys={selectedRowKeys} />
+      <FormStatistic
+        selectedRowKeys={selectedRowKeys}
+        setUserList={setUserList}
+        setPagination={setPagination}
+      />
       <FormSearch
         onFinish={onFinish}
         fetchData={fetchData}

@@ -1,7 +1,15 @@
 const countTotalHours = require("./countTotalHours");
-const shift = ["shift1", "shift2", "off"];
-const formatSchedule = (users, string, infoTitle) => {
+const totalShift = (shift) => {
+  const total = [];
+  for (let i = 1; i <= shift.length; i++) {
+    total.push("shift" + i);
+  }
+  total.push("off");
+  return total;
+};
+const formatSchedule = (users, string, shiftNum) => {
   let current = 0;
+  const shift = totalShift(shiftNum);
   const rs = users.map((item) => {
     return {
       key: item._id + string,
@@ -19,6 +27,18 @@ const formatSchedule = (users, string, infoTitle) => {
       totalHour: 0,
     };
   });
+  function numProblem(index) {
+    if (index < shift.length) {
+      return index;
+    }
+    return dequyNum(index);
+  }
+  function dequyNum(ts) {
+    if (ts - shift.length < shift.length) {
+      return ts - shift.length;
+    }
+    return dequyNum(ts - shift.length);
+  }
   for (let i = 0; i < rs.length; i++) {
     rs[i].monday = shift[numProblem(current)];
     current++;
@@ -48,20 +68,9 @@ const formatSchedule = (users, string, infoTitle) => {
     current++;
   }
   for (let i = 0; i < rs.length; i++) {
-    rs[i].totalHour = countTotalHours(rs[i], infoTitle);
+    rs[i].totalHour = countTotalHours(rs[i], shiftNum, shift);
   }
   return rs;
 };
-function numProblem(index) {
-  if (index < shift.length) {
-    return index;
-  }
-  return dequyNum(index);
-}
-function dequyNum(ts) {
-  if (ts - shift.length < shift.length) {
-    return ts - shift.length;
-  }
-  return dequyNum(ts - shift.length);
-}
+
 module.exports = formatSchedule;

@@ -1,11 +1,12 @@
 const User = require("../models/user.model");
 const Schedule = require("../models/schedule.model");
+const { formatHours } = require("../common/times");
 const formatSchedule = require("../common/formatSchedule");
 const countTotalHours = require("../common/countTotalHours");
 
 module.exports.createSchedule = async function (req, res) {
-  const { date, shift1, shift2, money } = req.body;
-  if (!money || !date || !shift1 || !shift2) {
+  const { date, shift, money } = req.body;
+  if (!money || !date || !shift) {
     return res.status(400).json({ message: "bad request" });
   }
   const scheduleForm = await Schedule.findOne({ scheduleId: date })
@@ -31,33 +32,34 @@ module.exports.createSchedule = async function (req, res) {
   })
     .select("-username -password -phonenumber -createdAt -updatedAt")
     .exec();
-  const infoTitle = { shift1, shift2 };
   const newSchedule = Schedule({
     scheduleId: date,
-    receptionist: formatSchedule(receptionist, "receptionist", infoTitle),
-    server: formatSchedule(server, "server", infoTitle),
-    cook: formatSchedule(cook, "cook", infoTitle),
-    shift1,
-    shift2,
+    receptionist: formatSchedule(receptionist, "receptionist", shift),
+    server: formatSchedule(server, "server", shift),
+    cook: formatSchedule(cook, "cook", shift),
+    shift,
     moneyReceptionist: money.moneyReceptionist,
     moneyServer: money.moneyServer,
     moneyCook: money.moneyCook,
   });
   newSchedule.save((err, schedule) => {
     if (err) return res.status(500).json({ message: "Server error" });
-    res.status(200).json({
-      receptionist: formatSchedule(receptionist, "receptionist", infoTitle),
-      server: formatSchedule(server, "server", infoTitle),
-      cook: formatSchedule(cook, "cook", infoTitle),
-      title: schedule.scheduleId,
-      infoTitle: {
-        shift1: schedule.shift1,
-        shift2: schedule.shift2,
-        moneyReceptionist: schedule.moneyReceptionist,
-        moneyServer: schedule.moneyServer,
-        moneyCook: schedule.moneyCook,
-      },
-    });
+    res
+      .status(200)
+      .json
+      // {
+      //   receptionist: formatSchedule(receptionist, "receptionist", shift),
+      //   server: formatSchedule(server, "server", shift),
+      //   cook: formatSchedule(cook, "cook", shift),
+      //   title: schedule.scheduleId,
+      //   money: {
+      //     receptionist: schedule.moneyReceptionist,
+      //     server: schedule.moneyServer,
+      //     cook: schedule.moneyCook,
+      //   },
+      //   shift,
+      // }
+      ();
   });
 };
 module.exports.getSchedule = async function (req, res) {

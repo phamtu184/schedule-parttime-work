@@ -6,6 +6,7 @@ import notification from "../../common/notification";
 import { useIntl } from "react-intl";
 import scheduleApi from "../../../api/scheduleApi";
 import formItems from "./formItems";
+import FormDymanic from "./formDymanic";
 
 const formItemLayout = {
   labelCol: {
@@ -27,36 +28,43 @@ export default function FormCreateSchedule() {
   const intl = useIntl();
   const [form] = Form.useForm();
   const onFinish = async (value) => {
-    const {
-      time,
-      shift1,
-      shift2,
-      moneyReceptionist,
-      moneyServer,
-      moneyCook,
-    } = value;
-    const body = {
-      date: `${time.year()}-${time.week()}`,
-      shift1: [shift1[0].hours(), shift1[1].hours()],
-      shift2: [shift2[0].hours(), shift2[1].hours()],
-      money: { moneyReceptionist, moneyServer, moneyCook },
-    };
-    try {
-      await scheduleApi.createSchedule(body);
-      notification(
-        "success",
-        intl.formatMessage({ id: "success" }),
-        intl.formatMessage({ id: "createSchedule" }) +
-          " " +
-          intl.formatMessage({ id: "success" })
-      );
-      form.resetFields();
-    } catch (e) {
+    const { time, shift, moneyReceptionist, moneyServer, moneyCook } = value;
+    const rsShift = shift.map((item, index) => {
+      return {
+        name: "shift" + (index + 1),
+        start: item[0].hours(),
+        end: item[1].hours(),
+      };
+    });
+    if (!shift) {
       notification(
         "error",
         intl.formatMessage({ id: "error" }),
-        intl.formatMessage({ id: "registerScheduleFail" })
+        intl.formatMessage({ id: "plsAddShift" })
       );
+    } else {
+      const body = {
+        date: `${time.year()}-${time.week()}`,
+        shift: rsShift,
+        money: { moneyReceptionist, moneyServer, moneyCook },
+      };
+      try {
+        await scheduleApi.createSchedule(body);
+        notification(
+          "success",
+          intl.formatMessage({ id: "success" }),
+          intl.formatMessage({ id: "createSchedule" }) +
+            " " +
+            intl.formatMessage({ id: "success" })
+        );
+        form.resetFields();
+      } catch (e) {
+        notification(
+          "error",
+          intl.formatMessage({ id: "error" }),
+          intl.formatMessage({ id: "registerScheduleFail" })
+        );
+      }
     }
   };
   return (
@@ -77,6 +85,7 @@ export default function FormCreateSchedule() {
           {item.input}
         </Form.Item>
       ))}
+      <FormDymanic />
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
           {translate("create")}

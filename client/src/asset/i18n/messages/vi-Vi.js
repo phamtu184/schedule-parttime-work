@@ -87,6 +87,8 @@ export default {
     moneyServer: "Tiền lương phục vụ",
     moneyCook: "Tiền lương phụ bếp",
     plsSelect: "Vui lòng chọn",
+    addShift: "thêm ca",
+    plsAddShift: "Vui lòng thêm ca",
     //scheduleRegister
     allDay: "Cả ngày",
     off: "nghỉ",
@@ -111,6 +113,8 @@ export default {
     backHome: "về trang chủ",
     // statistic
     selectUser: "chọn nhân viên",
-    requireSelect:'Phải chọn từ 1 trở lên!'
+    requireSelect: "Phải chọn từ 1 trở lên!",
+    totalHour: "số giờ",
+    totalMoney: "số tiền",
   },
 };

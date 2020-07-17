@@ -8,7 +8,7 @@ import locale from "antd/es/date-picker/locale/vi_VN";
 
 const { RangePicker } = DatePicker;
 export default function FormStatistic(props) {
-  const { selectedRowKeys } = props;
+  const { selectedRowKeys, setUserList } = props;
   const [form] = Form.useForm();
   const hasSelected = selectedRowKeys.length > 0;
   const onFinish = async (value) => {
@@ -27,7 +27,7 @@ export default function FormStatistic(props) {
       week2,
       usersId: selectedRowKeys,
     });
-    console.log(rs);
+    setUserList(rs);
   };
   return (
     <DivForm>

@@ -1,9 +1,9 @@
 import axiosClient from "./axiosClient";
 
 const statisticApi = {
-  postStatistic: (data) => {
+  postStatistic: (data, params) => {
     const url = "/api/statistic";
-    return axiosClient.post(url, data);
+    return axiosClient.post(url, data, params);
   },
 };
 

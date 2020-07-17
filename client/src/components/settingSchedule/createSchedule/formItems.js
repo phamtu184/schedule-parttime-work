@@ -1,10 +1,9 @@
 import React from "react";
-import { InputNumber, DatePicker, TimePicker } from "antd";
+import { InputNumber, DatePicker } from "antd";
 import translate from "../../../asset/i18n/translate";
 import locale from "antd/es/date-picker/locale/vi_VN";
 import checkWeek from "./checkWeek";
 
-const { RangePicker } = TimePicker;
 const formItems = [
   {
     name: "time",
@@ -25,44 +24,25 @@ const formItems = [
       }),
     ],
   },
-  {
-    name: "shift1",
-    label: translate("shift1"),
-    input: <RangePicker format={"HH:mm"} locale={locale} />,
-    rules: [
-      {
-        required: true,
-        message: translate("require", { title: translate("shift1") }),
-      },
-      () => ({
-        validator(rule, value) {
-          if (!value || value[0].hour() !== value[1].hour()) {
-            return Promise.resolve();
-          }
-          return Promise.reject(translate("timeSimilar"));
-        },
-      }),
-    ],
-  },
-  {
-    name: "shift2",
-    label: translate("shift2"),
-    input: <RangePicker format={"HH:mm"} locale={locale} />,
-    rules: [
-      {
-        required: true,
-        message: translate("require", { title: translate("shift2") }),
-      },
-      () => ({
-        validator(rule, value) {
-          if (!value || value[0].hour() !== value[1].hour()) {
-            return Promise.resolve();
-          }
-          return Promise.reject(translate("timeSimilar"));
-        },
-      }),
-    ],
-  },
+  // {
+  //   name: "shift2",
+  //   label: translate("shift2"),
+  //   input: <RangePicker format={"HH:mm"} locale={locale} />,
+  //   rules: [
+  //     {
+  //       required: true,
+  //       message: translate("require", { title: translate("shift2") }),
+  //     },
+  //     () => ({
+  //       validator(rule, value) {
+  //         if (!value || value[0].hour() !== value[1].hour()) {
+  //           return Promise.resolve();
+  //         }
+  //         return Promise.reject(translate("timeSimilar"));
+  //       },
+  //     }),
+  //   ],
+  // },
   {
     name: "moneyReceptionist",
     label: translate("moneyReceptionist"),

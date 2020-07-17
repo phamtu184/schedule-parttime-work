@@ -56,14 +56,13 @@ const ScheduleSchema = new Schema(
         totalHour: Number,
       },
     ],
-    shift1: {
-      type: [Number],
-      required: true,
-    },
-    shift2: {
-      type: [Number],
-      required: true,
-    },
+    shift: [
+      {
+        name: String,
+        start: Number,
+        end: Number,
+      },
+    ],
     moneyReceptionist: {
       type: Number,
       required: true,

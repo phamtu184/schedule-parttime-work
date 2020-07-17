@@ -87,6 +87,8 @@ export default {
     moneyServer: "money per hour Server",
     moneyCook: "money per hour Cook",
     plsSelect: "Please select",
+    addShift: "add shift",
+    plsAddShift: "Please add shift",
     //scheduleRegister
     allDay: "all day",
     off: "off",
@@ -111,6 +113,8 @@ export default {
     backHome: "back home",
     // statistic
     selectUser: "select user",
-    requireSelect:'More Than One Must Be Selected!'
+    requireSelect: "More Than One Must Be Selected!",
+    totalHour: "total hour",
+    totalMoney: "total money",
   },
 };

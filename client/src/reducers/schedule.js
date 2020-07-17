@@ -1,13 +1,12 @@
 const initialState = {
   dataSource: [],
   title: "",
-  infoTitle: {
-    shift1: [],
-    shift2: [],
-    moneyReceptionist: 0,
-    moneyServer: 0,
-    moneyCook: 0,
+  money: {
+    receptionist: 0,
+    server: 0,
+    cook: 0,
   },
+  shift: [],
 };
 const scheduleReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -16,7 +15,8 @@ const scheduleReducer = (state = initialState, action) => {
         ...state,
         dataSource: action.payload.data,
         title: action.payload.title,
-        infoTitle: action.payload.infoTitle,
+        money: action.payload.money,
+        shift: action.payload.shift,
       };
     }
     case "SET_SCHEDULE": {
