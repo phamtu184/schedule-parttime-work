@@ -68,7 +68,7 @@ const formatSchedule = (users, string, shiftNum) => {
     current++;
   }
   for (let i = 0; i < rs.length; i++) {
-    rs[i].totalHour = countTotalHours(rs[i], shiftNum, shift);
+    rs[i].totalHour = countTotalHours(rs[i], shiftNum);
   }
   return rs;
 };

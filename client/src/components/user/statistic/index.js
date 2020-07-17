@@ -1,12 +1,24 @@
 import React from "react";
 import translate from "../../../asset/i18n/translate";
-import DivForm from "../../common/roundForm";
-import { Form, Button, DatePicker } from "antd";
+import { Form, Button, DatePicker, Divider } from "antd";
 import { ScheduleOutlined } from "@ant-design/icons";
 import statisticApi from "../../../api/statisticApi";
 import locale from "antd/es/date-picker/locale/vi_VN";
 
 const { RangePicker } = DatePicker;
+const formItemLayout = {
+  labelCol: {
+    md: { span: 9 },
+  },
+  wrapperCol: {
+    md: { span: 18 },
+  },
+};
+const tailFormItemLayout = {
+  wrapperCol: {
+    md: { span: 18, offset: 8 },
+  },
+};
 export default function FormStatistic(props) {
   const { selectedRowKeys, setUserList } = props;
   const [form] = Form.useForm();
@@ -30,8 +42,17 @@ export default function FormStatistic(props) {
     setUserList(rs);
   };
   return (
-    <DivForm>
-      <Form form={form} name="edit-user" onFinish={onFinish} layout="inline">
+    <>
+      <Divider className="text-cap" orientation="left">
+        {translate("statistic")}
+      </Divider>
+      <Form
+        form={form}
+        {...formItemLayout}
+        name="edit-user"
+        onFinish={onFinish}
+        layout="inline"
+      >
         <Form.Item
           name="time"
           label={translate("time")}
@@ -45,7 +66,7 @@ export default function FormStatistic(props) {
         >
           <RangePicker picker="week" locale={locale} />
         </Form.Item>
-        <Form.Item>
+        <Form.Item {...tailFormItemLayout}>
           <Button
             type="ghost"
             icon={<ScheduleOutlined />}
@@ -56,6 +77,7 @@ export default function FormStatistic(props) {
           </Button>
         </Form.Item>
       </Form>
-    </DivForm>
+      <Divider />
+    </>
   );
 }

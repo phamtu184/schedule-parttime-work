@@ -1,8 +1,7 @@
 import React from "react";
-import { Form, Row, Col, Button } from "antd";
+import { Form, Row, Col, Button, Divider } from "antd";
 import formItems from "./formSearchItem";
 import { SearchOutlined, UndoOutlined } from "@ant-design/icons";
-import DivForm from "../common/roundForm";
 import translate from "../../asset/i18n/translate";
 
 const formItemLayout = {
@@ -27,7 +26,10 @@ export default function FormSearch(props) {
     setIsSearch(false);
   };
   return (
-    <DivForm>
+    <>
+      <Divider className="text-cap" orientation="left">
+        {translate("search")}
+      </Divider>
       <Form
         {...formItemLayout}
         name="searchUser"
@@ -65,6 +67,7 @@ export default function FormSearch(props) {
           </Button>
         </Form.Item>
       </Form>
-    </DivForm>
+      <Divider />
+    </>
   );
 }

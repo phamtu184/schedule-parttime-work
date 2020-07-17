@@ -21,7 +21,8 @@ export default function SettingSchedule() {
   const dispatch = useDispatch();
   const dataSource = useSelector((state) => state.schedule.dataSource);
   const title = useSelector((state) => state.schedule.title);
-  const infoTitle = useSelector((state) => state.schedule.infoTitle);
+  const money = useSelector((state) => state.schedule.money);
+  const shift = useSelector((state) => state.schedule.shift);
 
   const fentchOption = async () => {
     try {
@@ -84,12 +85,13 @@ export default function SettingSchedule() {
           </Button>
         </Popconfirm>
       </DivForm>
-      {/* <TitleTable title={title} infoTitle={infoTitle} /> */}
+      <TitleTable title={title} money={money} shift={shift} />
       <Table
         isLoading={isLoading}
         dataSource={dataSource}
         title={title}
-        infoTitle={infoTitle}
+        money={money}
+        shift={shift}
       />
     </>
   );

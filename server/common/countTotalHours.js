@@ -1,4 +1,5 @@
-const countTotalHours = (item, shiftNum, shift) => {
+const countTotalHours = (item, shiftNum) => {
+  const shift = totalShift(shiftNum);
   const totalShiftHours = shiftNum.map((it) => {
     return (it.end * 60 - it.start * 60) / 60;
   });
@@ -11,5 +12,13 @@ const countTotalHours = (item, shiftNum, shift) => {
     }
   });
   return rs;
+};
+const totalShift = (shift) => {
+  const total = [];
+  for (let i = 1; i <= shift.length; i++) {
+    total.push("shift" + i);
+  }
+  total.push("off");
+  return total;
 };
 module.exports = countTotalHours;

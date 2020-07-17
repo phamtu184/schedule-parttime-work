@@ -11,7 +11,8 @@ export default function SelectSchedule(props) {
     fentchOption,
     setLoading,
     setDataSource,
-    setInfoTitle,
+    setShift,
+    setMoney,
     setTitle,
   } = props;
   const intl = useIntl();
@@ -24,10 +25,11 @@ export default function SelectSchedule(props) {
       setLoading(true);
       try {
         const rs = await scheduleApi.getSchedule({ id: value[1] });
-        const { receptionist, server, cook, title, infoTitle } = rs;
+        const { receptionist, server, cook, title, money, shift } = rs;
         setTitle(title);
         setDataSource(formatResult(receptionist, server, cook));
-        setInfoTitle(infoTitle);
+        setShift(shift);
+        setMoney(money);
         setLoading(false);
       } catch (e) {
         console.log(e);

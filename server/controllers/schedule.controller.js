@@ -73,8 +73,7 @@ module.exports.getSchedule = async function (req, res) {
     server,
     cook,
     scheduleId,
-    shift1,
-    shift2,
+    shift,
     moneyReceptionist,
     moneyServer,
     moneyCook,
@@ -84,12 +83,11 @@ module.exports.getSchedule = async function (req, res) {
     server,
     cook,
     title: scheduleId,
-    infoTitle: {
-      shift1,
-      shift2,
-      moneyReceptionist,
-      moneyServer,
-      moneyCook,
+    shift,
+    money: {
+      receptionist: moneyReceptionist,
+      server: moneyServer,
+      cook: moneyCook,
     },
   });
 };
@@ -150,12 +148,12 @@ module.exports.deleteSchedule = async function (req, res) {
 };
 
 module.exports.userRegisterSchedule = async function (req, res) {
-  const { title, item, infoTitle } = req.body;
-  if (!title || !item || !infoTitle) {
+  const { title, item, money, shift } = req.body;
+  if (!title || !item || !money || !shift) {
     return res.status(400).json({ message: "bad request" });
   }
   const place = item.key.slice(24, item.key.length);
-  const totalHour = countTotalHours(item, infoTitle);
+  const totalHour = countTotalHours(item, shift);
   const newItem = { ...item, totalHour };
   Schedule.findOneAndUpdate(
     place === "receptionist"
@@ -191,8 +189,7 @@ module.exports.getMainSchedule = async function (req, res) {
       server,
       cook,
       scheduleId,
-      shift1,
-      shift2,
+      shift,
       moneyReceptionist,
       moneyServer,
       moneyCook,
@@ -202,11 +199,12 @@ module.exports.getMainSchedule = async function (req, res) {
       server,
       cook,
       title: scheduleId,
-      shift1,
-      shift2,
-      moneyReceptionist,
-      moneyServer,
-      moneyCook,
+      shift,
+      money: {
+        receptionist: moneyReceptionist,
+        server: moneyServer,
+        cook: moneyCook,
+      },
     });
   } catch (e) {
     console.log(e);

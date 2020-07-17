@@ -11,7 +11,11 @@ import { setSchedule } from "../../action/schedule";
 const { Title } = Typography;
 const renderContent = (value, row, index) => {
   const obj = {
-    children: value ? translate(value) : value,
+    children: value
+      ? value === "off"
+        ? translate("off")
+        : translate("shiftCus", { num: value.slice(-1) })
+      : value,
     props: {},
   };
   if (row.isTitle) {
@@ -20,7 +24,7 @@ const renderContent = (value, row, index) => {
   return obj;
 };
 export default function TableRegister(props) {
-  const { isLoading, dataSource, title, infoTitle } = props;
+  const { isLoading, dataSource, title, money, shift } = props;
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const intl = useIntl();
@@ -56,7 +60,8 @@ export default function TableRegister(props) {
         await scheduleApi.userRegisterSchedule({
           title,
           item: newData[index],
-          infoTitle,
+          money,
+          shift,
         });
         notification(
           "success",

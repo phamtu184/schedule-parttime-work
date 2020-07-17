@@ -1,6 +1,7 @@
 import React from "react";
 import { Select, Form } from "antd";
 import translate from "../../asset/i18n/translate";
+import { useSelector } from "react-redux";
 const { Option } = Select;
 const EditableCell = ({
   editing,
@@ -12,6 +13,7 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
+  const shift = useSelector((state) => state.schedule.shift);
   return (
     <td {...restProps}>
       {editing ? (
@@ -28,15 +30,11 @@ const EditableCell = ({
           ]}
         >
           <Select style={{ width: 80 }}>
-            <Option className="text-cap" value="shift1">
-              {translate("shift1")}
-            </Option>
-            <Option className="text-cap" value="shift2">
-              {translate("shift2")}
-            </Option>
-            <Option className="text-cap" value="all">
-              {translate("allDay")}
-            </Option>
+            {shift.map((item) => (
+              <Option key={item.name} className="text-cap" value={item.name}>
+                {translate("shiftCus", { num: item.name.slice(-1) })}
+              </Option>
+            ))}
             <Option className="text-cap" value="off">
               {translate("off")}
             </Option>

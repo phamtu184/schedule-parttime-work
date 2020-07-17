@@ -13,39 +13,23 @@ export default function Schedule() {
   const [options, setOptions] = useState([]);
   const [dataSource, setDataSource] = useState([]);
   const [title, setTitle] = useState("");
-  const [infoTitle, setInfoTitle] = useState({
-    shift1: [],
-    shift2: [],
-    moneyReceptionist: 0,
-    moneyServer: 0,
-    moneyCook: 0,
+  const [money, setMoney] = useState({
+    receptionist: 0,
+    server: 0,
+    cook: 0,
   });
+  const [shift, setShift] = useState([]);
   useEffect(() => {
     const getSchedule = async () => {
       setLoading(true);
       try {
         const res = await scheduleApi.getMainSchedule();
-        const {
-          receptionist,
-          server,
-          cook,
-          title,
-          shift1,
-          shift2,
-          moneyReceptionist,
-          moneyServer,
-          moneyCook,
-        } = res;
+        const { receptionist, server, cook, title, shift, money } = res;
         setDataSource(formatResult(receptionist, server, cook));
         setTitle(title);
         setLoading(false);
-        setInfoTitle({
-          shift1,
-          shift2,
-          moneyReceptionist,
-          moneyServer,
-          moneyCook,
-        });
+        setShift(shift);
+        setMoney(money);
       } catch (e) {
         console.log(e);
         setLoading(false);
@@ -70,11 +54,12 @@ export default function Schedule() {
           options={options}
           setLoading={setLoading}
           setDataSource={setDataSource}
-          setInfoTitle={setInfoTitle}
+          setMoney={setMoney}
+          setShift={setShift}
           setTitle={setTitle}
         />
       </DivForm>
-      <TitleTable title={title} infoTitle={infoTitle} />
+      <TitleTable title={title} money={money} shift={shift} />
       <Table isLoading={isLoading} dataSource={dataSource} />
     </>
   );

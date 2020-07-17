@@ -9,7 +9,11 @@ export default function TableSchedule(props) {
   const fullname = useSelector((state) => state.auth.fullname);
   const renderContent = (value, row, index) => {
     const obj = {
-      children: value ? translate(value) : value,
+      children: value
+        ? value === "off"
+          ? translate("off")
+          : translate("shiftCus", { num: value.slice(-1) })
+        : value,
       props: {},
     };
     if (row.isTitle) {

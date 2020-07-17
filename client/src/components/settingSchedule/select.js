@@ -19,12 +19,13 @@ export default function SelectSchedule(props) {
       setLoading(true);
       try {
         const rs = await scheduleApi.getSchedule({ id: value[1] });
-        const { receptionist, server, cook, title, infoTitle } = rs;
+        const { receptionist, server, cook, title, money, shift } = rs;
         dispatch(
           action({
             data: formatResult(receptionist, server, cook),
             title,
-            infoTitle,
+            money,
+            shift,
           })
         );
         setLoading(false);

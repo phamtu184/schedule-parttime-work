@@ -156,16 +156,15 @@ export default function User() {
         enableUsers={enableUsers}
         disableUsers={disableUsers}
       />
-      <FormStatistic
-        selectedRowKeys={selectedRowKeys}
-        setUserList={setUserList}
-        setPagination={setPagination}
-      />
       <FormSearch
         onFinish={onFinish}
         fetchData={fetchData}
         pagination={pagination}
         setIsSearch={setIsSearch}
+      />
+      <FormStatistic
+        selectedRowKeys={selectedRowKeys}
+        setUserList={setUserList}
       />
       <TableUserList
         rowSelection={rowSelection}
