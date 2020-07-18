@@ -13,21 +13,29 @@ export default function TableUserList(props) {
     isSearch,
     searchData,
     searchValue,
+    statisticData,
+    isStatistic,
+    statisticValue
   } = props;
   const handleTableChange = (page) => {
     const { fullname, roles, status, username } = searchValue;
-    if (isSearch) {
-      searchData(
-        fullname,
-        roles,
-        status,
-        username,
-        page.current,
-        page.pageSize
-      );
-    } else {
-      fetchData(page.current, page.pageSize);
+    if(isStatistic){
+      statisticData(statisticValue, page.current, page.pageSize)
+    } else{
+      if (isSearch) {
+        searchData(
+          fullname,
+          roles,
+          status,
+          username,
+          page.current,
+          page.pageSize
+        );
+      } else {
+        fetchData(page.current, page.pageSize);
+      }
     }
+    
   };
   useEffect(() => {
     setLoading(true);

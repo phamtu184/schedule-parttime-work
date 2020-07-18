@@ -4,16 +4,20 @@ const checkRole = require("../common/checkRoles");
 
 module.exports.postStatistic = async function (req, res) {
   const { week1, week2, usersId } = req.body;
+  const { current, pageSize } = req.query;
   if (!req.body || !usersId)
     return res.status(500).json({ message: "bad request" });
   const userList = await User.find({ _id: { $in: usersId } })
     .select("-password -phonenumber -createdAt -updatedAt")
-    .lean();
+    .lean()
+    .limit(parseInt(pageSize))
+    .skip(parseInt((current - 1) * pageSize));
   const scheduleList = await Schedule.find({
     scheduleId: { $in: getWeekList(week1, week2) },
   })
     .select("-createdAt -updatedAt")
     .lean();
+
   return res.status(200).json(resultList(userList, scheduleList));
 };
 function getWeekList(week1, week2) {
@@ -37,30 +41,35 @@ function getMoneyWeek(user, scheduleList) {
   let totalHour = 0;
   let totalMoney = 0;
   for (let i = 0; i < scheduleList.length; i++) {
-    if (checkRole.cook(user.roles)) {
-      totalHour += scheduleList[i].cook.find(
-        (e) => e.userId.toString() == user._id
-      ).totalHour;
-      totalMoney +=
-        scheduleList[i].cook.find((e) => e.userId.toString() == user._id)
-          .totalHour * scheduleList[i].moneyCook;
-    }
-    if (checkRole.server(user.roles)) {
-      totalHour += scheduleList[i].server.find(
-        (e) => e.userId.toString() == user._id
-      ).totalHour;
-      totalMoney +=
-        scheduleList[i].server.find((e) => e.userId.toString() == user._id)
-          .totalHour * scheduleList[i].moneyServer;
-    }
-    if (checkRole.receptionist(user.roles)) {
-      totalHour += scheduleList[i].receptionist.find(
-        (e) => e.userId.toString() == user._id
-      ).totalHour;
-      totalMoney +=
-        scheduleList[i].receptionist.find(
+    try {
+      if (checkRole.cook(user.roles)) {
+        totalHour += scheduleList[i].cook.find(
           (e) => e.userId.toString() == user._id
-        ).totalHour * scheduleList[i].moneyReceptionist;
+        ).totalHour;
+        totalMoney +=
+          scheduleList[i].cook.find((e) => e.userId.toString() == user._id)
+            .totalHour * scheduleList[i].moneyCook;
+      }
+      if (checkRole.server(user.roles)) {
+        totalHour += scheduleList[i].server.find(
+          (e) => e.userId.toString() == user._id
+        ).totalHour;
+        totalMoney +=
+          scheduleList[i].server.find((e) => e.userId.toString() == user._id)
+            .totalHour * scheduleList[i].moneyServer;
+      }
+      if (checkRole.receptionist(user.roles)) {
+        totalHour += scheduleList[i].receptionist.find(
+          (e) => e.userId.toString() == user._id
+        ).totalHour;
+        totalMoney +=
+          scheduleList[i].receptionist.find(
+            (e) => e.userId.toString() == user._id
+          ).totalHour * scheduleList[i].moneyReceptionist;
+      }
+    } catch {
+      totalHour = 0;
+      totalMoney = 0;
     }
   }
   return { totalHour, totalMoney };

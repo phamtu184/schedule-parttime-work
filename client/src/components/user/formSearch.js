@@ -18,12 +18,21 @@ const tailFormItemLayout = {
   },
 };
 export default function FormSearch(props) {
-  const { onFinish, fetchData, pagination, setIsSearch } = props;
+  const {
+    onFinish,
+    fetchData,
+    pagination,
+    setIsSearch,
+    setIsStatistic,
+    setSelectedRowKeys,
+  } = props;
   const [form] = Form.useForm();
   const onReset = () => {
     form.resetFields();
     fetchData(1, pagination.pageSize);
     setIsSearch(false);
+    setIsStatistic(false);
+    setSelectedRowKeys([]);
   };
   return (
     <>

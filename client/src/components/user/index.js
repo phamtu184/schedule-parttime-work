@@ -11,6 +11,7 @@ import notification from "../common/notification";
 import { roleAdmin, roleManager } from "../security/checkPrivateRoles";
 import { useSelector } from "react-redux";
 import userApi from "../../api/userApi";
+import statisticApi from "../../api/statisticApi";
 
 export default function User() {
   const [userList, setUserList] = useState([]);
@@ -19,6 +20,8 @@ export default function User() {
   const [pagination, setPagination] = useState(pageSize);
   const [isSearch, setIsSearch] = useState(false);
   const [searchValue, setSearchValue] = useState({});
+  const [isStatistic, setIsStatistic] = useState(false);
+  const [statisticValue, setStatisticValue] = useState({});
   const intl = useIntl();
   const authed = useSelector((state) => state.auth.roles);
   const onSelectChange = (selectedRowKeys) => {
@@ -44,6 +47,7 @@ export default function User() {
     current,
     pageSize
   ) => {
+    setIsStatistic(false);
     setLoading(true);
     try {
       const params = { current, pageSize };
@@ -69,6 +73,7 @@ export default function User() {
   };
   const onFinish = (value) => {
     const { fullname, roles, status, username } = value;
+    setSelectedRowKeys([]);
     setSearchValue(value);
     if (!fullname && (!roles || roles.length < 1) && !status && !username) {
       fetchData(pagination.current, pagination.pageSize);
@@ -147,6 +152,42 @@ export default function User() {
       setLoading(false);
     }
   };
+  const statisticData = async (value, current, pageSize) => {
+    setIsSearch(false);
+    const week1 = {
+      week: value.time[0].week(),
+      year: value.time[0].year(),
+      weeksInYear: value.time[0].weeksInYear(),
+    };
+    const week2 = {
+      week: value.time[1].week(),
+      year: value.time[1].year(),
+      weeksInYear: value.time[1].weeksInYear(),
+    };
+    setStatisticValue(value);
+    setLoading(true);
+    try {
+      const rsData = await statisticApi.postStatistic(
+        {
+          week1,
+          week2,
+          usersId: selectedRowKeys,
+        },
+        { current, pageSize }
+      );
+      setPagination({ ...pagination, total: selectedRowKeys.length, current });
+      setLoading(false);
+      setUserList(rsData);
+    } catch (e) {
+      console.log(e);
+      notification(
+        "error",
+        intl.formatMessage({ id: "error" }),
+        intl.formatMessage({ id: "serverError" })
+      );
+      setLoading(false);
+    }
+  };
   return (
     <>
       <Title className="color-dark">{translate("users")}</Title>
@@ -161,10 +202,14 @@ export default function User() {
         fetchData={fetchData}
         pagination={pagination}
         setIsSearch={setIsSearch}
+        setIsStatistic={setIsStatistic}
+        setSelectedRowKeys={setSelectedRowKeys}
       />
       <FormStatistic
         selectedRowKeys={selectedRowKeys}
-        setUserList={setUserList}
+        statisticData={statisticData}
+        pageSize={pagination.pageSize}
+        setIsStatistic={setIsStatistic}
       />
       <TableUserList
         rowSelection={rowSelection}
@@ -176,6 +221,9 @@ export default function User() {
         searchData={searchData}
         isSearch={isSearch}
         searchValue={searchValue}
+        statisticData={statisticData}
+        isStatistic={isStatistic}
+        statisticValue={statisticValue}
       />
     </>
   );
