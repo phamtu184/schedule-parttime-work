@@ -75,7 +75,7 @@ export default function Profile() {
       notification(
         "success",
         intl.formatMessage({ id: "success" }),
-        intl.formatMessage({ id: "editUserSuccess" })
+        intl.formatMessage({ id: "updateProfileSuccess" })
       );
       setLoading(false);
     } catch (err) {

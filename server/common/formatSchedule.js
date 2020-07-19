@@ -15,8 +15,6 @@ const formatSchedule = (users, string, shiftNum) => {
       key: item._id + string,
       userId: item._id,
       fullname: item.fullname,
-      isModify: false,
-      isTitle: false,
       monday: "",
       tuesday: "",
       wednesday: "",

@@ -39,6 +39,8 @@ export default {
     confirmDelete: "are you sure delete this task?",
     yes: "yes",
     no: "no",
+    updatedAt: "updated at",
+    createdAt: "created at",
     // roles
     admin: "admin",
     manager: "manager",
@@ -101,9 +103,11 @@ export default {
     enableUserSuccess: "enable user success",
     disableUserSuccess: "disable user success",
     editUserSuccess: "edit user success",
+    statisticUserSuccess: "statistic user success",
     loginSuccess: "login success",
     loginFail: "account dosen't exist or wrong password",
     registerScheduleFail: "schedule has exist",
+    updateProfileSuccess: "update Profile Success",
     // feedback
     success: "success",
     error: "error",

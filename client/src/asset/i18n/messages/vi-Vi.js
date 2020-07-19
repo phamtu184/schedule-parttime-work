@@ -39,6 +39,8 @@ export default {
     confirmDelete: "bạn có chắc muốn xóa?",
     yes: "có",
     no: "không",
+    updatedAt: "ngày cập nhật",
+    createdAt: "ngày tạo",
     // roles
     admin: "quản trị viên",
     manager: "quản lý",
@@ -100,10 +102,12 @@ export default {
     deleteUserSuccess: "xóa nhân viên thành công",
     enableUserSuccess: "kích hoạt nhân viên thành công",
     disableUserSuccess: "vô hiệu nhân viên thành công",
+    statisticUserSuccess: "thống kê nhân viên thành công",
     editUserSuccess: "sửa nhân viên thành công",
     loginSuccess: "đăng nhập thành công",
     loginFail: "tài khoản không tồn tại hoặc sai mật khẩu",
     registerScheduleFail: "lịch đã tồn tại",
+    updateProfileSuccess: "Cập nhật hồ sơ thành công",
     // feedback
     success: "thành công",
     error: "Lỗi",

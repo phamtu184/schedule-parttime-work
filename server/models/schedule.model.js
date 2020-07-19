@@ -12,7 +12,6 @@ const ScheduleSchema = new Schema(
       {
         key: String,
         userId: Schema.Types.ObjectId,
-        isTile: Boolean,
         fullname: String,
         monday: String,
         tuesday: String,
@@ -28,7 +27,6 @@ const ScheduleSchema = new Schema(
       {
         key: String,
         userId: Schema.Types.ObjectId,
-        isTile: Boolean,
         fullname: String,
         monday: String,
         tuesday: String,
@@ -44,7 +42,6 @@ const ScheduleSchema = new Schema(
       {
         key: String,
         userId: Schema.Types.ObjectId,
-        isTile: Boolean,
         fullname: String,
         monday: String,
         tuesday: String,

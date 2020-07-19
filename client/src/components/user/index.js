@@ -178,6 +178,11 @@ export default function User() {
       setPagination({ ...pagination, total: selectedRowKeys.length, current });
       setLoading(false);
       setUserList(rsData);
+      notification(
+        "success",
+        intl.formatMessage({ id: "success" }),
+        intl.formatMessage({ id: "statisticUserSuccess" })
+      );
     } catch (e) {
       console.log(e);
       notification(

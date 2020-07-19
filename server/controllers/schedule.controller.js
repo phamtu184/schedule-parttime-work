@@ -44,22 +44,7 @@ module.exports.createSchedule = async function (req, res) {
   });
   newSchedule.save((err, schedule) => {
     if (err) return res.status(500).json({ message: "Server error" });
-    res
-      .status(200)
-      .json
-      // {
-      //   receptionist: formatSchedule(receptionist, "receptionist", shift),
-      //   server: formatSchedule(server, "server", shift),
-      //   cook: formatSchedule(cook, "cook", shift),
-      //   title: schedule.scheduleId,
-      //   money: {
-      //     receptionist: schedule.moneyReceptionist,
-      //     server: schedule.moneyServer,
-      //     cook: schedule.moneyCook,
-      //   },
-      //   shift,
-      // }
-      ();
+    res.status(200).json();
   });
 };
 module.exports.getSchedule = async function (req, res) {
